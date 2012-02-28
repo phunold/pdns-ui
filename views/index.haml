@@ -1,0 +1,20 @@
+%p Welcome to my first few steps to make an UI for passiveDNS
+%p= "Total: #{@total}"
+%table
+  %tr
+    %th First Seen
+    %th Last Seen
+    %th Query
+    %th Maptype
+    %th RR
+    %th Answer
+    %th TTL
+  - for p in @pdns.limit(100)
+    %tr
+      %td= p[:FIRST_SEEN].strftime("%b %d, %T")
+      %td= p[:LAST_SEEN].strftime("%b %d, %T")
+      %td= p[:QUERY]
+      %td= p[:MAPTYPE]
+      %td= p[:RR]
+      %td= p[:ANSWER]
+      %td= p[:TTL]
