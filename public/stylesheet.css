@@ -1,0 +1,259 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+	margin:0;
+	padding:0;
+	background:#BBB;
+	font-size:small;
+}
+
+#container {
+	width:900px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top:20px;
+	padding:30px;
+	font: small Arial, Helvetica, sans-serif;
+	font-size:90%;
+	color:#666666;
+	background:#FFF;
+}
+
+h1 {
+	margin: 0;	
+	background: url(images/trafficLight.jpg) no-repeat center left;
+	padding: 22px 20px 20px 40px;
+	color:#00A03E;
+	font-weight:normal;
+}
+h1 a {
+  text-decoration:none;
+}
+
+hr {
+	border: 0;
+	width: 100%;
+	color: #EDEDED;
+	background-color: #EDEDED;
+	height: 2px;
+}
+
+a, a:link, a:visited {
+	color:#0995B3;	
+	text-decoration:none;
+}
+
+a:hover {
+	text-decoration:underline;	
+}
+
+table {
+  padding:0;
+  border-collapse:collapse;
+}
+
+td#cornerLeft {
+	background:url(images/roundLeft.png) no-repeat top left;
+}
+
+td#cornerRight {
+	background:url(images/roundRight.png) no-repeat top right;	
+}
+
+thead {
+	background:url(images/tableHeader.png) repeat-x;
+	font: bold 85% Arial, Helvetica, sans-serif;
+}
+
+tbody {
+  border:1px solid #dfdfdf;
+  border-top:none;
+}
+
+tr.odd {
+	background:#F1F8FA;
+}
+
+tr.border {
+	border-top:1px solid #dfdfdf;	
+}
+
+td {
+	padding:2px;
+	padding-left:15px;
+}
+
+p {
+	font-size: 100%;
+}
+
+ul {
+	color: #000;
+	font-size:100%;
+	background: #EDEDED;
+	border: 1px solid #CDCDCD;
+}
+
+img {
+	border:none;
+}
+
+.searchbar {
+	width: 900px;
+	height: 1px;
+	margin:0 auto;
+	text-align: right;	
+	position:relative;
+  top:-90px;
+}
+
+ul.error {
+	margin: 35px auto;
+	padding: 35px;
+  line-height:200%;
+  letter-spacing:2px;
+  width: 400px;
+	height: 150px;
+	border: 1px red dashed;
+	font-size: 120%;
+	color: red;
+}
+
+li.error {
+  list-style: none;
+  background: url(images/error.jpg) no-repeat bottom left;
+  padding: 8px 0 8px 45px;
+  display:inline;
+}
+
+/******* MENU STYLING ******/
+/* style the outer div to give it width */
+.menu {
+	width: 900px;
+	height:32px;
+	margin-top:10px;
+}
+
+/* remove all the bullets, borders and padding from the default list styling */
+.menu ul {
+	padding:0;
+	margin:0;
+	list-style-type:none;
+	width: 900px;
+	height:28px;
+	font: 8pt Arial, Helvetica, sans-serif;
+	font-weight: 500;
+	background:url(images/tableHeader.png) repeat-x;
+	border: 1px solid #DDD;
+	border-bottom:0;
+	border-top:0;
+}
+
+/* style the sub-level lists */
+.menu ul ul {
+	width:12em;
+}
+
+/* float the top list items to make it horizontal and a relative positon so that you can control the dropdown menu positon */
+.menu ul li {
+	float:left;
+	height:28px;
+	list-style-image:none;
+}
+
+/* style the sub level list items */
+.menu ul ul li {
+	display:block;
+	width:14em;
+	height:auto;
+	position:relative;
+	z-index:1000;
+	line-height:1em;
+}
+
+/* style the links for the top level */
+.menu a, .menu a:visited {
+	display:block;
+	float:left;
+	font: 8pt Arial, Helvetica, sans-serif;
+	font-weight: 500;
+	text-decoration:none;
+	color:#666;
+	padding-top:8px;
+	padding-right: 10px;
+	padding-left: 10px;
+	height:28px;
+}
+
+/* style the sub level links */
+.menu ul ul{
+	margin-top:-4px;
+	background:none;
+	border:none;
+}
+
+.menu ul ul a, .menu ul ul a:visited {
+	display:block;
+	background:#666; 
+	color:#EDEDED;
+	width:12em;
+	height:100%;
+	line-height:1.5em;
+	padding:0.5em 1em;
+}
+
+.menu ul table ul a, .menu ul table ul a:visited  {
+	width:12em; 
+	w\idth:12em;
+}
+
+/* style the table so that it takes no part in the layout - required for IE to work */
+.menu table {position:absolute; left:0; top:0; font-size:1em; z-index:-1;}
+.menu ul ul table {lef\t:-1px;}
+.menu ul ul table ul.left {margin-lef\t:2px;}
+
+.menu li:hover {position:relative;}
+* html .menu a:hover {position:relative;}
+
+/* style the sub level 1 background */
+.menu ul :hover a.sub1 {background:#666;}
+/* style the sub level 2 background */
+.menu ul ul :hover a.sub2 {background:#666;}
+
+/* style the level hovers */
+/* first */
+.menu a:hover {
+	text-decoration:underline;
+}
+
+.menu :hover > a {
+	text-decoration:underline;
+}
+
+/* second */
+.menu ul ul a:hover{
+	text-decoration:underline;
+}
+
+.menu ul ul :hover > a {
+	text-decoration:underline;
+}
+
+/* hide the sub levels and give them a positon absolute so that they take up no room */
+.menu ul ul {
+	visibility:hidden;
+	position:absolute;
+	height:0;
+	top:3em;
+	left:0;
+	width:14em;
+}
+
+/* make the second level visible when hover on first level list OR link */
+.menu ul li:hover ul, .menu ul a:hover ul {
+	visibility:visible; 
+	height:auto; 
+	padding-bottom:3em;
+}
+

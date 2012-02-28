@@ -15,3 +15,19 @@ get '/' do
 end
 
 
+post '/search' do
+  pattern = params['search'].strip
+  # go back if search is not valid
+  redirect back if pattern == "search"
+
+  # match loosly against 'query' and 'answer' column
+  pdns = DB[:pdns]
+  @results = pdns.where(:query.like("%#{pattern}%") | :answer.like("%#{pattern}%"))
+
+  @results_total = @results.count
+
+  # render result
+  haml :searchresult
+
+end
+

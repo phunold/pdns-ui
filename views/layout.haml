@@ -2,7 +2,21 @@
 %html
   %head
     %title PassiveDNS :: SimpleUI
+    %link{:href=>"stylesheet.css",:type=>"text/css",:rel=>"stylesheet"}
   %body
-    %h1 PassiveDNS...still very raw...
-
-    =yield
+    %div#container
+      %h1 PassiveDNS...still very raw...
+      %div.menu
+        %ul
+          %li
+            %a{:href=>"/"} .:HOME:.
+          %li
+            %a{:href=>"/detail"} .:DETAIL:.
+      %div.searchbar
+        %form{:action=>"/search", :method=>"post"}
+          %input{:type=>"text", :size=>"8", :name=>"search", :value=>"search"}
+          &nbsp;
+          %input{:type=>"image", :src=>"images/searchButton.jpg", :name=>"submit", :value=>"search"}
+        %p
+          DNS records: #{@total}
+      =yield

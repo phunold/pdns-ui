@@ -6,7 +6,9 @@ WebUI for passivedns
 
 Install
 -------
-* Ubuntu: apt-get install mysql-client libmysql-ruby libsinatra-ruby rubygems libsinatra-ruby libhaml-ruby
+* Ubuntu: apt-get install mysql-client libmysql-ruby libsinatra-ruby rubygems libsinatra-ruby libhaml-ruby libsqlite3-dev
+* gem install padrino rake sequel sqlite3 --no-ri --no-rdoc
+
 
 Usage
 -----

@@ -1,0 +1,20 @@
+%p
+  Results found in database: #{@results_total}
+%table
+  %tr
+    %th First Seen
+    %th Last Seen
+    %th Query
+    %th Maptype
+    %th RR
+    %th Answer
+    %th TTL
+  - for r in @results
+    %tr
+      %td= r[:FIRST_SEEN].strftime("%b %d, %T")
+      %td= r[:LAST_SEEN].strftime("%b %d, %T")
+      %td= r[:QUERY]
+      %td= r[:MAPTYPE]
+      %td= r[:RR]
+      %td= r[:ANSWER]
+      %td= r[:TTL]
