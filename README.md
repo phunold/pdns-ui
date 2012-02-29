@@ -1,21 +1,20 @@
-WebUI for passivedns
-====================
+# WebUI for passivedns
 
-** Minimalistic WebUI for passiveDNS tool by gamelinux.
-** the UI is built on (sinatrarb.com)
+**Minimalistic WebUI for passiveDNS tool by gamelinux.**
+the UI is built on (sinatrarb.com)
 
-# Install
+## Install
 
 - Ubuntu: apt-get install mysql-client libmysql-ruby libsinatra-ruby rubygems libsinatra-ruby libhaml-ruby libsqlite3-dev
 
 
-# Usage
+## Usage
 
 - start webserver:
 
-    $ ruby pdns-ui.rb
+    ruby pdns-ui.rb
 
 - point your browser to:
 
-    $ http://localhost:4567/
+    http://localhost:4567/
 
