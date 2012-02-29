@@ -1,0 +1,31 @@
+%h2 DNS Summary
+%h3 Highest amount of expiring records per QUERY result
+%table
+  %thead
+    %tr
+      %td{:id=>"cornerLeft",:width=>20} &nbsp;
+      %td Count
+      %td Query
+      %td{:id=>"cornerRight",:width=>20} &nbsp;
+  - for i in @low_ttls
+    %tbody
+      %tr
+        %td &nbsp;
+        %td= i[:count]
+        %td= i[:QUERY]
+        %td &nbsp;
+%h3 Maptype Grouped
+%table
+  %thead
+    %tr
+      %td{:id=>"cornerLeft",:width=>20} &nbsp;
+      %td Count
+      %td Maptype
+      %td{:id=>"cornerRight",:width=>20} &nbsp;
+  - for m in @maptypes
+    %tbody
+      %tr
+        %td &nbsp;
+        %td= m[:count]
+        %td= m[:MAPTYPE]
+        %td &nbsp;

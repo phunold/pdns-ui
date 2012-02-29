@@ -1,18 +1,24 @@
-%h2 Listing(brief)
+%h2 Listing(brief, latest first)
 %table
-  %tr
-    %th First Seen
-    %th Last Seen
-    %th DNS Query
-    %th MAPTYPE
-    %th DNS Answer
-  - for p in @pdns
+  %thead
     %tr
-      %td= p[:FIRST_SEEN].strftime("%b %d, %T")
-      - if p[:FIRST_SEEN] == p[:LAST_SEEN]
-        %td same
-      - else
-        %td= p[:LAST_SEEN].strftime("%b %d, %T")
-      %td= p[:QUERY]
-      %td= p[:MAPTYPE]
-      %td= p[:ANSWER]
+      %td{:id=>"cornerLeft",:width=>20} &nbsp;
+      %td First Seen
+      %td Last Seen
+      %td DNS Query
+      %td MAPTYPE
+      %td DNS Answer
+      %td{:id=>"cornerRight",:width=>20} &nbsp;
+  - for p in @items
+    %tbody
+      %tr
+        %td &nbsp;
+        %td= p[:FIRST_SEEN].strftime("%b %d, %T")
+        - if p[:FIRST_SEEN] == p[:LAST_SEEN]
+          %td same
+        - else
+          %td= p[:LAST_SEEN].strftime("%b %d, %T")
+        %td= p[:QUERY]
+        %td= p[:MAPTYPE]
+        %td= p[:ANSWER]
+        %td &nbsp;

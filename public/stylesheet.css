@@ -22,7 +22,6 @@ body {
 
 h1 {
 	margin: 0;	
-	background: url(images/trafficLight.jpg) no-repeat center left;
 	padding: 22px 20px 20px 40px;
 	color:#00A03E;
 	font-weight:normal;
@@ -109,15 +108,14 @@ img {
 }
 
 ul.error {
-	margin: 35px auto;
-	padding: 35px;
+  margin: 35px auto;
+  padding: 35px;
   line-height:200%;
   letter-spacing:2px;
   width: 400px;
-	height: 150px;
-	border: 1px red dashed;
-	font-size: 120%;
-	color: red;
+  height: 150px;
+  font-size: 120%;
+  color: red;
 }
 
 li.error {

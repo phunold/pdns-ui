@@ -9,14 +9,16 @@
       %div.menu
         %ul
           %li
-            %a{:href=>"/"} .:HOME:.
+            %a{:href=>"/"} List
           %li
-            %a{:href=>"/detail"} .:DETAIL:.
+            %a{:href=>"/summary"} Summary
+          %li
+            %a{:href=>"/about"} About
       %div.searchbar
         %form{:action=>"/search", :method=>"post"}
           %input{:type=>"text", :size=>"8", :name=>"search", :value=>"search"}
           &nbsp;
           %input{:type=>"image", :src=>"images/searchButton.jpg", :name=>"submit", :value=>"search"}
         %p
-          DNS records: #{@total}
+          Available DNS records: #{@@total}
       =yield
