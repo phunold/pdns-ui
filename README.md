@@ -1,7 +1,7 @@
 # WebUI for passivedns
 
 **Minimalistic WebUI for passiveDNS tool by gamelinux.**
-the UI is built on (sinatrarb.com)
+the UI is built on (http://sinatrarb.com)
 
 ## Install
 
