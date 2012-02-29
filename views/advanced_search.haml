@@ -1,0 +1,23 @@
+%h2 Advanced Search
+%form{:action=>"/advanced_search", :method=>"post"}
+  %fieldset
+    %ol
+      %li
+        %label{:for=>"query"} DNS Query
+        %input{:type=>"text", :size=>"12", :name=>"query", :value=>"any"}
+      %li
+        %label{:for=>"query"} DNS Answer
+        %input{:type=>"text", :size=>"12", :name=>"answer", :value=>"any"}
+      %li
+        %label{:for=>"maptype"} Maptype
+        %select{:name=>"maptype"}
+          %option{:value=>""} any
+          - for m in @maptypes
+            %option{:value=>"#{m[:MAPTYPE]}"} #{m[:MAPTYPE]}
+      %li
+        %label{:for=>"rr"} RR
+        %select{:name=>"rr"}
+          %option{:value=>""} any
+          - for r in @rrs
+            %option{:value=>"#{r[:RR]}"} #{r[:RR]}
+    %input{:type=>"submit", :name=>"submit", :value=>"search"}

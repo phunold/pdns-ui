@@ -1,20 +1,28 @@
 %p
-  Results found in database: #{@results_total}
+  Results in database: #{@results_total}
+  - if @results_total > 100
+    (limited display to first 100)
 %table
-  %tr
-    %th First Seen
-    %th Last Seen
-    %th Query
-    %th Maptype
-    %th RR
-    %th Answer
-    %th TTL
-  - for r in @results
+  %thead
     %tr
-      %td= r[:FIRST_SEEN].strftime("%b %d, %T")
-      %td= r[:LAST_SEEN].strftime("%b %d, %T")
-      %td= r[:QUERY]
-      %td= r[:MAPTYPE]
-      %td= r[:RR]
-      %td= r[:ANSWER]
-      %td= r[:TTL]
+      %td{:id=>"cornerLeft", :width=>"20"} &nbsp;
+      %td First Seen
+      %td Last Seen
+      %td Query
+      %td Maptype
+      %td RR
+      %td Answer
+      %td TTL
+      %td{:id=>"cornerRight", :width=>"20"} &nbsp;
+  %tbody
+    - for r in @results
+      %tr{:class=>cycle}
+        %td &nbsp;
+        %td= r[:FIRST_SEEN].strftime("%b %d, %T")
+        %td= r[:LAST_SEEN].strftime("%b %d, %T")
+        %td= r[:QUERY]
+        %td= r[:MAPTYPE]
+        %td= r[:RR]
+        %td= r[:ANSWER]
+        %td= r[:TTL]
+        %td &nbsp;

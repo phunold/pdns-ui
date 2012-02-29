@@ -13,6 +13,17 @@ configure do
   @@total = DB[:pdns].count
 end
 
+helpers do
+  def cycle
+    @_cycle ||= reset_cycle
+    @_cycle = [@_cycle.pop] + @_cycle
+    @_cycle.first
+  end
+  def reset_cycle
+    @_cycle = %w(even odd)
+  end  
+end
+
 # send emtpy
 get '/favicon' do
 end
@@ -36,6 +47,7 @@ end
 
 post '/search' do
   pattern = params['search'].strip
+
   # go back if search is not valid
   redirect back if pattern == "search"
 
@@ -44,10 +56,47 @@ post '/search' do
   @results = pdns.where(:QUERY.like("%#{pattern}%") | :ANSWER.like("%#{pattern}%"))
 
   @results_total = @results.count
+  
+  # limit results to 100 always
+  @results = @results.reverse_order(:LAST_SEEN).limit(100)
 
   # render result
   haml :searchresult
 
+end
+
+get '/advanced_search' do
+  # group unique for dropdown menu
+  @rrs = DB[:pdns].group(:RR).order(:RR)
+  @maptypes = DB[:pdns].group(:MAPTYPE).order(:MAPTYPE)
+  haml :advanced_search
+end
+
+post '/advanced_search' do
+  answer  = params['answer'].strip
+  query   = params['query'].strip
+  rr      = params['rr']
+  maptype = params['maptype']
+
+  # go back if search is not valid
+  redirect back if (answer == "any" && query == "any" && rr.empty? && maptype.empty?) 
+
+
+  # chain filters (logical AND)
+  @results = DB[:pdns]
+  @results = @results.where(:QUERY.like("%#{query}%")) unless query == "any"
+  @results = @results.where(:ANSWER.like("%#{answer}%")) unless answer == "any"
+  @results = @results.filter(:RR => rr) unless rr.empty?
+  @results = @results.filter(:MAPTYPE => maptype) unless maptype.empty?
+
+  @results = @results.filter(:MAPTYPE => maptype) unless maptype.empty?
+  @results_total = @results.count
+
+  # limit results to 100 (always)
+  @results = @results.reverse_order(:LAST_SEEN).limit(100)
+
+  # render result
+  haml :searchresult
 end
 
 get '/summary' do

@@ -11,7 +11,7 @@
       %td{:id=>"cornerRight",:width=>20} &nbsp;
   - for p in @items
     %tbody
-      %tr
+      %tr{:class=>cycle}
         %td &nbsp;
         %td= p[:FIRST_SEEN].strftime("%b %d, %T")
         - if p[:FIRST_SEEN] == p[:LAST_SEEN]
