@@ -6,7 +6,7 @@ This app is built on (http://sinatrarb.com)
 
 ## Install
 
-- Ubuntu: apt-get install mysql-client libmysql-ruby libsinatra-ruby rubygems libsinatra-ruby libhaml-ruby libsqlite3-dev
+- Ubuntu: apt-get install mysql-client libmysql-ruby libsinatra-ruby rubygems libsinatra-ruby libhaml-ruby libsqlite3-dev libsequel-ruby
 
 
 ## Usage
@@ -26,10 +26,9 @@ This app is built on (http://sinatrarb.com)
 
 - [failed] pagination
 - detailed view of IP/host
-- ease of navigation ie: clicking on query will display detailed view
 - grouped view of MAPTYPE/RR to make unusal stick out a bit...
 - add interactive ASN/WHOIS/TRACEROUTE/DNS lookup for IP/DOMAIN
-- interactive query is domain/IP is in blacklist somewhere (virustotal,spamhause,cymru.org,etc)
+- interactive query is url/domain/IP is in IP reputation/blacklist somewhere (virustotal,spamhause,cymru.org,etc)
 - etc....
 
 ! there is no client-ip/server-ip in the database

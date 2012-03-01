@@ -4,9 +4,6 @@ require 'sinatra'
 require 'rubygems'
 require 'sequel'
 require 'haml'
-require 'will_paginate'
-require 'will_paginate/sequel'
-require 'will_paginate/version'
 
 configure do
   DB = Sequel.mysql 'pdns', :user=>'pdns', :host=>'localhost', :password=>'pdns'
@@ -40,10 +37,8 @@ end
 
 # index page / tabular listing of DNS records
 get '/' do
-  puts WillPaginate::VERSION::STRING
   @items = @@_ds.reverse_order(:LAST_SEEN).limit(100)
   @total = @items.count
-#  @items = @items.paginate :page => params[:page], :per_page => 30 
   haml :index
 end
 
@@ -110,6 +105,10 @@ post '/advanced_search' do
 end
 
 get '/summary' do
+  # get latest/oldest records
+  @latest_date = @@_ds.order(:FIRST_SEEN).get(:FIRST_SEEN)
+  @oldest_date = @@_ds.reverse_order(:FIRST_SEEN).get(:FIRST_SEEN)
+
   # count expiring TTLs per RR
   @low_ttls = @@_ds.group_and_count(:QUERY).having{count >= 10}.where(:TTL <= 60).reverse_order(:count)
 
