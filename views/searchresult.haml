@@ -20,7 +20,8 @@
         %td &nbsp;
         %td= r[:FIRST_SEEN].strftime("%b %d, %T")
         %td= r[:LAST_SEEN].strftime("%b %d, %T")
-        %td= r[:QUERY]
+        %td
+          %a{:href=>"/q/#{r[:QUERY]}"}= r[:QUERY]
         %td= r[:MAPTYPE]
         %td= r[:RR]
         %td= r[:ANSWER]

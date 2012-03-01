@@ -10,7 +10,8 @@ require 'will_paginate/version'
 
 configure do
   DB = Sequel.mysql 'pdns', :user=>'pdns', :host=>'localhost', :password=>'pdns'
-  @@total = DB[:pdns].count
+  @@_ds = DB[:pdns]
+  @@total = @@_ds.count
 end
 
 helpers do
@@ -24,7 +25,7 @@ helpers do
   end  
 end
 
-# send emtpy
+# send empty response
 get '/favicon' do
 end
 
@@ -37,12 +38,22 @@ error do
   haml :sorry
 end
 
+# index page / tabular listing of DNS records
 get '/' do
   puts WillPaginate::VERSION::STRING
-  @items = DB[:pdns].reverse_order(:LAST_SEEN).limit(100)
+  @items = @@_ds.reverse_order(:LAST_SEEN).limit(100)
   @total = @items.count
 #  @items = @items.paginate :page => params[:page], :per_page => 30 
   haml :index
+end
+
+# detailed few for 'click' action
+get '/q/:query' do
+  @results = @@_ds.filter(:QUERY => params[:query])
+  puts @results.inspect 
+  
+  @results_total = @results.count
+  haml :searchresult
 end
 
 post '/search' do
@@ -52,8 +63,7 @@ post '/search' do
   redirect back if pattern == "search"
 
   # match loosly against 'query' and 'answer' column
-  pdns = DB[:pdns]
-  @results = pdns.where(:QUERY.like("%#{pattern}%") | :ANSWER.like("%#{pattern}%"))
+  @results = @@_ds.where(:QUERY.like("%#{pattern}%") | :ANSWER.like("%#{pattern}%"))
 
   @results_total = @results.count
   
@@ -67,8 +77,8 @@ end
 
 get '/advanced_search' do
   # group unique for dropdown menu
-  @rrs = DB[:pdns].group(:RR).order(:RR)
-  @maptypes = DB[:pdns].group(:MAPTYPE).order(:MAPTYPE)
+  @rrs = @@_ds.group(:RR).order(:RR)
+  @maptypes = @@_ds.group(:MAPTYPE).order(:MAPTYPE)
   haml :advanced_search
 end
 
@@ -83,7 +93,7 @@ post '/advanced_search' do
 
 
   # chain filters (logical AND)
-  @results = DB[:pdns]
+  @results = @@_ds
   @results = @results.where(:QUERY.like("%#{query}%")) unless query == "any"
   @results = @results.where(:ANSWER.like("%#{answer}%")) unless answer == "any"
   @results = @results.filter(:RR => rr) unless rr.empty?
@@ -101,10 +111,10 @@ end
 
 get '/summary' do
   # count expiring TTLs per RR
-  @low_ttls = DB[:pdns].group_and_count(:QUERY).having{count >= 10}.where(:TTL <= 60).reverse_order(:count)
+  @low_ttls = @@_ds.group_and_count(:QUERY).having{count >= 10}.where(:TTL <= 60).reverse_order(:count)
 
   # show distribution of maptype(A,PTR,CNAME,etc)
-  @maptypes = DB[:pdns].group_and_count(:MAPTYPE)
+  @maptypes = @@_ds.group_and_count(:MAPTYPE)
 
   haml :summary
   

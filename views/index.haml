@@ -18,7 +18,8 @@
           %td same
         - else
           %td= p[:LAST_SEEN].strftime("%b %d, %T")
-        %td= p[:QUERY]
+        %td
+          %a{:href=>"/q/#{p[:QUERY]}"}= p[:QUERY]
         %td= p[:MAPTYPE]
         %td= p[:ANSWER]
         %td &nbsp;

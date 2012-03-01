@@ -2,7 +2,7 @@
 %html
   %head
     %title PassiveDNS :: SimpleUI
-    %link{:href=>"stylesheet.css",:type=>"text/css",:rel=>"stylesheet"}
+    %link{:href=>"/stylesheet.css",:type=>"text/css",:rel=>"stylesheet"}
   %body
     %div#container
       %h1 PassiveDNS...still very raw...
@@ -22,7 +22,7 @@
         %form{:action=>"/search", :method=>"post"}
           %input{:type=>"text", :size=>"8", :name=>"search", :value=>"search"}
           &nbsp;
-          %input{:type=>"image", :src=>"images/searchButton.jpg", :name=>"submit", :value=>"search"}
+          %input{:type=>"image", :src=>"/images/searchButton.jpg", :name=>"submit", :value=>"search"}
         %p
           Available DNS records: #{@@total}
       =yield

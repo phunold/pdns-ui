@@ -12,7 +12,8 @@
       %tr
         %td &nbsp;
         %td= i[:count]
-        %td= i[:QUERY]
+        %td
+          %a{:href=>"/q/#{i[:QUERY]}"}= i[:QUERY]
         %td &nbsp;
 %h3 Maptype Grouped
 %table
