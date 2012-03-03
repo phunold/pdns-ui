@@ -3,10 +3,15 @@
   %head
     %title PassiveDNS :: SimpleUI
     %link{:href=>"/stylesheet.css",:type=>"text/css",:rel=>"stylesheet"}
+    %script{:src=>"/js/jquery-1.7.min.js",:type=>"text/javascript"}
+    %script{:src=>"/js/jquery.dimensions.js",:type=>"text/javascript"}
+    %script{:src=>"/js/jquery.tooltip.min.js",:type=>"text/javascript"}
+    %script
+      $("#demo img[title]").tooltip();
   %body
-    %div#container
+    #container
       %h1 PassiveDNS...still very raw...
-      %div.menu
+      .menu
         %ul
           %li
             %a{:href=>"/"} List
@@ -18,11 +23,12 @@
             %a{:href=>"#"} &nbsp;
           %li
             %a{:href=>"/about"} About
-      %div.searchbar
-        %form{:action=>"/search", :method=>"post"}
-          %input{:type=>"text", :size=>"8", :name=>"search", :value=>"search"}
-          &nbsp;
-          %input{:type=>"image", :src=>"/images/searchButton.jpg", :name=>"submit", :value=>"search"}
+      .searchbar
         %p
-          Available DNS records: #{@@total}
+          Total Records: #{@@total}
+        %form{:action=>"/search", :method=>"post"}
+          %span.simpletip{:title=>"Full-text Search of Query and Responses"} &nbsp;
+          %input{:type=>"text", :size=>"8", :name=>"search", :value=>"search", :onfocus=>"value=''"}
+          &nbsp;
+          %input{:type=>"image", :src=>"/images/zoom.png", :name=>"submit", :value=>"search"}
       =yield

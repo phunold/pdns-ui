@@ -4,7 +4,9 @@
     Latest Record: #{@latest_date}
   %li
     Oldest Available Record: #{@oldest_date}
-%h3 Highest amount of expiring records per QUERY result
+%h3
+  %span.simpletip{:title=>"Could be indication of fast-flux"}
+    Top records with low TTL
 %table
   %thead
     %tr
@@ -20,7 +22,9 @@
         %td
           %a{:href=>"/q/#{i[:QUERY]}"}= i[:QUERY]
         %td &nbsp;
-%h3 Maptype Grouped
+%h3
+  %span.simpletip{:title=>"Shows overall QUERYTYPE distribution"}
+    QUERYTYPE distribution
 %table
   %thead
     %tr

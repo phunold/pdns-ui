@@ -20,12 +20,22 @@ This app is built on (http://sinatrarb.com)
     http://localhost:4567/
 
 
-## TODO and ThinkTank
+## TODO
+- use pagination for all tables
+- create nicer tooltips
+- create test scripts, RIOT or whatever may be a good fit
+- create conf for running in passenger
+- make it look like a real app and re-organise, introduce proper MVC, split Model/Controller/helpers
+- check what I can 'borrow' from padrino project
+- make 'summary' page look nicer
+- check install requirements on RPM based systems
 
-Just thinking out loud, anything or nothing may be implemented. Some are totally out-of-scope.
+## ThinkTank
+
+Just thinking out loud, anything or nothing may be implemented.
+This is waaaaay out-of-scope! Just want to do a 'brain-dump'.
  
-- [failed] pagination
-- detailed view of a query name including class/qtype/query length/IP(s)/TTL/Reponse Flags(Reply Codes,NXDOMAIN,Opcodes/Authorative/Recursive Flag/AXFR/do-bit and other extra data allocated with that query domain
+- more detailed DNS query/response information including query length/IP(s)(server/client)/Reponse Flags(Reply Codes,NXDOMAIN,Opcodes/Authorative/Recursive Flag/IXFR,AXFR/do-bit and other extra data allocated with that query domain
 - create view of domains grouped by ccTLD,gTLD and TLD, 2nd level and 3rd level domains
 - create statistics
   * queries over time
@@ -47,8 +57,6 @@ Just thinking out loud, anything or nothing may be implemented. Some are totally
 - graphical interpretation of DNS data (tag-cloud, word-tree)
 - display possible security issues (fast-flux,fwd lookup not match reverse,covert comm, rogue servers, DNS poisoning/pharming/redirection/hijacking, enumeration/scans, subdomain anomalies)
 - display sensitive information DNS queries may hold (software used, partners, email, OS detection, etc.)
-
-! there is no client-ip/server-ip in the database
 
 ## Feedback
 

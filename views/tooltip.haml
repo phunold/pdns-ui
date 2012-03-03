@@ -1,14 +1,16 @@
-%h3
-  %span.tooltip{:title=>"This is how we do it"} This is a header
- 
-%span.tooltip{:title=>"tip on a link!"}
-  %a{:href=>"#"} This is the link
+%h1 This is just the header
 
-This is just the icon: &nbsp;
-%span.tooltip{:title=>"Just the help icon"} &nbsp;
-
-%p &nbsp;
-%p &nbsp;
-%h3 without effects...
-%a{:href=>"#", :title=>"This is just a tooltip"}
-
+#demo
+  %img{:src=>"images/help.png",:title=>"TEST tooltip here things and as such valuable"}
+  %img{:src=>"images/help.png",:title=>"TEST tooltip here things and as such valuable"}
+  %img{:src=>"images/help.png",:title=>"TEST tooltip here things and as such valuable"}
+  %img{:src=>"images/help.png",:title=>"TEST tooltip here things and as such valuable"}
+  %img{:src=>"images/help.png",:title=>"TEST tooltip here things and as such valuable"}
+  %span{:title=>"test for me"}
+    foo bar stuff goes here...
+  %span{:title=>"test for me"}
+    foo bar stuff goes here...
+  %span{:title=>"test for me"}
+    foo bar stuff goes here...
+%img#demo{:src=>"images/help.png",:title=>"test for me"}
+%img#demo{:src=>"images/help.png",:title=>"test for me"}

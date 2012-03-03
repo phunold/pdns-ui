@@ -20,16 +20,6 @@ body {
 	background:#FFF;
 }
 
-h1 {
-	margin: 0;	
-	padding: 22px 20px 20px 40px;
-	color:#00A03E;
-	font-weight:normal;
-}
-h1 a {
-  text-decoration:none;
-}
-
 hr {
 	border: 0;
 	width: 100%;
@@ -63,6 +53,7 @@ td#cornerRight {
 thead {
 	background:url(images/tableHeader.png) repeat-x;
 	font: bold 85% Arial, Helvetica, sans-serif;
+  height: 25px;
 }
 
 tbody {
@@ -104,7 +95,7 @@ img {
 	margin:0 auto;
 	text-align: right;	
 	position:relative;
-	top:-90px;
+	top:-100px;
 }
 
 ul.error {
@@ -120,7 +111,7 @@ ul.error {
 
 li.error {
   list-style: none;
-  background: url(images/error.jpg) no-repeat bottom left;
+  background: url(images/error.png) no-repeat bottom left;
   padding: 8px 0 8px 45px;
   display:inline;
 }
@@ -253,5 +244,29 @@ li.error {
 	visibility:visible; 
 	height:auto; 
 	padding-bottom:3em;
+}
+
+/* built-in tooltip design */
+.simpletip {
+  padding-right: 20px;
+  background:transparent url(images/help.png) no-repeat right;
+  cursor: help;
+}
+
+
+/* jquery tooltip plugin. by default the element to be styled is .tooltip  */
+.tooltip {
+  display:none;
+  background:transparent url(images/black_arrow.png);
+  font-size:12px;
+  height:70px;
+  width:160px;
+  padding:25px;
+}
+
+#demo img {
+  border:0;
+  cursor:pointer;
+  margin:0 8px;
 }
 

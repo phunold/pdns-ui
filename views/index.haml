@@ -1,10 +1,14 @@
-%h2 Listing(brief, latest first)
+%h2
+  DNS QUERY List
+  %span.simpletip{:title=>"Brief listing of 100 DNS QUERY latest first"}
 %table
   %thead
     %tr
       %td{:id=>"cornerLeft",:width=>20} &nbsp;
       %td First Seen
-      %td Last Seen
+      %td
+        Last Seen
+        %span.simpletip{:title=>"Showing \"Same\" if equals to \"First Seen\" datetime"} &nbsp;
       %td DNS Query
       %td MAPTYPE
       %td DNS Answer
@@ -21,5 +25,6 @@
         %td
           %a{:href=>"/q/#{p[:QUERY]}"}= p[:QUERY]
         %td= p[:MAPTYPE]
-        %td= p[:ANSWER]
+        %td
+          %a{:href=>"/a/#{p[:ANSWER]}"}= p[:ANSWER]
         %td &nbsp;

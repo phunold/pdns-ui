@@ -45,8 +45,12 @@ end
 # detailed few for 'click' action
 get '/q/:query' do
   @results = @@_ds.filter(:QUERY => params[:query])
-  puts @results.inspect 
-  
+  @results_total = @results.count
+  haml :searchresult
+end
+# detailed few for 'click' action
+get '/a/:answer' do
+  @results = @@_ds.filter(:ANSWER => params[:answer])
   @results_total = @results.count
   haml :searchresult
 end
@@ -121,4 +125,7 @@ end
 
 get '/about' do
   haml :about
+end
+get '/tooltip' do
+  haml :tooltip
 end
