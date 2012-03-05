@@ -22,37 +22,40 @@ helpers do
   end  
 end
 
-# send empty response
-get '/favicon' do
-end
-
-# error handling 404
-not_found do
-  haml :sorry
-end
-# error handling 500
-error do
-  haml :sorry
-end
-
 # index page / tabular listing of DNS records
 get '/' do
-  @items = @@_ds.reverse_order(:LAST_SEEN).limit(100)
-  @total = @items.count
+  @records = @@_ds.reverse_order(:LAST_SEEN).limit(100)
   haml :index
 end
 
-# detailed few for 'click' action
+# exact lookup of DNS query
 get '/q/:query' do
-  @results = @@_ds.filter(:QUERY => params[:query])
-  @results_total = @results.count
-  haml :searchresult
+  @search_term   = params[:query]
+  @records       = @@_ds.filter(:QUERY => @search_term)
+  @total_records = @records.count
+
+  # lookup search should always give you a result
+  # but lets just catch this anyway
+  if @total_records >= 1 then
+    haml :lookup_result
+  else
+    haml :sorry
+  end
 end
-# detailed few for 'click' action
+
+# exact lookup of DNS answer
 get '/a/:answer' do
-  @results = @@_ds.filter(:ANSWER => params[:answer])
-  @results_total = @results.count
-  haml :searchresult
+  @search_term   = params[:query]
+  @records = @@_ds.filter(:ANSWER => params[:answer])
+  @total_records = @records.count
+
+  # lookup search should always give you a result
+  # but lets just catch this anyway
+  if @total_records >= 1 then
+    haml :lookup_result
+  else
+    haml :sorry
+  end
 end
 
 post '/search' do
@@ -62,15 +65,15 @@ post '/search' do
   redirect back if pattern == "search"
 
   # match loosly against 'query' and 'answer' column
-  @results = @@_ds.where(:QUERY.like("%#{pattern}%") | :ANSWER.like("%#{pattern}%"))
+  @records = @@_ds.where(:QUERY.like("%#{pattern}%") | :ANSWER.like("%#{pattern}%"))
 
-  @results_total = @results.count
+  @total_records = @records.count
   
-  # limit results to 100 always
-  @results = @results.reverse_order(:LAST_SEEN).limit(100)
+  # limit records to 100 always
+  @records = @records.reverse_order(:LAST_SEEN).limit(100)
 
   # render result
-  haml :searchresult
+  haml :search_result
 
 end
 
@@ -90,21 +93,18 @@ post '/advanced_search' do
   # go back if search is not valid
   redirect back if (answer == "any" && query == "any" && rr.empty? && maptype.empty?) 
 
-
   # chain filters (logical AND)
-  @results = @@_ds
-  @results = @results.where(:QUERY.like("%#{query}%")) unless query == "any"
-  @results = @results.where(:ANSWER.like("%#{answer}%")) unless answer == "any"
-  @results = @results.filter(:RR => rr) unless rr.empty?
-  @results = @results.filter(:MAPTYPE => maptype) unless maptype.empty?
+  @records = @@_ds
+  @records = @records.where(:QUERY.like("%#{query}%")) unless query == "any"
+  @records = @records.where(:ANSWER.like("%#{answer}%")) unless answer == "any"
+  @records = @records.filter(:RR => rr) unless rr.empty?
+  @records = @records.filter(:MAPTYPE => maptype) unless maptype.empty?
+  @records = @records.filter(:MAPTYPE => maptype) unless maptype.empty?
+  @total_records = @records.count
 
-  @results = @results.filter(:MAPTYPE => maptype) unless maptype.empty?
-  @results_total = @results.count
+  # FIXME limit records to 100 until we have pagination
+  @records = @records.reverse_order(:LAST_SEEN).limit(100)
 
-  # limit results to 100 (always)
-  @results = @results.reverse_order(:LAST_SEEN).limit(100)
-
-  # render result
   haml :searchresult
 end
 
@@ -120,12 +120,29 @@ get '/summary' do
   @maptypes = @@_ds.group_and_count(:MAPTYPE)
 
   haml :summary
-  
 end
 
+
+# some static pages
 get '/about' do
   haml :about
 end
+
+# send browser something
+get '/favicon' do
+end
+
+# error handling 404
+not_found do
+  haml :sorry
+end
+
+# error handling 500
+error do
+  haml :sorry
+end
+
+# FIXME just test page to figure out a fancy tooltip
 get '/tooltip' do
   haml :tooltip
 end

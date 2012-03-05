@@ -1,6 +1,6 @@
 %h2
-  DNS QUERY List
-  %span.simpletip{:title=>"Brief listing of 100 DNS QUERY latest first"}
+  DNS QUERY
+  %span.simpletip{:title=>"100 latest records brief"}
 %table
   %thead
     %tr
@@ -8,23 +8,23 @@
       %td First Seen
       %td
         Last Seen
-        %span.simpletip{:title=>"Showing \"Same\" if equals to \"First Seen\" datetime"} &nbsp;
-      %td DNS Query
-      %td MAPTYPE
-      %td DNS Answer
+        %span.simpletip{:title=>"\"-\" only seen once!"} &nbsp;
+      %td Query
+      %td Q Type
+      %td Answer
       %td{:id=>"cornerRight",:width=>20} &nbsp;
-  - for p in @items
+  - @records.each do |r|
     %tbody
       %tr{:class=>cycle}
         %td &nbsp;
-        %td= p[:FIRST_SEEN].strftime("%b %d, %T")
-        - if p[:FIRST_SEEN] == p[:LAST_SEEN]
-          %td same
+        %td= r[:FIRST_SEEN].strftime("%b %d, %T")
+        - if r[:FIRST_SEEN] == r[:LAST_SEEN]
+          %td -
         - else
-          %td= p[:LAST_SEEN].strftime("%b %d, %T")
+          %td= r[:LAST_SEEN].strftime("%b %d, %T")
         %td
-          %a{:href=>"/q/#{p[:QUERY]}"}= p[:QUERY]
-        %td= p[:MAPTYPE]
+          %a{:href=>"/q/#{r[:QUERY]}"}= r[:QUERY]
+        %td= r[:MAPTYPE]
         %td
-          %a{:href=>"/a/#{p[:ANSWER]}"}= p[:ANSWER]
+          %a{:href=>"/a/#{r[:ANSWER]}"}= r[:ANSWER]
         %td &nbsp;

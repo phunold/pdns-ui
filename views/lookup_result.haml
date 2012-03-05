@@ -1,7 +1,6 @@
+%h2 Lookup Results
 %p
-  Results in database: #{@results_total}
-  - if @results_total > 100
-    (limited display to first 100)
+  Total found in database: #{@total_records}
 %table
   %thead
     %tr
@@ -9,13 +8,13 @@
       %td First Seen
       %td Last Seen
       %td Query
-      %td Maptype
-      %td RR
+      %td Query Type
+      %td CLASS
       %td Answer
       %td TTL
       %td{:id=>"cornerRight", :width=>"20"} &nbsp;
   %tbody
-    - for r in @results
+    - for r in @records
       %tr{:class=>cycle}
         %td &nbsp;
         %td= r[:FIRST_SEEN].strftime("%b %d, %T")

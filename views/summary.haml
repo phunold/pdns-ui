@@ -1,11 +1,11 @@
-%h2 DNS Summary
+%h2
+  Summary
 %ul
   %li
-    Latest Record: #{@latest_date}
-  %li
-    Oldest Available Record: #{@oldest_date}
+    Records available from: #{@latest_date} to #{@oldest_date}
+%hr
 %h3
-  %span.simpletip{:title=>"Could be indication of fast-flux"}
+  %span.simpletip{:title=>"Possible indication of fast-flux"}
     Top records with low TTL
 %table
   %thead
@@ -23,8 +23,8 @@
           %a{:href=>"/q/#{i[:QUERY]}"}= i[:QUERY]
         %td &nbsp;
 %h3
-  %span.simpletip{:title=>"Shows overall QUERYTYPE distribution"}
-    QUERYTYPE distribution
+  QTYPE
+  %span.simpletip{:title=>"Overall distribution of Query Types"}
 %table
   %thead
     %tr

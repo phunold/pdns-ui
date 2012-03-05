@@ -53,7 +53,7 @@ td#cornerRight {
 thead {
 	background:url(images/tableHeader.png) repeat-x;
 	font: bold 85% Arial, Helvetica, sans-serif;
-  height: 25px;
+  height: 24px;
 }
 
 tbody {
@@ -71,7 +71,6 @@ tr.border {
 
 td {
 	padding:2px;
-	padding-left:15px;
 }
 
 p {
