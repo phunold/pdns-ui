@@ -1,8 +1,7 @@
 %h2 Search Results
 %p
-  Total found in database: #{@total_records}
-  - if @total_records > 100
-    (Only showing first 100 records!)
+  Matched Records: #{@total_records}
+  = will_paginate(@records)
 %table
   %thead
     %tr

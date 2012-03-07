@@ -4,13 +4,13 @@ require 'sinatra'
 require 'rubygems'
 require 'sequel'
 require 'haml'
-
-
-# load built-in pagination feature
-Sequel.extension(:pagination)
-
+require 'ostruct'
+require 'will_paginate'
+require 'will_paginate/sequel'
 
 configure do
+  # set globals
+  CONFIG = OpenStruct.new(:PER_PAGE => 100)
   set :bind, '192.168.56.101'
 
   DB = Sequel.mysql 'pdns_test', :user=>'pdns', :host=>'localhost', :password=>'pdns'
@@ -31,20 +31,9 @@ end
 
 # index page / tabular listing of DNS records
 get '/' do
-puts @@_ds.inspect
-
-  @records = @@_ds
-  test = @records.paginate(1,100)
-  puts test.inspect
-  puts "current: " + test.current_page.to_s
-  puts "next: " + test.next_page.to_s
-  puts "prev: " + test.prev_page.to_s
-  puts "page_count: " + test.page_count.to_s
-  puts "page_size " + test.page_size.to_s
-  puts "pagination_rec_count: " + test.pagination_record_count.to_s
-  #puts "is last: " + test.page_last?
-  #puts "is first: " + test.page_first?
-
+  params[:page] ||= 1
+  #@records = @@_ds.paginate(my_page,CONFIG.PER_PAGE)
+  @records = @@_ds.paginate(params[:page].to_i,CONFIG.PER_PAGE)
   haml :index
 end
 
@@ -78,8 +67,9 @@ get '/a/:answer' do
   end
 end
 
-post '/search' do
+get '/search_result' do
   pattern = params['search'].strip
+  params[:page] ||= 1 
 
   # go back if search is not valid
   redirect back if pattern == "search"
@@ -89,8 +79,8 @@ post '/search' do
 
   @total_records = @records.count
   
-  # limit records to 100 always
-  @records = @records.reverse_order(:LAST_SEEN).limit(100)
+  # create paginated records
+  @records = @records.reverse_order(:LAST_SEEN).paginate(params[:page].to_i,CONFIG.PER_PAGE)
 
   # render result
   haml :search_result
@@ -104,11 +94,13 @@ get '/advanced_search' do
   haml :advanced_search
 end
 
-post '/advanced_search' do
+get '/advanced_search_result' do
   answer  = params['answer'].strip
   query   = params['query'].strip
   rr      = params['rr']
   maptype = params['maptype']
+  params[:page] ||= 1
+
 
   # go back if search is not valid
   redirect back if (answer == "any" && query == "any" && rr.empty? && maptype.empty?) 
@@ -123,9 +115,9 @@ post '/advanced_search' do
   @total_records = @records.count
 
   # FIXME limit records to 100 until we have pagination
-  @records = @records.reverse_order(:LAST_SEEN).limit(100)
+  @records = @records.reverse_order(:LAST_SEEN).paginate(params[:page].to_i,CONFIG.PER_PAGE)
 
-  haml :searchresult
+  haml :search_result
 end
 
 get '/summary' do

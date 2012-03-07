@@ -1,6 +1,8 @@
 %h2
   DNS QUERY
   %span.help{:title=>"100 latest records brief"} &nbsp;
+%p
+  = will_paginate(@records)
 %table
   %thead
     %tr
