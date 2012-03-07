@@ -42,6 +42,10 @@ table {
   border-collapse:collapse;
 }
 
+table#main {
+  width: 100%;
+}
+
 td#cornerLeft {
 	background:url(images/roundLeft.png) no-repeat top left;
 }

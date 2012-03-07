@@ -10,8 +10,7 @@ require 'will_paginate/sequel'
 
 configure do
   # set globals
-  CONFIG = OpenStruct.new(:PER_PAGE => 100)
-  set :bind, '192.168.56.101'
+  CONFIG = OpenStruct.new(:PER_PAGE => 50)
 
   DB = Sequel.mysql 'pdns_test', :user=>'pdns', :host=>'localhost', :password=>'pdns'
   @@_ds = DB[:pdns]
@@ -32,20 +31,19 @@ end
 # index page / tabular listing of DNS records
 get '/' do
   params[:page] ||= 1
-  #@records = @@_ds.paginate(my_page,CONFIG.PER_PAGE)
-  @records = @@_ds.paginate(params[:page].to_i,CONFIG.PER_PAGE)
+  @records = @@_ds.reverse_order(:LAST_SEEN).paginate(params[:page].to_i,CONFIG.PER_PAGE)
   haml :index
 end
 
 # exact lookup of DNS query
 get '/q/:query' do
-  @search_term   = params[:query]
-  @records       = @@_ds.filter(:QUERY => @search_term)
-  @total_records = @records.count
+  params[:page] ||= 1
+  @lookup  = params[:query]
+  @records = @@_ds.where(:QUERY => @lookup).paginate(params[:page].to_i,CONFIG.PER_PAGE)
 
   # lookup search should always give you a result
   # but lets just catch this anyway
-  if @total_records >= 1 then
+  if @records.count >= 1 then
     haml :lookup_result
   else
     haml :sorry
@@ -54,13 +52,13 @@ end
 
 # exact lookup of DNS answer
 get '/a/:answer' do
-  @search_term   = params[:query]
-  @records = @@_ds.filter(:ANSWER => params[:answer])
-  @total_records = @records.count
+  params[:page] ||= 1
+  @lookup   = params[:answer]
+  @records = @@_ds.where(:ANSWER => @lookup).paginate(params[:page].to_i,CONFIG.PER_PAGE)
 
   # lookup search should always give you a result
   # but lets just catch this anyway
-  if @total_records >= 1 then
+  if @records.count >= 1 then
     haml :lookup_result
   else
     haml :sorry
@@ -68,22 +66,20 @@ get '/a/:answer' do
 end
 
 get '/search_result' do
-  pattern = params['search'].strip
+  @lookup = params[:search].strip
   params[:page] ||= 1 
 
   # go back if search is not valid
-  redirect back if pattern == "search"
+  redirect back if @lookup == "search"
 
-  # match loosly against 'query' and 'answer' column
-  @records = @@_ds.where(:QUERY.like("%#{pattern}%") | :ANSWER.like("%#{pattern}%"))
+  # match loosly against 'query' OR 'answer' column
+  @records = @@_ds.where(:QUERY.like("%#{@lookup}%") | :ANSWER.like("%#{@lookup}%"))
 
-  @total_records = @records.count
-  
   # create paginated records
   @records = @records.reverse_order(:LAST_SEEN).paginate(params[:page].to_i,CONFIG.PER_PAGE)
 
-  # render result
-  haml :search_result
+  # FIXME what if returns no results?
+  haml :lookup_result
 
 end
 
@@ -95,29 +91,32 @@ get '/advanced_search' do
 end
 
 get '/advanced_search_result' do
-  answer  = params['answer'].strip
-  query   = params['query'].strip
-  rr      = params['rr']
-  maptype = params['maptype']
+  terms = Array.new
+  terms << answer  = params[:answer].strip
+  terms << query   = params[:query].strip
+  terms << rr      = params[:rr]
+  terms << maptype = params[:maptype]
   params[:page] ||= 1
 
+  # FIXME this is quick and too dirty
+  # make the advanced search parameters show up nicely at the top
+  @lookup = terms.join(" ")
 
   # go back if search is not valid
   redirect back if (answer == "any" && query == "any" && rr.empty? && maptype.empty?) 
 
-  # chain filters (logical AND)
+  # start to chain filters (logical AND)
   @records = @@_ds
   @records = @records.where(:QUERY.like("%#{query}%")) unless query == "any"
   @records = @records.where(:ANSWER.like("%#{answer}%")) unless answer == "any"
   @records = @records.filter(:RR => rr) unless rr.empty?
   @records = @records.filter(:MAPTYPE => maptype) unless maptype.empty?
   @records = @records.filter(:MAPTYPE => maptype) unless maptype.empty?
-  @total_records = @records.count
 
-  # FIXME limit records to 100 until we have pagination
   @records = @records.reverse_order(:LAST_SEEN).paginate(params[:page].to_i,CONFIG.PER_PAGE)
 
-  haml :search_result
+  # FIXME what if returns no results?
+  haml :lookup_result
 end
 
 get '/summary' do
@@ -126,6 +125,8 @@ get '/summary' do
   @oldest_date = @@_ds.reverse_order(:FIRST_SEEN).get(:FIRST_SEEN)
 
   # count expiring TTLs per RR
+  # FIXME what if now result
+  # FIXME it is not accurate, is it useful?
   @low_ttls = @@_ds.group_and_count(:QUERY).having{count >= 10}.where(:TTL <= 60).reverse_order(:count)
 
   # show distribution of maptype(A,PTR,CNAME,etc)

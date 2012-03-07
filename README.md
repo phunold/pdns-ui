@@ -21,12 +21,12 @@ This app is built on (http://sinatrarb.com)
 
 
 ## TODO
-- use pagination for all tables
 - create test scripts, RIOT or whatever may be a good fit
 - create conf for running in passenger
 - make it look like a real app and re-organise, introduce proper MVC, split Model/Controller/helpers
 - check what I can 'borrow' from padrino project
 - make 'summary' page look nicer
+- create detailed views with overlays and other eye candy
 - check install requirements on RPM based systems
 
 ## ThinkTank
