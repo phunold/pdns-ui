@@ -5,10 +5,15 @@ require 'rubygems'
 require 'sequel'
 require 'haml'
 
+
+# load built-in pagination feature
+Sequel.extension(:pagination)
+
+
 configure do
   set :bind, '192.168.56.101'
 
-  DB = Sequel.mysql 'pdns', :user=>'pdns', :host=>'localhost', :password=>'pdns'
+  DB = Sequel.mysql 'pdns_test', :user=>'pdns', :host=>'localhost', :password=>'pdns'
   @@_ds = DB[:pdns]
   @@total = @@_ds.count
 end
@@ -26,7 +31,20 @@ end
 
 # index page / tabular listing of DNS records
 get '/' do
-  @records = @@_ds.reverse_order(:LAST_SEEN).limit(100)
+puts @@_ds.inspect
+
+  @records = @@_ds
+  test = @records.paginate(1,100)
+  puts test.inspect
+  puts "current: " + test.current_page.to_s
+  puts "next: " + test.next_page.to_s
+  puts "prev: " + test.prev_page.to_s
+  puts "page_count: " + test.page_count.to_s
+  puts "page_size " + test.page_size.to_s
+  puts "pagination_rec_count: " + test.pagination_record_count.to_s
+  #puts "is last: " + test.page_last?
+  #puts "is first: " + test.page_first?
+
   haml :index
 end
 
