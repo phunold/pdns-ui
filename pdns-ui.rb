@@ -6,6 +6,8 @@ require 'sequel'
 require 'haml'
 
 configure do
+  set :bind, '192.168.56.101'
+
   DB = Sequel.mysql 'pdns', :user=>'pdns', :host=>'localhost', :password=>'pdns'
   @@_ds = DB[:pdns]
   @@total = @@_ds.count

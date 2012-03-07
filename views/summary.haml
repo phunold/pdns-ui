@@ -5,37 +5,37 @@
     Records available from: #{@latest_date} to #{@oldest_date}
 %hr
 %h3
-  %span.simpletip{:title=>"Possible indication of fast-flux"}
-    Top records with low TTL
+  Top records with low TTL
+  %span.help{:title=>"Possible indication of fast-flux"} &nbsp;
 %table
   %thead
     %tr
       %td{:id=>"cornerLeft",:width=>20} &nbsp;
-      %td Count
       %td Query
+      %td Total Queries
       %td{:id=>"cornerRight",:width=>20} &nbsp;
   - for i in @low_ttls
     %tbody
       %tr
         %td &nbsp;
-        %td= i[:count]
         %td
           %a{:href=>"/q/#{i[:QUERY]}"}= i[:QUERY]
+        %td= i[:count]
         %td &nbsp;
 %h3
-  QTYPE
-  %span.simpletip{:title=>"Overall distribution of Query Types"}
+  Query Type
+  %span.help{:title=>"Overall distribution of Query Types"} &nbsp;
 %table
   %thead
     %tr
       %td{:id=>"cornerLeft",:width=>20} &nbsp;
-      %td Count
-      %td Maptype
+      %td Query Type
+      %td Total
       %td{:id=>"cornerRight",:width=>20} &nbsp;
   - for m in @maptypes
     %tbody
       %tr
         %td &nbsp;
-        %td= m[:count]
         %td= m[:MAPTYPE]
+        %td= m[:count]
         %td &nbsp;

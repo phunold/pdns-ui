@@ -1,16 +1,13 @@
 %h1 This is just the header
 
 #demo
-  %img{:src=>"images/help.png",:title=>"TEST tooltip here things and as such valuable"}
-  %img{:src=>"images/help.png",:title=>"TEST tooltip here things and as such valuable"}
-  %img{:src=>"images/help.png",:title=>"TEST tooltip here things and as such valuable"}
-  %img{:src=>"images/help.png",:title=>"TEST tooltip here things and as such valuable"}
-  %img{:src=>"images/help.png",:title=>"TEST tooltip here things and as such valuable"}
-  %span{:title=>"test for me"}
-    foo bar stuff goes here...
-  %span{:title=>"test for me"}
-    foo bar stuff goes here...
-  %span{:title=>"test for me"}
-    foo bar stuff goes here...
-%img#demo{:src=>"images/help.png",:title=>"test for me"}
-%img#demo{:src=>"images/help.png",:title=>"test for me"}
+  %img{:src=>"images/help.png", :title=>"The tooltip text #1"}
+  %img{:src=>"images/help.png", :title=>"The tooltip text #2"}
+  %img{:src=>"images/help.png", :title=>"The tooltip text #3"}
+
+
+%h1
+  This is header
+  %span.help{:title=>"hard test with h1.help"} &nbsp;
+
+%span.help{:title=>"please work with span.help"} This is just a span tooltip

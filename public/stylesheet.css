@@ -193,13 +193,13 @@ li.error {
 
 .menu ul table ul a, .menu ul table ul a:visited  {
 	width:12em; 
-	w\idth:12em;
+	width:12em;
 }
 
 /* style the table so that it takes no part in the layout - required for IE to work */
 .menu table {position:absolute; left:0; top:0; font-size:1em; z-index:-1;}
-.menu ul ul table {lef\t:-1px;}
-.menu ul ul table ul.left {margin-lef\t:2px;}
+.menu ul ul table {left:-1px;}
+.menu ul ul table ul.left {margin-left:2px;}
 
 .menu li:hover {position:relative;}
 * html .menu a:hover {position:relative;}
@@ -220,7 +220,7 @@ li.error {
 }
 
 /* second */
-.menu ul ul a:hover{
+.menu ul ul a:hover {
 	text-decoration:underline;
 }
 
@@ -245,27 +245,21 @@ li.error {
 	padding-bottom:3em;
 }
 
-/* built-in tooltip design */
-.simpletip {
-  padding-right: 20px;
-  background:transparent url(images/help.png) no-repeat right;
+/* add help image as tooltip trigger */
+.help {
+  padding-left: 20px;
+  background:transparent url(images/help.png) no-repeat left;
   cursor: help;
 }
-
 
 /* jquery tooltip plugin. by default the element to be styled is .tooltip  */
 .tooltip {
   display:none;
   background:transparent url(images/black_arrow.png);
-  font-size:12px;
+  font-size:14px;
+  color:#f3f6f9;
   height:70px;
   width:160px;
   padding:25px;
+  padding-top:25px;
 }
-
-#demo img {
-  border:0;
-  cursor:pointer;
-  margin:0 8px;
-}
-

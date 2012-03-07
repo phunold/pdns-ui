@@ -3,14 +3,12 @@
   %head
     %title PassiveDNS :: SimpleUI
     %link{:href=>"/stylesheet.css",:type=>"text/css",:rel=>"stylesheet"}
-    %script{:src=>"/js/jquery-1.7.min.js",:type=>"text/javascript"}
-    %script{:src=>"/js/jquery.dimensions.js",:type=>"text/javascript"}
-    %script{:src=>"/js/jquery.tooltip.min.js",:type=>"text/javascript"}
-    %script
-      $("#demo img[title]").tooltip();
+    %script{:src=>"/js/jquery.tools.min.js",:type=>"text/javascript"}
+    %script{:src=>"/js/help.js",:type=>"text/javascript"}
   %body
     #container
       %h1 PassiveDNS
+      #navbartooltip.tooltip &nbsp;
       .menu
         %ul
           %li
@@ -27,7 +25,6 @@
         %p
           Total Records: #{@@total}
         %form{:action=>"/search", :method=>"post"}
-          %span.simpletip{:title=>"Full-text Search of Query and Responses"} &nbsp;
           %input{:type=>"text", :size=>"8", :name=>"search", :value=>"search", :onfocus=>"value=''"}
           &nbsp;
           %input{:type=>"image", :src=>"/images/zoom.png", :name=>"submit", :value=>"search"}

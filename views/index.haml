@@ -1,6 +1,6 @@
 %h2
   DNS QUERY
-  %span.simpletip{:title=>"100 latest records brief"}
+  %span.help{:title=>"100 latest records brief"} &nbsp;
 %table
   %thead
     %tr
@@ -8,9 +8,9 @@
       %td First Seen
       %td
         Last Seen
-        %span.simpletip{:title=>"\"-\" only seen once!"} &nbsp;
+        %span.help{:title=>"\"-\" if seen the very first time!"} &nbsp;
       %td Query
-      %td Q Type
+      %td Type
       %td Answer
       %td{:id=>"cornerRight",:width=>20} &nbsp;
   - @records.each do |r|
