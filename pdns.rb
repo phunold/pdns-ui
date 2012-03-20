@@ -14,20 +14,18 @@ configure do
   @page_title = "PassiveDNS"
   #FIXME totals...fake
   @total = 123
-  #FIXME should be able to put page default here too...
-  page = 1
 end
 
 # routes
 get '/' do
-  page ||= params[:page].to_i ||= 1
+  page = (params[:page] || 1).to_i
   @records = Pdns.reverse_order(:LAST_SEEN).paginate(page,FlowsPerPage)
   haml :index
 end
 
 # exact lookup of DNS query
 get '/q/:query' do
-  page ||= params[:page].to_i ||= 1
+  page = (params[:page] || 1).to_i
   @lookup  = params[:query]
   @records = Pdns.where(:QUERY => @lookup).paginate(page,FlowsPerPage)
 
@@ -42,7 +40,7 @@ end
 
 # exact lookup of DNS answer
 get '/a/:answer' do
-  page ||= params[:page].to_i ||= 1
+  page = (params[:page] || 1).to_i
   @lookup   = params[:answer]
   @records = Pdns.where(:ANSWER => @lookup).paginate(page,FlowsPerPage)
 
@@ -57,8 +55,8 @@ get '/a/:answer' do
 end
 
 get '/search_result' do
+  page = (params[:page] || 1).to_i
   @lookup = params[:search].strip
-  page ||= params[:page].to_i ||= 1 
 
   # go back if search is not valid
   redirect back if @lookup == "search"
@@ -82,12 +80,12 @@ get '/advanced_search' do
 end
 
 get '/advanced_search_result' do
+  page = (params[:page] || 1).to_i
   terms = Array.new
   terms << answer  = params[:answer].strip
   terms << query   = params[:query].strip
   terms << rr      = params[:rr]
   terms << maptype = params[:maptype]
-  page ||= params[:page].to_i ||= 1
 
   # FIXME this is quick and too dirty
   # make the advanced search parameters show up nicely at the top
