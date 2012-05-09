@@ -23,9 +23,9 @@
             %a{:href=>"/about"} About
       .searchbar
         %p
-          Total Records: #{@total}
-        %form{:action=>"/search_result", :method=>"get"}
+          Total Records: #{@@total}
+        %form{:action=>"/search", :method=>"get"}
           %input{:type=>"text", :size=>"8", :name=>"search", :value=>"search", :onfocus=>"value=''"}
           &nbsp;
-          %input{:type=>"image", :src=>"/images/zoom.png", :name=>"submit", :value=>"search"}
+          %input{:type=>"submit", :id=>"quicksearch", :value=>""}
       =yield

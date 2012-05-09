@@ -13,8 +13,8 @@
         %span.help{:title=>"\"-\" if a brand new query!"} &nbsp;
       %td Last Seen
       %td Query
-      %td Query Type
       %td CLASS
+      %td Query Type
       %td Answer
       %td TTL
       %td{:id=>"cornerRight", :width=>"20"} &nbsp;
@@ -29,8 +29,8 @@
         %td= r[:LAST_SEEN].strftime("%b %d, %T")
         %td
           %a{:href=>"/q/#{r[:QUERY]}"}= r[:QUERY]
-        %td= r[:MAPTYPE]
         %td= r[:RR]
+        %td= r[:MAPTYPE]
         %td
           %a{:href=>"/a/#{r[:ANSWER]}"}= r[:ANSWER]
         %td= r[:TTL]

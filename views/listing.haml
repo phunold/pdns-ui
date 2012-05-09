@@ -1,5 +1,5 @@
 %h2
-  DNS QUERY
+  DNS Query Listing
   %span.help{:title=>"brief listing latest first"} &nbsp;
 %p
   = will_paginate(@records)
@@ -7,11 +7,7 @@
   %thead
     %tr
       %td{:id=>"cornerLeft",:width=>20} &nbsp;
-      %td
-        First Seen
-        %span.help{:title=>"\"-\" if a brand new query!"} &nbsp;
-      %td
-        Last Seen
+      %td Date Time
       %td Query
       %td Type
       %td Answer
@@ -20,10 +16,6 @@
     %tbody
       %tr{:class=>cycle}
         %td &nbsp;
-        - if r[:FIRST_SEEN] == r[:LAST_SEEN]
-          %td -
-        - else
-          %td= r[:FIRST_SEEN].strftime("%b %d, %T")
         %td= r[:LAST_SEEN].strftime("%b %d, %T")
         %td
           %a{:href=>"/q/#{r[:QUERY]}"}= r[:QUERY]

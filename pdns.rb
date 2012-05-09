@@ -10,17 +10,15 @@ require 'will_paginate/sequel'
 
 configure do
   FlowsPerPage = 50
-  #FIXME make layout <title> dynamic
-  @page_title = "PassiveDNS"
-  #FIXME totals...fake
-  @total = 123
+  #Calculate total number of records
+  @@total = Pdns.count
 end
 
 # routes
 get '/' do
   page = (params[:page] || 1).to_i
   @records = Pdns.reverse_order(:LAST_SEEN).paginate(page,FlowsPerPage)
-  haml :index
+  haml :listing
 end
 
 # exact lookup of DNS query
@@ -54,7 +52,7 @@ get '/a/:answer' do
   end
 end
 
-get '/search_result' do
+get '/search' do
   page = (params[:page] || 1).to_i
   @lookup = params[:search].strip
 
@@ -82,17 +80,19 @@ end
 get '/advanced_search_result' do
   page = (params[:page] || 1).to_i
   terms = Array.new
-  terms << answer  = params[:answer].strip
-  terms << query   = params[:query].strip
-  terms << rr      = params[:rr]
-  terms << maptype = params[:maptype]
-
+  terms << answer     = params[:answer].strip
+  terms << query      = params[:query].strip
+  terms << rr         = params[:rr]
+  terms << maptype    = params[:maptype]
   # FIXME this is quick and too dirty
   # make the advanced search parameters show up nicely at the top
   @lookup = terms.join(" ")
 
+  first_seen = params[:first_seen].strip
+  last_seen  = params[:last_seen].strip
+
   # go back if search is not valid
-  redirect back if (answer == "any" && query == "any" && rr.empty? && maptype.empty?) 
+  redirect back if (answer == "any" && query == "any" && rr.empty? && maptype.empty? && first_seen == "YYYY-MM-DD" && last_seen == "YYYY-MM-DD")
 
   # start to chain filters (logical AND)
   @records = Pdns
@@ -100,7 +100,8 @@ get '/advanced_search_result' do
   @records = @records.where(:ANSWER.like("%#{answer}%")) unless answer == "any"
   @records = @records.filter(:RR => rr) unless rr.empty?
   @records = @records.filter(:MAPTYPE => maptype) unless maptype.empty?
-  @records = @records.filter(:MAPTYPE => maptype) unless maptype.empty?
+  @records = @records.filter(:FIRST_SEEN < Date.parse(first_seen)) unless first_seen == "YYYY-MM-DD" or first_seen.empty?
+  @records = @records.filter(:LAST_SEEN > Date.parse(last_seen)) unless last_seen == "YYYY-MM-DD" or last_seen.empty?
 
   @records = @records.reverse_order(:LAST_SEEN).paginate(page,FlowsPerPage)
 
