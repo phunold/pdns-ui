@@ -6,8 +6,9 @@ This app is built on (http://sinatrarb.com)
 
 ## Install
 
-- Ubuntu: apt-get install mysql-client libmysql-ruby libsinatra-ruby rubygems libsinatra-ruby libhaml-ruby libsqlite3-dev libsequel-ruby
-
+- Ubuntu:
+  apt-get install mysql-client libmysql-ruby libsinatra-ruby rubygems libsinatra-ruby libhaml-ruby libsqlite3-dev libsequel-ruby
+  gem install will_paginate --no-ri --no-rdoc
 
 ## Usage
 

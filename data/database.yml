@@ -2,4 +2,4 @@ adapter: mysql
 host: localhost
 username: pdns
 password: pdns
-database: pdns_test
+database: pdns
