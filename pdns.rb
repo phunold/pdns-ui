@@ -65,9 +65,7 @@ get '/search' do
   # create paginated records
   @records = @records.reverse_order(:LAST_SEEN).paginate(page,FlowsPerPage)
 
-  # FIXME what if returns no results?
   haml :lookup_result
-
 end
 
 get '/advanced_search' do
@@ -105,7 +103,6 @@ get '/advanced_search_result' do
 
   @records = @records.reverse_order(:LAST_SEEN).paginate(page,FlowsPerPage)
 
-  # FIXME what if returns no results?
   haml :lookup_result
 end
 
@@ -137,18 +134,13 @@ get '/favicon' do
 end
 
 # error handling 404
-#  not_found do
-#    haml :sorry
-#  end
+not_found do
+  haml :sorry
+end
 
 # error handling 500
-#  error do
-#    haml :sorry
-#  end
-
-# FIXME just test page to figure out a fancy tooltip
-get '/tooltip' do
-  haml :tooltip
+error do
+  haml :sorry
 end
 
 helpers do

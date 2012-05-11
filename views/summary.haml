@@ -20,7 +20,7 @@
       %td{:id=>"cornerRight",:width=>20} &nbsp;
   - for i in @top_query
     %tbody
-      %tr
+      %tr{:class=>cycle}
         %td &nbsp;
         %td
           %a{:href=>"/q/#{i[:QUERY]}"}= i[:QUERY]
@@ -39,7 +39,7 @@
       %td{:id=>"cornerRight",:width=>20} &nbsp;
   - for m in @maptypes
     %tbody
-      %tr
+      %tr{:class=>cycle}
         %td &nbsp;
         %td= m[:MAPTYPE]
         %td= m[:count]
@@ -57,7 +57,7 @@
       %td{:id=>"cornerRight",:width=>20} &nbsp;
   - for i in @nxdomains
     %tbody
-      %tr
+      %tr{:class=>cycle}
         %td &nbsp;
         %td
           %a{:href=>"/q/#{i[:QUERY]}"}= i[:QUERY]
