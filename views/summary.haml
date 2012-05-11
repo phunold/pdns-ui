@@ -1,20 +1,24 @@
 %h2
   Summary
+%h3
+  Database
 %ul
   %li
-    Records available from: #{@latest_date} to #{@oldest_date}
+    First Record available: #{@oldest_date}
+  %li
+    Latest Record available: #{@latest_date}
 %hr
 %h3
-  Top records with low TTL
-  %span.help{:title=>"Possible indication of fast-flux"} &nbsp;
+  Top10 DNS Query
+  %span.help{:title=>"passivedns is caching, use Top10 list with caution!"} &nbsp;
 %table
   %thead
     %tr
       %td{:id=>"cornerLeft",:width=>20} &nbsp;
-      %td Query
+      %td Address
       %td Total Queries
       %td{:id=>"cornerRight",:width=>20} &nbsp;
-  - for i in @low_ttls
+  - for i in @top_query
     %tbody
       %tr
         %td &nbsp;
@@ -22,6 +26,7 @@
           %a{:href=>"/q/#{i[:QUERY]}"}= i[:QUERY]
         %td= i[:count]
         %td &nbsp;
+%hr
 %h3
   Query Type
   %span.help{:title=>"Overall distribution of Query Types"} &nbsp;
@@ -38,4 +43,23 @@
         %td &nbsp;
         %td= m[:MAPTYPE]
         %td= m[:count]
+        %td &nbsp;
+%hr
+%h3
+  NXDOMAIN
+  %span.help{:title=>"Query returning NXDOMAIN"} &nbsp;
+%table
+  %thead
+    %tr
+      %td{:id=>"cornerLeft",:width=>20} &nbsp;
+      %td Query
+      %td Count
+      %td{:id=>"cornerRight",:width=>20} &nbsp;
+  - for i in @nxdomains
+    %tbody
+      %tr
+        %td &nbsp;
+        %td
+          %a{:href=>"/q/#{i[:QUERY]}"}= i[:QUERY]
+        %td= i[:count]
         %td &nbsp;

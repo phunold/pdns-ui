@@ -59,8 +59,8 @@ get '/search' do
   # go back if search is not valid
   redirect back if @lookup == "search"
 
-  # match loosly against 'query' OR 'answer' column
-  @records = Pdns.where(:QUERY.like("%#{@lookup}%") | :ANSWER.like("%#{@lookup}%"))
+  # match case insensitive against 'query' OR 'answer' column
+  @records = Pdns.where(:QUERY.ilike("%#{@lookup}%") | :ANSWER.ilike("%#{@lookup}%"))
 
   # create paginated records
   @records = @records.reverse_order(:LAST_SEEN).paginate(page,FlowsPerPage)
@@ -111,16 +111,17 @@ end
 
 get '/summary' do
   # get latest/oldest records
-  @latest_date = Pdns.order(:FIRST_SEEN).get(:FIRST_SEEN)
+  @latest_date = Pdns.order(:FIRST_SEEN).get(:LAST_SEEN)
   @oldest_date = Pdns.reverse_order(:FIRST_SEEN).get(:FIRST_SEEN)
 
-  # count expiring TTLs per RR
-  # FIXME what if now result
-  # FIXME it is not accurate, is it useful?
-  @low_ttls = Pdns.group_and_count(:QUERY).having{count >= 10}.where(:TTL <= 60).reverse_order(:count)
+  # Top 10 Query
+  @top_query = Pdns.group_and_count(:QUERY).reverse_order(:count).limit(10)
 
   # show distribution of maptype(A,PTR,CNAME,etc)
-  @maptypes = Pdns.group_and_count(:MAPTYPE)
+  @maptypes = Pdns.group_and_count(:MAPTYPE).reverse_order(:count)
+
+  # Show NXDOMAIN answers
+  @nxdomains = Pdns.where(:ANSWER.like("NXDOMAIN")).group_and_count(:QUERY).reverse_order(:count)
 
   haml :summary
 end
