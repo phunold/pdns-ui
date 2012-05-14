@@ -4,10 +4,10 @@
     %ol
       %li
         %label{:for=>"query"} Query
-        %input{:type=>"text", :size=>"12", :name=>"query", :value=>"any"}
+        %input{:type=>"text", :size=>"12", :name=>"query", :value=>"any", :onfocus=>"value=''"}
       %li
         %label{:for=>"answer"} Answer
-        %input{:type=>"text", :size=>"12", :name=>"answer", :value=>"any"}
+        %input{:type=>"text", :size=>"12", :name=>"answer", :value=>"any", :onfocus=>"value=''"}
       %li
         %label{:for=>"maptype"} Query Type
         %select{:name=>"maptype"}
@@ -22,8 +22,8 @@
             %option{:value=>"#{r[:RR]}"} #{r[:RR]}
       %li
         %label{:for=>"first_seen"} First seen before
-        %input{:type=>"text", :size=>"12", :name=>"first_seen", :value=>"YYYY-MM-DD"}
+        %input{:type=>"text", :size=>"12", :name=>"first_seen", :value=>"YYYY-MM-DD", :onfocus=>"value=''"}
       %li
         %label{:for=>"last_seen"} Last seen after
-        %input{:type=>"text", :size=>"12", :name=>"last_seen", :value=>"YYYY-MM-DD"}
+        %input{:type=>"text", :size=>"12", :name=>"last_seen", :value=>"YYYY-MM-DD", :onfocus=>"value=''"}
     %input{:type=>"submit", :name=>"submit", :value=>"search"}

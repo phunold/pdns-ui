@@ -68,6 +68,7 @@ get '/search' do
   haml :lookup_result
 end
 
+# FIXME add TTL value to advanced search
 get '/advanced_search' do
   # group unique for dropdown menu
   @rrs = Pdns.group(:RR).order(:RR)
@@ -82,17 +83,17 @@ get '/advanced_search_result' do
   terms << query      = params[:query].strip
   terms << rr         = params[:rr]
   terms << maptype    = params[:maptype]
+  terms << first_seen = params[:first_seen].strip
+  terms << last_seen  = params[:last_seen].strip
+
   # FIXME this is quick and too dirty
   # make the advanced search parameters show up nicely at the top
   @lookup = terms.join(" ")
 
-  first_seen = params[:first_seen].strip
-  last_seen  = params[:last_seen].strip
-
   # go back if search is not valid
   redirect back if (answer == "any" && query == "any" && rr.empty? && maptype.empty? && first_seen == "YYYY-MM-DD" && last_seen == "YYYY-MM-DD")
 
-  # start to chain filters (logical AND)
+  # start to stick together sql statement (logical AND)
   @records = Pdns
   @records = @records.where(:QUERY.like("%#{query}%")) unless query == "any"
   @records = @records.where(:ANSWER.like("%#{answer}%")) unless answer == "any"
@@ -101,6 +102,7 @@ get '/advanced_search_result' do
   @records = @records.filter(:FIRST_SEEN < Date.parse(first_seen)) unless first_seen == "YYYY-MM-DD" or first_seen.empty?
   @records = @records.filter(:LAST_SEEN > Date.parse(last_seen)) unless last_seen == "YYYY-MM-DD" or last_seen.empty?
 
+  # Final sql statement
   @records = @records.reverse_order(:LAST_SEEN).paginate(page,FlowsPerPage)
 
   haml :lookup_result
@@ -117,7 +119,7 @@ get '/summary' do
   # show distribution of maptype(A,PTR,CNAME,etc)
   @maptypes = Pdns.group_and_count(:MAPTYPE).reverse_order(:count)
 
-  # Show NXDOMAIN answers
+  # show NXDOMAIN answers
   @nxdomains = Pdns.where(:ANSWER.like("NXDOMAIN")).group_and_count(:QUERY).reverse_order(:count)
 
   haml :summary
