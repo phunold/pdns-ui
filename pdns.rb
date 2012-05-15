@@ -1,12 +1,15 @@
 #!/usr/bin/env ruby
 
 require 'rubygems'
+require 'bundler'
 require 'sinatra'
-require 'data/init'
-
+require 'sequel'
 require 'haml'
 require 'will_paginate'
 require 'will_paginate/sequel'
+
+# non-gem require
+require 'data/init'
 
 configure do
   FlowsPerPage = 50
