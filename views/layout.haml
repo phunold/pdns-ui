@@ -23,7 +23,7 @@
             %a{:href=>"/about"} About
       .searchbar
         %p
-          Total Records: #{@@total}
+          Total Records: #{@counter}
         %form{:action=>"/search", :method=>"get"}
           %input{:type=>"text", :size=>"8", :name=>"search", :value=>"search", :onfocus=>"value=''"}
           &nbsp;

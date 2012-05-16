@@ -23,13 +23,13 @@ This app is built on (http://sinatrarb.com)
 - Running for development or test:
 
 ````Bash
-    ruby pdns-ui.rb
+    rackup
 ````
 
 - point your browser to:
 
 ````Bash
-    http://localhost:4567/
+    http://localhost:9292/
 ````
 
 - Or running with Passenger aka modrails
