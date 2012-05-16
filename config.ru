@@ -5,4 +5,4 @@ Bundler.require
 
 require "pdns"
 
-run Sinatra::Application
+run App.new
