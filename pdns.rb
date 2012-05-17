@@ -1,8 +1,9 @@
 #!/usr/bin/env ruby
 
 require 'rubygems'
-require 'bundler'
-require 'sinatra'
+require 'bundler/setup'
+require 'sinatra/base'
+require 'sinatra/reloader'
 require 'sequel'
 require 'haml'
 require 'will_paginate'
@@ -12,15 +13,19 @@ require 'rack-flash'
 # non-gem require
 require 'config/init'
 
-class App < Sinatra::Application
+class App < Sinatra::Base
 
   configure do
+    register WillPaginate::Sinatra
     enable :sessions
     use Rack::Flash
 
     # FIXME Global vars should probably be in a config file
     AppVersion = "0.1draft"
     FlowsPerPage = 50
+  end
+  configure :development do
+    register Sinatra::Reloader
   end
 
   # count number of rows

@@ -2,6 +2,7 @@ source :rubygems
 
 gem "mysql"
 gem "sinatra", :require => "sinatra/base"
+gem "sinatra-contrib", :require => "sinatra/reloader"
 gem "haml"
 gem "sequel"
 gem "will_paginate"

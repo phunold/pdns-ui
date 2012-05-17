@@ -1,6 +1,3 @@
-require 'rubygems'
-require 'sequel'
-
 # database interaction
 class Pdns < Sequel::Model
 
