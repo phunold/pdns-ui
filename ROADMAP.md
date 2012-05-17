@@ -17,11 +17,11 @@ This is waaaaay out-of-scope! Just want to do a 'brain-dump'.
   * IPv6 RSN abuser
   * CHAOS names and classes 
   * internationalized domain names(non ASCII) starting with 'xn-'
-  * check where forware DNS(A) doesn't match Reverse(PTR)
+  * check where forware DNS(A) doesnt match Reverse(PTR)
   * separate some specialty queries, i.e. root server queries, [a-m].root-servers.net
   - on demand information lookup (registrar/whois/ISP,ip ranges,traceroute/BGP Prefix/ASN/GeoIP, Websitei/server details
   - on demand IP/Domain reputation and blacklist lookup and website scans(bogon,SPF,SBL,DNSBL,DROP,URIBL,SNARE,NOTOS,etc.)
-  * malwaredomains.com nice blacklist..., incorporates lot's of sources...
+  * malwaredomains.com nice blacklist..., incorporates lots of sources...
   * malwaredomainlist.com
   * virustotal.com
   * ET RBN
@@ -38,6 +38,8 @@ This is waaaaay out-of-scope! Just want to do a 'brain-dump'.
   * labs.alienvault.com by OSSIM guys *detecting malware domains by syntax heuritstics
 - allow user to classify and group domains (i.e: popluar domains like facebook/google/etc., common domains according to alexa.com, CDN domains, dynamic domains(no-ip.com/dyn-dns.com,etc.)
 - graphical interpretation of DNS data (tag-cloud, word-tree)
+  * https://google-developers.appspot.com/chart/interactive/docs/gallery
+  * http://www.highcharts.com/ 
 - display possible security issues (fast-flux,domain generation algorithms(DGA),fwd lookup not match reverse,custom DNS servers used by hackers(appears to not exist! and able to use well known domain, like google.com, fluxing domain names), covert comm, rogue servers, roque ISPs, DNS poisoning/pharming/redirection/hijacking, enumeration/scans, subdomain anomalies)
 - display sensitive information DNS queries may hold (software used, partners, email, OS detection, etc.)
 
