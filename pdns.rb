@@ -7,13 +7,17 @@ require 'sequel'
 require 'haml'
 require 'will_paginate'
 require 'will_paginate/sequel'
+require 'rack-flash'
 
 # non-gem require
-require 'data/init'
+require 'config/init'
 
 class App < Sinatra::Application
 
   configure do
+    enable :sessions
+    use Rack::Flash
+
     # FIXME Global vars should probably be in a config file
     AppVersion = "0.1draft"
     FlowsPerPage = 50
@@ -88,29 +92,36 @@ class App < Sinatra::Application
 
   get '/advanced_search_result' do
     page = (params[:page] || 1).to_i
-    terms = Array.new
-    terms << answer     = params[:answer].strip
-    terms << query      = params[:query].strip
-    terms << rr         = params[:rr]
-    terms << maptype    = params[:maptype]
-    terms << first_seen = params[:first_seen].strip
-    terms << last_seen  = params[:last_seen].strip
+    query      = params[:query]
+    answer     = params[:answer]
+    maptype    = params[:maptype]
+    rr         = params[:rr]
+    first_seen = params[:first_seen]
+    last_seen  = params[:last_seen]
 
-    # FIXME this is quick and too dirty
-    # make the advanced search parameters show up nicely at the top
-    @lookup = terms.join(" ")
+    @search = Search.new(:query     =>query,
+                         :answer    =>answer,
+                         :first_seen=>first_seen,
+                         :last_seen =>last_seen)
+
+puts @search.inspect
+puts @search.valid?
 
     # go back if search is not valid
-    redirect back if (answer == "any" && query == "any" && rr.empty? && maptype.empty? && first_seen == "YYYY-MM-DD" && last_seen == "YYYY-MM-DD")
+    flash[:warning] = @search.errors.full_messages
+puts flash[:warning].inspect
+puts flash[:warning].class
+
+    redirect back unless @search.valid?
 
     # start to stick together sql statement (logical AND)
     @records = Pdns
-    @records = @records.where(:QUERY.like("%#{query}%")) unless query == "any"
-    @records = @records.where(:ANSWER.like("%#{answer}%")) unless answer == "any"
+    @records = @records.where(:QUERY.like("%#{query}%")) unless query.empty?
+    @records = @records.where(:ANSWER.like("%#{answer}%")) unless answer.empty?
     @records = @records.filter(:RR => rr) unless rr.empty?
     @records = @records.filter(:MAPTYPE => maptype) unless maptype.empty?
-    @records = @records.filter(:FIRST_SEEN < Date.parse(first_seen)) unless first_seen == "YYYY-MM-DD" or first_seen.empty?
-    @records = @records.filter(:LAST_SEEN > Date.parse(last_seen)) unless last_seen == "YYYY-MM-DD" or last_seen.empty?
+    @records = @records.filter(:FIRST_SEEN >= Date.parse(first_seen))
+    @records = @records.filter(:LAST_SEEN <= Date.parse(last_seen))
 
     # Final sql statement
     @records = @records.reverse_order(:LAST_SEEN).paginate(page,FlowsPerPage)

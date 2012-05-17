@@ -35,9 +35,8 @@ This app is built on (http://sinatrarb.com)
 - Or running with Passenger aka modrails
 
 ## TODO
-- use form validation helper for 'advanced search' page
 - reconsider date format, is US-style right now (MM-DD !)
 - create test scripts, RIOT or whatever may be a good fit
 - check install requirements on RPM based systems
 - check how it feels with large table (+1M records)
-- more error handling, like mysql database (Sequel::DatabaseConnectionError)
+- more error handling, like mysql database (Sequel::DatabaseConnectionError,Sequel::DatabaseConnectionError)

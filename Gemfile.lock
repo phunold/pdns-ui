@@ -4,6 +4,9 @@ GEM
     haml (3.1.5)
     mysql (2.8.1)
     rack (1.4.1)
+    rack-flash3 (1.0.1)
+      rack
+      rack
     rack-protection (1.2.0)
       rack
     sequel (3.35.0)
@@ -20,6 +23,7 @@ PLATFORMS
 DEPENDENCIES
   haml
   mysql
+  rack-flash3
   sequel
   sinatra
   will_paginate
