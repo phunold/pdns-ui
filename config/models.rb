@@ -31,7 +31,6 @@ class Search < Sequel::Model
     s.reverse_order(:LAST_SEEN)
   end
 
-
   # obj.inspect returned nothing, this will help
   def inspect
     "#{first_seen} #{last_seen} #{query} #{answer}"

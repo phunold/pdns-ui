@@ -13,7 +13,6 @@ require 'rack-flash'
 
 # non-gem require
 #require 'config/init'
-require 'config/models.rb'
 
 class App < Sinatra::Base
 
@@ -25,9 +24,6 @@ class App < Sinatra::Base
     config_file 'config/app.yml'
     config_file 'config/database.yml'
     DB = Sequel.connect "#{settings.adapter}://#{settings.username}:#{settings.password}@#{settings.host}/#{settings.database}"
-  end
-
-  configure :development do
     register Sinatra::Reloader
   end
 
@@ -36,7 +32,6 @@ class App < Sinatra::Base
   before do
     @counter  = Pdns.count
     @rrs      = Pdns.group(:RR).order(:RR)
-puts @rrs.inspect
     @maptypes = Pdns.group(:MAPTYPE).order(:MAPTYPE)
   end
 
@@ -191,4 +186,5 @@ puts @rrs.inspect
     end  
   end
 
+  require 'config/models.rb'
 end
