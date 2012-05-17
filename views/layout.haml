@@ -13,13 +13,13 @@
         %ul
           %li
             %a{:href=>"#"}
-              %span List
+              %span History 
             %ul
               %li
                 %a{:href=>"/"} All
               - for t in @maptypes
                 %li
-                  %a{:href=>"/t/#{t[:MAPTYPE]}"} #{t[:MAPTYPE]} Records
+                  %a{:href=>"/t/#{t[:MAPTYPE]}"} #{t[:MAPTYPE]} records
           %li
             %a{:href=>"/summary"} Summary
           %li

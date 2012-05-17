@@ -81,7 +81,7 @@ class App < Sinatra::Base
     # lookup search should always give you a result
     # but lets just catch this anyway
     if @records.count >= 1 then
-      haml :lookup_result
+      haml :listing
     else
       haml :sorry
     end
@@ -99,7 +99,7 @@ class App < Sinatra::Base
 
     # create paginated records
     @records = @records.reverse_order(:LAST_SEEN).paginate(page,settings.per_page)
-    haml :lookup_result
+    haml :listing
   end
 
   # FIXME add TTL value to advanced search
@@ -150,7 +150,7 @@ class App < Sinatra::Base
     @maptypes = Pdns.group_and_count(:MAPTYPE).reverse_order(:count)
 
     # show NXDOMAIN answers
-    @nxdomains = Pdns.where(:ANSWER.like("NXDOMAIN")).group_and_count(:QUERY).reverse_order(:count)
+    @nxdomains = Pdns.where(:ANSWER.like("NXDOMAIN")).group_and_count(:QUERY).reverse_order(:count).limit(30)
 
     haml :summary
   end

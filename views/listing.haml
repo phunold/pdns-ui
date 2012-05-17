@@ -16,7 +16,7 @@
     %tbody
       %tr{:class=>cycle}
         %td &nbsp;
-        %td= r[:LAST_SEEN].strftime("%b %d, %T")
+        %td= r[:LAST_SEEN].strftime(settings.short_date_format)
         %td
           %a{:href=>"/q/#{r[:QUERY]}"}= r[:QUERY]
         %td

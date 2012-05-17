@@ -28,8 +28,8 @@
           - if r[:FIRST_SEEN] == r[:LAST_SEEN]
             %td -
           - else
-            %td= r[:FIRST_SEEN].strftime("%b %d, %T")
-          %td= r[:LAST_SEEN].strftime("%b %d, %T")
+            %td= r[:FIRST_SEEN].strftime(settings.long_date_format)
+          %td= r[:LAST_SEEN].strftime(settings.long_date_format)
           %td
             %a{:href=>"/q/#{r[:QUERY]}"}= r[:QUERY]
           %td= r[:RR]
