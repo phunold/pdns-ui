@@ -3,6 +3,7 @@
 require 'rubygems'
 require 'bundler/setup'
 require 'sinatra/base'
+require 'sinatra/config_file'
 require 'sinatra/reloader'
 require 'sequel'
 require 'haml'
@@ -11,32 +12,38 @@ require 'will_paginate/sequel'
 require 'rack-flash'
 
 # non-gem require
-require 'config/init'
+#require 'config/init'
+require 'config/models.rb'
 
 class App < Sinatra::Base
 
   configure do
-    register WillPaginate::Sinatra
     enable :sessions
     use Rack::Flash
-
-    # FIXME Global vars should probably be in a config file
-    AppVersion = "0.1draft"
-    FlowsPerPage = 50
+    register WillPaginate::Sinatra
+    register Sinatra::ConfigFile
+    config_file 'config/app.yml'
+    config_file 'config/database.yml'
+    DB = Sequel.connect "#{settings.adapter}://#{settings.username}:#{settings.password}@#{settings.host}/#{settings.database}"
   end
+
   configure :development do
     register Sinatra::Reloader
   end
 
+
   # count number of rows
   before do
-    @counter = Pdns.count
+    @counter  = Pdns.count
+    @rrs      = Pdns.group(:RR).order(:RR)
+puts @rrs.inspect
+    @maptypes = Pdns.group(:MAPTYPE).order(:MAPTYPE)
   end
 
   # routes
   get '/' do
     page = (params[:page] || 1).to_i
-    @records = Pdns.reverse_order(:LAST_SEEN).paginate(page,FlowsPerPage)
+    @records = Pdns.reverse_order(:LAST_SEEN).paginate(page,settings.settings.per_page)
     haml :listing
   end
 
@@ -44,7 +51,7 @@ class App < Sinatra::Base
   get '/q/:query' do
     page = (params[:page] || 1).to_i
     @lookup  = params[:query]
-    @records = Pdns.where(:QUERY => @lookup).paginate(page,FlowsPerPage)
+    @records = Pdns.where(:QUERY => @lookup).paginate(page,settings.per_page)
 
     # lookup search should always give you a result
     # but lets just catch this anyway
@@ -59,8 +66,22 @@ class App < Sinatra::Base
   get '/a/:answer' do
     page = (params[:page] || 1).to_i
     @lookup   = params[:answer]
-    @records = Pdns.where(:ANSWER => @lookup).paginate(page,FlowsPerPage)
+    @records = Pdns.where(:ANSWER => @lookup).paginate(page,settings.per_page)
 
+    # lookup search should always give you a result
+    # but lets just catch this anyway
+    if @records.count >= 1 then
+      haml :lookup_result
+    else
+      haml :sorry
+    end
+  end
+
+  # list of specific DNS Type aka MAPTYPE
+  get '/t/:type' do
+    page = (params[:page] || 1).to_i
+    @lookup   = params[:type]
+    @records = Pdns.where(:MAPTYPE => @lookup).paginate(page,settings.per_page)
 
     # lookup search should always give you a result
     # but lets just catch this anyway
@@ -82,16 +103,15 @@ class App < Sinatra::Base
     @records = Pdns.where(:QUERY.ilike("%#{@lookup}%") | :ANSWER.ilike("%#{@lookup}%"))
 
     # create paginated records
-    @records = @records.reverse_order(:LAST_SEEN).paginate(page,FlowsPerPage)
-
+    @records = @records.reverse_order(:LAST_SEEN).paginate(page,settings.per_page)
     haml :lookup_result
   end
 
   # FIXME add TTL value to advanced search
   get '/advanced_search' do
     # group unique for dropdown menu
-    @rrs = Pdns.group(:RR).order(:RR)
-    @maptypes = Pdns.group(:MAPTYPE).order(:MAPTYPE)
+    #FIXME @rrs = Pdns.group(:RR).order(:RR)
+    #FIXME @maptypes = Pdns.group(:MAPTYPE).order(:MAPTYPE)
     haml :advanced_search
   end
 
@@ -118,7 +138,7 @@ class App < Sinatra::Base
     redirect back unless @search.valid?
     
     # Final sql statement
-    @records = @search.construct_sql(Pdns).paginate(page,FlowsPerPage)
+    @records = @search.construct_sql(Pdns).paginate(page,settings.per_page)
 
     haml :lookup_result
   end
@@ -140,12 +160,9 @@ class App < Sinatra::Base
     haml :summary
   end
 
-
   # some static pages
   get '/about' do
-    @version = AppVersion
-puts "version: #{@version}"
-
+    @version = settings.version
     haml :about
   end
 

@@ -33,7 +33,8 @@
           %td
             %a{:href=>"/q/#{r[:QUERY]}"}= r[:QUERY]
           %td= r[:RR]
-          %td= r[:MAPTYPE]
+          %td
+            %a{:href=>"/t/#{r[:MAPTYPE]}"}= r[:MAPTYPE]
           %td
             %a{:href=>"/a/#{r[:ANSWER]}"}= r[:ANSWER]
           %td= r[:TTL]

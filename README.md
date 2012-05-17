@@ -41,3 +41,4 @@ This app is built on (http://sinatrarb.com)
 - check how it feels with large table (+1M records)
 - more error handling, like mysql database (Sequel::DatabaseConnectionError,Sequel::DatabaseConnectionError)
 - check out sinatra/contributions in sinatra 1.3.2
+- add environment configuration development/test/production similar what Rails does

@@ -12,7 +12,14 @@
       .menu
         %ul
           %li
-            %a{:href=>"/"} List
+            %a{:href=>"#"}
+              %span List
+            %ul
+              %li
+                %a{:href=>"/"} All
+              - for t in @maptypes
+                %li
+                  %a{:href=>"/t/#{t[:MAPTYPE]}"} #{t[:MAPTYPE]} Records
           %li
             %a{:href=>"/summary"} Summary
           %li
