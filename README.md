@@ -27,6 +27,7 @@ This app is built on (http://sinatrarb.com)
 ````
 
 - change application look and feel to your liking: **config/app.yml**
+
 ````Bash
     per_page: 100                          # number of rows per page
     short_date_format: "%T %F"             # date format 'strftime'
