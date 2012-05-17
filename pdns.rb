@@ -102,24 +102,18 @@ class App < Sinatra::Application
     @search = Search.new(:query     =>query,
                          :answer    =>answer,
                          :first_seen=>first_seen,
-                         :last_seen =>last_seen)
+                         :last_seen =>last_seen,
+                         :rr        => rr,
+                         :maptype   => maptype)
 
-    # go back if search is not valid
+    # check validation, populates errors
+    # and go back if search is not valid
+    @search.validate
     flash[:warning] = @search.errors.full_messages
-
     redirect back unless @search.valid?
-
-    # start to stick together sql statement (logical AND)
-    @records = Pdns
-    @records = @records.where(:QUERY.like("%#{query}%")) unless query.empty?
-    @records = @records.where(:ANSWER.like("%#{answer}%")) unless answer.empty?
-    @records = @records.filter(:RR => rr) unless rr.empty?
-    @records = @records.filter(:MAPTYPE => maptype) unless maptype.empty?
-    @records = @records.filter(:FIRST_SEEN >= Date.parse(first_seen))
-    @records = @records.filter(:LAST_SEEN <= Date.parse(last_seen))
-
+    
     # Final sql statement
-    @records = @records.reverse_order(:LAST_SEEN).paginate(page,FlowsPerPage)
+    @records = @search.construct_sql(Pdns).paginate(page,FlowsPerPage)
 
     haml :lookup_result
   end
