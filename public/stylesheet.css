@@ -109,21 +109,14 @@ img {
 }
 
 ul.error {
-  margin: 35px auto;
-  padding: 35px;
-  line-height:200%;
-  letter-spacing:2px;
-  width: 400px;
-  height: 150px;
-  font-size: 120%;
+  padding: 5px;
   color: red;
 }
 
 li.error {
   list-style: none;
-  background: url(images/error.png) no-repeat bottom left;
-  padding: 8px 0 8px 45px;
-  display:inline;
+  background: url(images/error.png) no-repeat center left;
+  padding: 8px 0 2px 20px;
 }
 
 /******* MENU STYLING ******/

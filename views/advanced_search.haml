@@ -1,6 +1,8 @@
 %h2 Advanced Search
-%ul
-  %li= flash[:warning]
+- if flash[:warning]
+  %ul.error
+    - flash[:warning].each do |m|
+      %li.error= m
 %form{:action=>"/advanced_search_result", :method=>"get"}
   %ul
     %li

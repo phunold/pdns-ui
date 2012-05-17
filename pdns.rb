@@ -104,13 +104,8 @@ class App < Sinatra::Application
                          :first_seen=>first_seen,
                          :last_seen =>last_seen)
 
-puts @search.inspect
-puts @search.valid?
-
     # go back if search is not valid
     flash[:warning] = @search.errors.full_messages
-puts flash[:warning].inspect
-puts flash[:warning].class
 
     redirect back unless @search.valid?
 
