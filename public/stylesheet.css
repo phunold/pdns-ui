@@ -9,7 +9,7 @@ body {
 }
 
 #container {
-	width:900px;
+	width:1200px;
 	margin-left: auto;
 	margin-right: auto;
 	margin-top:20px;
@@ -20,6 +20,37 @@ body {
 	background:#FFF;
 }
 
+.header-box {
+margin: 10px 0;
+padding: 8px 8px 0;
+background: #E6F1F6;
+border: 1px solid #C5D5DD;
+border-radius: 4px;
+border-image: initial;
+}
+.header-title {
+margin: 0 0 6px 0;
+}
+.header-meta {
+margin-left: -8px;
+width: 100%;
+padding: 8px;
+background: white;
+border-top: 1px solid #D8E6EC;
+border-bottom-right-radius: 4px;
+border-bottom-left-radius: 4px;
+}
+
+h1 {
+  margin: 0;
+  padding: 2px 0px 4px 0px;
+  font-weight:normal;
+}
+h2 {
+  margin: 0;
+  padding: 2px 0px 4px 0px;
+  font-weight:normal;
+}
 hr {
 	border: 0;
 	width: 100%;
@@ -86,6 +117,7 @@ td {
 
 p {
 	font-size: 100%;
+  margin: 4px 0px;
 }
 
 ul {
@@ -100,7 +132,7 @@ img {
 }
 
 .searchbar {
-	width: 900px;
+	width: 1000px;
 	height: 1px;
 	margin:0 auto;
 	text-align: right;	
@@ -122,7 +154,7 @@ li.error {
 /******* MENU STYLING ******/
 /* style the outer div to give it width */
 .menu {
-	width: 900px;
+	width: 1000px;
 	height:32px;
 	margin-top:10px;
 }
@@ -132,7 +164,7 @@ li.error {
 	padding:0;
 	margin:0;
 	list-style-type:none;
-	width: 900px;
+	width: 1200px;
 	height:28px;
 	font: 8pt Arial, Helvetica, sans-serif;
 	font-weight: 500;

@@ -38,7 +38,8 @@ class App < Sinatra::Base
   # routes
   get '/' do
     page = (params[:page] || 1).to_i
-    @records = Pdns.reverse_order(:LAST_SEEN).paginate(page,settings.settings.per_page)
+    @records = Pdns.reverse(:LAST_SEEN).paginate(page,settings.settings.per_page)
+    @meta = "No Filter"
     haml :listing
   end
 
@@ -46,7 +47,8 @@ class App < Sinatra::Base
   get '/q/:query' do
     page = (params[:page] || 1).to_i
     @lookup  = params[:query]
-    @records = Pdns.where(:QUERY => @lookup).paginate(page,settings.per_page)
+    @records = Pdns.where(:QUERY => @lookup).reverse(:LAST_SEEN).paginate(page,settings.per_page)
+    @meta = "Filter by Query:"
 
     # lookup search should always give you a result
     # but lets just catch this anyway
@@ -61,7 +63,8 @@ class App < Sinatra::Base
   get '/a/:answer' do
     page = (params[:page] || 1).to_i
     @lookup   = params[:answer]
-    @records = Pdns.where(:ANSWER => @lookup).paginate(page,settings.per_page)
+    @records = Pdns.where(:ANSWER => @lookup).reverse(:LAST_SEEN).paginate(page,settings.per_page)
+    @meta = "Filter by Response:"
 
     # lookup search should always give you a result
     # but lets just catch this anyway
@@ -76,7 +79,8 @@ class App < Sinatra::Base
   get '/t/:type' do
     page = (params[:page] || 1).to_i
     @lookup   = params[:type]
-    @records = Pdns.where(:MAPTYPE => @lookup).paginate(page,settings.per_page)
+    @records = Pdns.where(:MAPTYPE => @lookup).reverse(:LAST_SEEN).paginate(page,settings.per_page)
+    @meta = "Filter by Query Type:"
 
     # lookup search should always give you a result
     # but lets just catch this anyway
@@ -96,10 +100,11 @@ class App < Sinatra::Base
 
     # match case insensitive against 'query' OR 'answer' column
     @records = Pdns.where(:QUERY.ilike("%#{@lookup}%") | :ANSWER.ilike("%#{@lookup}%"))
+    @meta = "Search Query and Response for:"
 
     # create paginated records
-    @records = @records.reverse_order(:LAST_SEEN).paginate(page,settings.per_page)
-    haml :listing
+    @records = @records.reverse(:LAST_SEEN).paginate(page,settings.per_page)
+    haml :lookup_result
   end
 
   # FIXME add TTL value to advanced search
@@ -134,6 +139,7 @@ class App < Sinatra::Base
     
     # Final sql statement
     @records = @search.construct_sql(Pdns).paginate(page,settings.per_page)
+    @meta = "Woohoo! You've done an Advanced Search!"
 
     haml :lookup_result
   end
@@ -143,14 +149,15 @@ class App < Sinatra::Base
     @latest_date = Pdns.order(:FIRST_SEEN).get(:LAST_SEEN)
     @oldest_date = Pdns.reverse_order(:FIRST_SEEN).get(:FIRST_SEEN)
 
+    # FIXME all stats are kinda useless, since the backend is caching!
     # Top 10 Query
-    @top_query = Pdns.group_and_count(:QUERY).reverse_order(:count).limit(10)
+    @top_query = Pdns.group_and_count(:QUERY).order(:count).limit(10)
 
     # show distribution of maptype(A,PTR,CNAME,etc)
-    @maptypes = Pdns.group_and_count(:MAPTYPE).reverse_order(:count)
+    @maptypes = Pdns.group_and_count(:MAPTYPE).reverse(:count)
 
     # show NXDOMAIN answers
-    @nxdomains = Pdns.where(:ANSWER.like("NXDOMAIN")).group_and_count(:QUERY).reverse_order(:count).limit(30)
+    @nxdomains = Pdns.where(:ANSWER.like("NXDOMAIN")).group_and_count(:QUERY).reverse(:count).limit(20)
 
     haml :summary
   end

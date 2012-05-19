@@ -57,3 +57,8 @@ This app is built on (http://sinatrarb.com)
 - more error handling, like mysql database (Sequel::DatabaseConnectionError,Sequel::DatabaseConnectionError)
 - check out sinatra/contributions in sinatra 1.3.2
 - add environment configuration development/test/production similar what Rails does
+- escape special characters for html/link
+- sort out Roadmap, just a pile of ideas right now...
+- style pagination links
+- root query string is 'blank'! Issue?
+- sinatra/reloader does not seem to work properly

@@ -1,6 +1,6 @@
 # Application Version
 version: v0.0.3
 # Application Look
-per_page: 100                          # number of rows per page
-short_date_format: "%T %F"             # date format 'strftime'
-long_date_format: "%a, %d %b %Y %T %z" # date format 'strftime'
+per_page: 80                           # number of rows per page
+short_date_format: "%T"                # this is for today's date
+long_date_format: "%a, %d %b %Y %T %z" # format of all other dates

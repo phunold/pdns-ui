@@ -1,8 +1,14 @@
 # database interaction
 class Pdns < Sequel::Model
 
-  # FIXME create data class for LAST_SEEN,FIRST_SEEN
-  def date
+  # FIXME this is not very nice, there should be a better way
+  # than comparing two strings YYYY-MM-DD
+  def today?
+    if self[:LAST_SEEN].strftime("%Y-%m-%d") == Date.today.to_s then
+      true
+    else
+      false
+    end
   end
 
 end
@@ -28,7 +34,7 @@ class Search < Sequel::Model
     s = s.filter(:LAST_SEEN <= Date.parse(last_seen)) unless first_seen.empty?
 
     # Final sql statement
-    s.reverse_order(:LAST_SEEN)
+    s.reverse(:LAST_SEEN)
   end
 
   # obj.inspect returned nothing, this will help

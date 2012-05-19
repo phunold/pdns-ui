@@ -1,12 +1,19 @@
-%h2
-  Summary
-%h3
-  Database
-%ul
-  %li
-    First Record available: #{@oldest_date}
-  %li
-    Latest Record available: #{@latest_date}
+.header-box
+  .header-title
+    %h2
+      Summary Page
+      %span.help{:title=>"This needs work!"} &nbsp;
+  .header-meta
+    %p
+      Records in Database
+      %br
+      #{@oldest_date} &lt;-&gt; #{@latest_date}
+%hr
+%hr
+%hr
+%p all below here needs work
+%hr
+%hr
 %hr
 %h3
   Top10 DNS Query
@@ -26,7 +33,6 @@
           %a{:href=>"/q/#{i[:QUERY]}"}= i[:QUERY]
         %td= i[:count]
         %td &nbsp;
-%hr
 %h3
   Query Type
   %span.help{:title=>"Overall distribution of Query Types"} &nbsp;
@@ -41,10 +47,10 @@
     %tbody
       %tr{:class=>cycle}
         %td &nbsp;
-        %td= m[:MAPTYPE]
+        %td 
+          %a{:href=>"/q/#{i[:MAPTYPE]}"}= i[:MAPTYPE]
         %td= m[:count]
         %td &nbsp;
-%hr
 %h3
   NXDOMAIN
   %span.help{:title=>"Query returning NXDOMAIN"} &nbsp;

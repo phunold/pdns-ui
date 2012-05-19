@@ -42,6 +42,10 @@ This is waaaaay out-of-scope! Just want to do a 'brain-dump'.
   * http://www.highcharts.com/ 
 - display possible security issues (fast-flux,domain generation algorithms(DGA),fwd lookup not match reverse,custom DNS servers used by hackers(appears to not exist! and able to use well known domain, like google.com, fluxing domain names), covert comm, rogue servers, roque ISPs, DNS poisoning/pharming/redirection/hijacking, enumeration/scans, subdomain anomalies)
 - display sensitive information DNS queries may hold (software used, partners, email, OS detection, etc.)
+  * list all domains which violate character rule /a-zA-z0-9\-/
+  * list domains with 4 or more levels (foo.bar.bad.hack.com) 
+  * allow user to create a 'watchlist', similar to a costumized view of capture DNS info
+  * special view/list for TXT queries
 
 ## Feedback
 

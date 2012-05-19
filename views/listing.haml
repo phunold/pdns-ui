@@ -1,28 +1,34 @@
-%h2
-  DNS Query Listing
-  %span.help{:title=>"brief listing latest first"} &nbsp;
-%p
-  = will_paginate(@records)
+.header-box
+  .header-title
+    %h2
+      DNS Query Listing
+      %span.help{:title=>"brief listing latest first"} &nbsp;
+  .header-meta
+    = "#{@meta} #{@lookup}"
+%p= will_paginate(@records)
 %table#main
   %thead
     %tr
       %td{:id=>"cornerLeft",:width=>20} &nbsp;
-      %td Date Time
       %td Query
       %td Type
       %td Answer
+      %td Date Time
       %td{:id=>"cornerRight",:width=>20} &nbsp;
   - @records.each do |r|
     %tbody
       %tr{:class=>cycle}
         %td &nbsp;
-        %td= r[:LAST_SEEN].strftime(settings.short_date_format)
         %td
           %a{:href=>"/q/#{r[:QUERY]}"}= r[:QUERY]
-        %td
-          %a{:href=>"/t/#{r[:MAPTYPE]}"}= r[:MAPTYPE]
+        %td= r[:MAPTYPE]
         %td
           %a{:href=>"/a/#{r[:ANSWER]}"}= r[:ANSWER]
+        %td
+          - if r.today? then
+            =r[:LAST_SEEN].strftime(settings.short_date_format)
+          - else
+            =r[:LAST_SEEN].strftime(settings.long_date_format)
+            
         %td &nbsp;
-%p
-  = will_paginate(@records)
+%p= will_paginate(@records)
