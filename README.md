@@ -62,3 +62,4 @@ This app is built on (http://sinatrarb.com)
 - style pagination links
 - root query string is 'blank'! Issue?
 - sinatra/reloader does not seem to work properly
+- 'meta' data about advanced search and figure out where better to compute if/else in 'views' or in 'controller'

@@ -151,7 +151,8 @@ class App < Sinatra::Base
     
     # Final sql statement
     @records = @search.construct_sql(Pdns).paginate(page,settings.per_page)
-    @meta = "Woohoo! You've done an Advanced Search!"
+    @meta = "Woohoo! You just did an &#39;Advanced Search&#39;:"
+    @lookup = "FIXME"
 
     haml :lookup_result
   end
@@ -159,11 +160,13 @@ class App < Sinatra::Base
   get '/summary' do
     # get latest/oldest records
     @latest_date = Pdns.order(:FIRST_SEEN).get(:LAST_SEEN)
-    @oldest_date = Pdns.reverse_order(:FIRST_SEEN).get(:FIRST_SEEN)
+    @oldest_date = Pdns.reverse(:FIRST_SEEN).get(:FIRST_SEEN)
 
-    # FIXME all stats are kinda useless, since the backend is caching!
+    # FIXME stats need improvement, dont have good ideas yet!
+    # and we have "wrong" numbers of rows because of caching
+
     # Top 10 Query
-    @top_query = Pdns.group_and_count(:QUERY).order(:count).limit(10)
+    @top_query = Pdns.group_and_count(:QUERY).reverse(:count).limit(10)
 
     # show distribution of maptype(A,PTR,CNAME,etc)
     @maptypes = Pdns.group_and_count(:MAPTYPE).reverse(:count)

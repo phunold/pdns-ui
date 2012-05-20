@@ -43,13 +43,13 @@
       %td Query Type
       %td Total
       %td{:id=>"cornerRight",:width=>20} &nbsp;
-  - for m in @maptypes
+  - for i in @maptypes
     %tbody
       %tr{:class=>cycle}
         %td &nbsp;
         %td 
-          %a{:href=>"/q/#{i[:MAPTYPE]}"}= i[:MAPTYPE]
-        %td= m[:count]
+          %a{:href=>"/t/#{i[:MAPTYPE]}"}= i[:MAPTYPE]
+        %td= i[:count]
         %td &nbsp;
 %h3
   NXDOMAIN
