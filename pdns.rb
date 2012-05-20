@@ -38,9 +38,21 @@ class App < Sinatra::Base
   # routes
   get '/' do
     page = (params[:page] || 1).to_i
-    @records = Pdns.reverse(:LAST_SEEN).paginate(page,settings.settings.per_page)
-    @meta = "No Filter"
+    @records = Pdns.reverse(:LAST_SEEN).paginate(page,settings.per_page)
+    @meta = "No Filters applied"
     haml :listing
+  end
+  
+  # FIXME this is not linked anywhere, still testing
+  get '/grouped' do
+    page = (params[:page] || 1).to_i
+    @records = Pdns.group_and_count(:QUERY).reverse(:LAST_SEEN).paginate(page,settings.per_page)
+    @members_list = Hash.new
+    @records.each do |r|
+      puts r.values
+    end
+    @meta = "This is just a to test out a new view/layout"
+    haml :grouped
   end
 
   # exact lookup of DNS query
@@ -167,6 +179,10 @@ class App < Sinatra::Base
     @version = settings.version
     haml :about
   end
+  # FIXME: just for testing
+  get '/tooltip' do
+    haml :tooltip
+  end
 
   # send browser something
   get '/favicon.ico' do
@@ -193,5 +209,7 @@ class App < Sinatra::Base
     end  
   end
 
+  # FIXME 'require' seems a little misplaced here
+  # but it works, and at the top of this file it didn't...
   require 'config/models.rb'
 end

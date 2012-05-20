@@ -6,7 +6,7 @@
     - if @records.empty?
       %p Oops, nothing found :(
     - else
-      = "#{@meta} #{@lookup}"
+      = "#{@meta} &#39;#{@lookup}&#39;"
 %p= will_paginate(@records)
 %table#main
   %thead
@@ -19,7 +19,7 @@
       %td TTL
       %td
         First Seen
-        %span.help{:title=>"\"-\" if a brand new query!"} &nbsp;
+        %span.help{:title=>"showing \"-\" if First Seen and Last seen are the same!"} &nbsp;
       %td Last Seen
       %td{:id=>"cornerRight", :width=>"20"} &nbsp;
   %tbody
@@ -36,7 +36,7 @@
         - if r[:FIRST_SEEN] == r[:LAST_SEEN]
           %td -
         - else
-          %td= r[:FIRST_SEEN].strftime(settings.long_date_format)
-        %td= r[:LAST_SEEN].strftime(settings.long_date_format)
+          %td.timestamp= r[:FIRST_SEEN].strftime(settings.long_date_format)
+        %td.timestamp= r[:LAST_SEEN].strftime(settings.long_date_format)
         %td &nbsp;
 %p= will_paginate(@records)

@@ -299,3 +299,14 @@ li.error {
   padding:25px;
   padding-top:25px;
 }
+
+td.timestamp {
+width: 100px;
+white-space: nowrap;
+color: #B1B1B1;
+font-weight: bold;
+font-variant: normal;
+font-size: .9em;
+text-shadow: white 0 1px 0;
+text-align: right;
+}

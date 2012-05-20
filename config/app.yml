@@ -3,4 +3,4 @@ version: v0.0.3
 # Application Look
 per_page: 80                           # number of rows per page
 short_date_format: "%T"                # this is for today's date
-long_date_format: "%a, %d %b %Y %T %z" # format of all other dates
+long_date_format: "%Y-%m-%d at %T" # format of all other dates

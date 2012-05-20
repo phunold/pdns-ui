@@ -1,0 +1,25 @@
+.header-box
+  .header-title
+    %h2
+      DNS Grouped View
+      %span.help{:title=>"Grouped by DNS Query... emulate DIG..."} &nbsp;
+  .header-meta
+    = "#{@meta} #{@lookup}"
+%p= will_paginate(@records)
+%table#main
+  %thead
+    %tr
+      %td{:id=>"cornerLeft",:width=>20} &nbsp;
+      %td Query
+      %td Count Response
+      %td Response
+      %td{:id=>"cornerRight",:width=>20} &nbsp;
+  - @records.each do |r|
+    %tbody
+      %tr{:class=>cycle}
+        %td &nbsp;
+        %td
+          %a{:href=>"/q/#{r[:QUERY]}"}= r[:QUERY]
+        %td= r[:count]
+        %td &nbsp;
+%p= will_paginate(@records)
