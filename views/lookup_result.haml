@@ -3,40 +3,41 @@
     %h2
       = "Search Results (#{@records.pagination_record_count})"
   .header-meta
-    - if @records.empty?
-      %p Oops, nothing found :(
-    - else
+    - unless @records.empty?
       = "#{@meta} &#39;#{@lookup}&#39;"
-%p= will_paginate(@records)
-%table#main
-  %thead
-    %tr
-      %td{:id=>"cornerLeft", :width=>"20"} &nbsp;
-      %td Query
-      %td CLASS
-      %td Query Type
-      %td Answer
-      %td TTL
-      %td
-        First Seen
-        %span.help{:title=>"showing \"-\" if First Seen and Last seen are the same!"} &nbsp;
-      %td Last Seen
-      %td{:id=>"cornerRight", :width=>"20"} &nbsp;
-  %tbody
-    - for r in @records
-      %tr{:class=>cycle}
-        %td &nbsp;
+    - else
+      %p Oops, nothing found :(
+- unless @records.empty?
+  %p= will_paginate(@records)
+  %table#main
+    %thead
+      %tr
+        %td{:id=>"cornerLeft", :width=>"20"} &nbsp;
+        %td Query
+        %td CLASS
+        %td Query Type
+        %td Answer
+        %td TTL
         %td
-          %a{:href=>"/q/#{r[:QUERY]}"}= r[:QUERY]
-        %td= r[:RR]
-        %td= r[:MAPTYPE]
-        %td
-          %a{:href=>"/a/#{r[:ANSWER]}"}= r[:ANSWER]
-        %td= r[:TTL]
-        - if r[:FIRST_SEEN] == r[:LAST_SEEN]
-          %td -
-        - else
-          %td.timestamp= r[:FIRST_SEEN].strftime(settings.long_date_format)
-        %td.timestamp= r[:LAST_SEEN].strftime(settings.long_date_format)
-        %td &nbsp;
-%p= will_paginate(@records)
+          First Seen
+          %span.help{:title=>"showing \"-\" if First Seen and Last seen are the same!"} &nbsp;
+        %td Last Seen
+        %td{:id=>"cornerRight", :width=>"20"} &nbsp;
+    %tbody
+      - for r in @records
+        %tr{:class=>cycle}
+          %td &nbsp;
+          %td
+            %a{:href=>"/q/#{r[:QUERY]}"}= r[:QUERY]
+          %td= r[:RR]
+          %td= r[:MAPTYPE]
+          %td
+            %a{:href=>"/a/#{r[:ANSWER]}"}= r[:ANSWER]
+          %td= r[:TTL]
+          - if r[:FIRST_SEEN] == r[:LAST_SEEN]
+            %td -
+          - else
+            %td.timestamp= r[:FIRST_SEEN].strftime(settings.long_date_format)
+          %td.timestamp= r[:LAST_SEEN].strftime(settings.long_date_format)
+          %td &nbsp;
+  %p= will_paginate @records

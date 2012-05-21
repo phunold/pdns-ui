@@ -59,7 +59,5 @@ This app is built on (http://sinatrarb.com)
 - add environment configuration development/test/production similar what Rails does
 - escape special characters for html/link
 - sort out Roadmap, just a pile of ideas right now...
-- style pagination links
 - root query string is 'blank'! Issue?
 - sinatra/reloader does not seem to work properly
-- 'meta' data about advanced search and figure out where better to compute if/else in 'views' or in 'controller'

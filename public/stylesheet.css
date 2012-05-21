@@ -21,24 +21,24 @@ body {
 }
 
 .header-box {
-margin: 10px 0;
-padding: 8px 8px 0;
-background: #E6F1F6;
-border: 1px solid #C5D5DD;
-border-radius: 4px;
-border-image: initial;
+  margin: 10px 0;
+  padding: 8px 8px 0;
+  background: #E6F1F6;
+  border: 1px solid #C5D5DD;
+  border-radius: 4px;
+  border-image: initial;
 }
 .header-title {
-margin: 0 0 6px 0;
+  margin: 0 0 6px 0;
 }
 .header-meta {
-margin-left: -8px;
-width: 100%;
-padding: 8px;
-background: white;
-border-top: 1px solid #D8E6EC;
-border-bottom-right-radius: 4px;
-border-bottom-left-radius: 4px;
+  margin-left: -8px;
+  width: 100%;
+  padding: 8px;
+  background: white;
+  border-top: 1px solid #D8E6EC;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
 }
 
 h1 {
@@ -309,4 +309,37 @@ font-variant: normal;
 font-size: .9em;
 text-shadow: white 0 1px 0;
 text-align: right;
+}
+
+.pagination {
+  padding: 6px 0 6px 0;
+  cursor: default;
+}
+.pagination a, .pagination span, .pagination em {
+  padding: 0.2em 0.5em;
+}
+
+.pagination .disabled {
+  color: #aaaaaa;
+}
+.pagination .current {
+  background: #E6F1F6;
+  font-style: normal;
+  font-weight: bolder;
+}
+.pagination a {
+  border: 1px solid #dddddd;
+  color: #0063dc;
+  text-decoration: none;
+}
+.pagination a:hover, .pagination a:focus {
+  border-color: #003366;
+  background: #0063dc;
+  color: white;
+}
+.pagination .previous_page {
+  margin-right: 1em;
+}
+.pagination .next_page {
+  margin-left: 1em;
 }

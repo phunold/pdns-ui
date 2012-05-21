@@ -5,7 +5,7 @@
       %span.help{:title=>"List is ordered by &quot;Last Seen&quot; desc"} &nbsp;
   .header-meta
     = "#{@meta} #{@lookup}"
-%p= will_paginate(@records)
+%p= will_paginate @records
 %table#main
   %thead
     %tr
@@ -31,4 +31,4 @@
             - else
               = r[:LAST_SEEN].strftime(settings.long_date_format)
         %td &nbsp;
-%p= will_paginate(@records)
+%p= will_paginate @records
