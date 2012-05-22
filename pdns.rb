@@ -46,12 +46,8 @@ class App < Sinatra::Base
   # FIXME this is not linked anywhere, still testing
   get '/grouped' do
     page = (params[:page] || 1).to_i
-    @records = Pdns.group_and_count(:QUERY).reverse(:LAST_SEEN).paginate(page,settings.per_page)
-    @members_list = Hash.new
-    @records.each do |r|
-      puts r.values
-    end
-    @meta = "This is just a to test out a new view/layout"
+    @records = Pdns.order(:QUERY,:ANSWER).paginate(page,settings.per_page)
+    @grouped = @records.to_hash_groups(:QUERY)
     haml :grouped
   end
 

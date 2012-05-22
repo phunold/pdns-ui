@@ -5,21 +5,27 @@
       %span.help{:title=>"Grouped by DNS Query... emulate DIG..."} &nbsp;
   .header-meta
     = "#{@meta} #{@lookup}"
-%p= will_paginate @records
+%p= will_paginate(@records)
 %table#main
   %thead
     %tr
       %td{:id=>"cornerLeft",:width=>20} &nbsp;
-      %td Query
-      %td Count Response
-      %td Response
+      %td key
+      %td val INSPECT
+      %td val CLASS
+      %td val VALUES
       %td{:id=>"cornerRight",:width=>20} &nbsp;
-  - @records.each do |r|
+  - @grouped.each do |q,answers|
     %tbody
       %tr{:class=>cycle}
         %td &nbsp;
         %td
-          %a{:href=>"/q/#{r[:QUERY]}"}= r[:QUERY]
-        %td= r[:count]
+          %a{:href=>"/q/#{q}"} #{q}
+          (#{answers.count})
+        %td
+          - answers.each do |a|
+            #{a.ANSWER}
+            %br
         %td &nbsp;
 %p= will_paginate(@records)
+
