@@ -17,9 +17,9 @@
             %ul
               %li
                 %a{:href=>"/"} All
-              - for t in @maptypes
+              - for m in @maptypes
                 %li
-                  %a{:href=>"/t/#{t[:MAPTYPE]}"} #{t[:MAPTYPE]} records
+                  %a{:href=>"/t/#{m}"} #{m} records
           %li
             %a{:href=>"/summary"} Summary
           %li

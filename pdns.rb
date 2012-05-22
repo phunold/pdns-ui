@@ -31,8 +31,8 @@ class App < Sinatra::Base
   # count number of rows
   before do
     @counter  = Pdns.count
-    @rrs      = Pdns.group(:RR).order(:RR)
-    @maptypes = Pdns.group(:MAPTYPE).order(:MAPTYPE)
+    @maptypes = Pdns.group(:MAPTYPE).map(:MAPTYPE)
+    @rrs      = Pdns.group(:RR).map(:RR)
   end
 
   # routes

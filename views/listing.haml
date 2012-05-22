@@ -20,15 +20,18 @@
       %tr{:class=>cycle}
         %td &nbsp;
         %td
-          %a{:href=>"/q/#{r[:QUERY]}"}= r[:QUERY]
-        %td= r[:MAPTYPE]
+          - if r.QUERY.empty?
+            &lt;blank&gt;
+          - else
+            %a{:href=>"/q/#{r.QUERY}"}= r.QUERY
+        %td= r.MAPTYPE
         %td
-          %a{:href=>"/a/#{r[:ANSWER]}"}= r[:ANSWER]
+          %a{:href=>"/a/#{r.ANSWER}"}= r.ANSWER
         %td.timestamp
-          .tipsy{:title=>"First Seen #{r[:FIRST_SEEN].strftime(settings.long_date_format)}"}
+          .tipsy{:title=>"First Seen #{r.FIRST_SEEN.strftime(settings.long_date_format)}"}
             - if r.today? then
-              = r[:LAST_SEEN].strftime(settings.short_date_format)
+              = r.LAST_SEEN.strftime(settings.short_date_format)
             - else
-              = r[:LAST_SEEN].strftime(settings.long_date_format)
+              = r.LAST_SEEN.strftime(settings.long_date_format)
         %td &nbsp;
 %p= will_paginate @records

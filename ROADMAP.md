@@ -18,7 +18,7 @@ This is waaaaay out-of-scope! Just want to do a 'brain-dump'.
   * CHAOS names and classes 
   * internationalized domain names(non ASCII) starting with 'xn-'
   * check where forware DNS(A) doesnt match Reverse(PTR)
-  * separate some specialty queries, i.e. root server queries, [a-m].root-servers.net
+  * separate some specialty queries, i.e. root server queries, [a-m].root-servers.net or just 'blank' queries
   - on demand information lookup (registrar/whois/ISP,ip ranges,traceroute/BGP Prefix/ASN/GeoIP, Websitei/server details
   - on demand IP/Domain reputation and blacklist lookup and website scans(bogon,SPF,SBL,DNSBL,DROP,URIBL,SNARE,NOTOS,etc.)
   * malwaredomains.com nice blacklist..., incorporates lots of sources...

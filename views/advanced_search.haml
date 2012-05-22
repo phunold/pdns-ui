@@ -14,15 +14,15 @@
     %li
       %label{:for=>"maptype"} Query Type
       %select{:name=>"maptype"}
-        %option{}
+        %option{} ...
         - for m in @maptypes
-          %option{:value=>"#{m[:MAPTYPE]}"} #{m[:MAPTYPE]}
+          %option{:value=>"#{m}"} #{m}
     %li
       %label{:for=>"rr"} CLASS
       %select{:name=>"rr"}
-        %option{}
+        %option{} ...
         - for r in @rrs
-          %option{:value=>"#{r[:RR]}"} #{r[:RR]}
+          %option{:value=>"#{r}"} #{r}
     %li
       %label{:for=>"first_seen"} From (YYYY-MM-DD)
       %input{:type=>"text", :size=>"12", :name=>"first_seen"}

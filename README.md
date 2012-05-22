@@ -61,3 +61,4 @@ This app is built on (http://sinatrarb.com)
 - sort out Roadmap, just a pile of ideas right now...
 - root query string is 'blank'! Issue?
 - sinatra/reloader does not seem to work properly
+- style advanced search
