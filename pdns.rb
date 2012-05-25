@@ -12,7 +12,7 @@ require 'will_paginate/sequel'
 require 'rack-flash'
 
 # non-gem require
-#require 'config/init'
+require 'config/application_helper'
 
 class App < Sinatra::Base
 

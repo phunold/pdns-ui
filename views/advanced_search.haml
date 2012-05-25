@@ -1,32 +1,47 @@
 %h2 Advanced Search
 - if flash[:warning]
-  %ul.error
+  %div.alert.alert-block
+    %a.close{"data-dismiss"=>"alert", :href=>"#"} &times;
+    %h4.alert-heading Validation Failed!
     - flash[:warning].each do |m|
-      %li.error= m
-%form{:action=>"/advanced_search_result", :method=>"get"}
-  %ul
-    %li
-      %label{:for=>"query"} Query
-      %input{:type=>"text", :name=>"query"}
-    %li
-      %label{:for=>"answer"} Answer
-      %input{:type=>"text", :size=>"12", :name=>"answer"}
-    %li
-      %label{:for=>"maptype"} Query Type
-      %select{:name=>"maptype"}
-        %option{} ...
-        - for m in @maptypes
-          %option{:value=>"#{m}"} #{m}
-    %li
-      %label{:for=>"rr"} CLASS
-      %select{:name=>"rr"}
-        %option{} ...
-        - for r in @rrs
-          %option{:value=>"#{r}"} #{r}
-    %li
-      %label{:for=>"first_seen"} From (YYYY-MM-DD)
-      %input{:type=>"text", :size=>"12", :name=>"first_seen"}
-    %li
-      %label{:for=>"last_seen"} To (YYYY-MM-DD)
-      %input{:type=>"text", :size=>"12", :name=>"last_seen"}
-  %input{:type=>"submit", :name=>"submit", :value=>"search"}
+      %p= m
+%form.well.form-horizontal{:action=>"/advanced_search_result", :method=>"get"}
+  %fieldset
+    %legend Search the database combining using logical &#39;AND&#39;
+    .control-group
+      %label.control-label{:for=>"query"} Query
+      .controls
+        %input.input-xlarge#query{:type=>"text", :placeholder=>"leave empty to match everything", :name=>"query"}
+        %span.help-inline Searches the DNS Query String, uses SQL LIKE &#39;%INPUT%&#39;
+    .control-group
+      %label.control-label{:for=>"answer"} Answer
+      .controls
+        %input.input-xlarge{:type=>"text", :placeholder=>"leave empty to match everything", :name=>"answer"}
+        %span.help-inline Searches the DNS Response(s), uses SQL LIKE &#39;%INPUT%&#39;
+    .control-group
+      %label.control-label{:for=>"maptype"} Query Type
+      .controls
+        %select.input-small{:name=>"maptype"}
+          %option{} ...
+          - for m in @maptypes
+            %option{:value=>"#{m}"} #{m}
+    .control-group
+      %label.control-label{:for=>"rr"} CLASS
+      .controls
+        %select.input-small{:name=>"rr"}
+          %option{} ...
+          - for r in @rrs
+            %option{:value=>"#{r}"} #{r}
+    .control-group
+      %label.control-label{:for=>"first_seen"} First Seen after
+      .controls
+        %input{:type=>"text", :name=>"first_seen", :placeholder=>"YYYY-MM-DD"}
+        %span.help-inline &#39;First Seen&#39; Date format: &#39;YYYY-MM-DD&#39;
+    .control-group
+      %label.control-label{:for=>"last_seen"} Last Seen before
+      .controls
+        %input{:type=>"text", :name=>"last_seen", :placeholder=>"YYYY-MM-DD"}
+        %span.help-inline &#39;Last Seen&#39; Date format: &#39;YYYY-MM-DD&#39;
+    .form-actions
+      %button.btn.btn-primary{:type=>"submit"} Search Database
+      %button.btn{:type=>"reset"} Reset Form

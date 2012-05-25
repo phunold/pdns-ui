@@ -1,18 +1,16 @@
-.header-box
-  .header-title
-    %h2
-      = "Search Results (#{@records.pagination_record_count})"
-  .header-meta
-    - unless @records.empty?
-      = "#{@meta} &#39;#{@lookup}&#39;"
-    - else
-      %p Oops, nothing found :(
+%h2 Search Result
+- unless @records.empty?
+  .alert.alert-info
+    #{@meta} &#39;#{@lookup}&#39;
+    %span.badge.badge-info= @records.pagination_record_count
+- else
+  .alert.alert-warning
+    Oops, nothing found :(
 - unless @records.empty?
   %p= will_paginate(@records)
-  %table#main
+  %table.table.table-condensed.table-striped.table-bordered
     %thead
       %tr
-        %td{:id=>"cornerLeft", :width=>"20"} &nbsp;
         %td Query
         %td CLASS
         %td Query Type
@@ -22,11 +20,9 @@
           First Seen
           %span.help{:title=>"showing \"-\" if First Seen and Last seen are the same!"} &nbsp;
         %td Last Seen
-        %td{:id=>"cornerRight", :width=>"20"} &nbsp;
     %tbody
       - for r in @records
-        %tr{:class=>cycle}
-          %td &nbsp;
+        %tr
           %td
             - if r.QUERY.empty?
               &lt;blank&gt;
@@ -42,5 +38,4 @@
           - else
             %td.timestamp= r[:FIRST_SEEN].strftime(settings.long_date_format)
           %td.timestamp= r[:LAST_SEEN].strftime(settings.long_date_format)
-          %td &nbsp;
   %p= will_paginate @records

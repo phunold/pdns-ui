@@ -3,11 +3,17 @@
     %h2
       Summary Page
       %span.help{:title=>"This needs work!"} &nbsp;
-  .header-meta
-    %p
-      Records in Database
-      %br
-      #{@oldest_date} &lt;-&gt; #{@latest_date}
+  .well
+    %h3 Records in Database
+    %span.label.label-info
+      From
+      %i.icon-time.icon-white
+    #{@oldest_date}
+    %br
+    %span.label.label-info
+      to
+      %i.icon-time.icon-white
+    #{@latest_date}
 %hr
 %hr
 %hr
@@ -18,54 +24,42 @@
 %h3
   Top10 DNS Query
   %span.help{:title=>"passivedns is caching, use Top10 list with caution!"} &nbsp;
-%table
+%table.table.table-striped.table-condensed
   %thead
     %tr
-      %td{:id=>"cornerLeft",:width=>20} &nbsp;
       %td Address
       %td Total Queries
-      %td{:id=>"cornerRight",:width=>20} &nbsp;
+  %tbody
   - for i in @top_query
-    %tbody
-      %tr{:class=>cycle}
-        %td &nbsp;
-        %td
-          %a{:href=>"/q/#{i[:QUERY]}"}= i[:QUERY]
-        %td= i[:count]
-        %td &nbsp;
+    %tr{:class=>cycle}
+      %td
+        %a{:href=>"/q/#{i[:QUERY]}"}= i[:QUERY]
+      %td= i[:count]
 %h3
   Query Type
   %span.help{:title=>"Overall distribution of Query Types"} &nbsp;
-%table
+%table.table.table-striped.table-condensed
   %thead
     %tr
-      %td{:id=>"cornerLeft",:width=>20} &nbsp;
       %td Query Type
       %td Total
-      %td{:id=>"cornerRight",:width=>20} &nbsp;
+  %tbody
   - for i in @maptypes
-    %tbody
-      %tr{:class=>cycle}
-        %td &nbsp;
-        %td 
-          %a{:href=>"/t/#{i[:MAPTYPE]}"}= i[:MAPTYPE]
-        %td= i[:count]
-        %td &nbsp;
+    %tr
+      %td 
+        %a{:href=>"/t/#{i[:MAPTYPE]}"}= i[:MAPTYPE]
+      %td= i[:count]
 %h3
   NXDOMAIN
   %span.help{:title=>"Query returning NXDOMAIN"} &nbsp;
-%table
+%table.table.table-striped.table-condensed
   %thead
     %tr
-      %td{:id=>"cornerLeft",:width=>20} &nbsp;
       %td Query
       %td Count
-      %td{:id=>"cornerRight",:width=>20} &nbsp;
+  %tbody
   - for i in @nxdomains
-    %tbody
-      %tr{:class=>cycle}
-        %td &nbsp;
-        %td
-          %a{:href=>"/q/#{i[:QUERY]}"}= i[:QUERY]
-        %td= i[:count]
-        %td &nbsp;
+    %tr
+      %td
+        %a{:href=>"/q/#{i[:QUERY]}"}= i[:QUERY]
+      %td= i[:count]
