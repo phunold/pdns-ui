@@ -18,7 +18,7 @@
         %th TTL
         %th
           First Seen
-          %span.help{:title=>"showing \"-\" if First Seen and Last seen are the same!"} &nbsp;
+          %i.icon-info-sign{:rel=>"tooltip", :title=>"showing \"-\" if First Seen and Last seen are the same!"}
         %th Last Seen
     %tbody
       - for r in @records

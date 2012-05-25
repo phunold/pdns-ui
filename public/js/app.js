@@ -1,3 +1,4 @@
 $(document).ready(function() {
-  $('.dropdown-toggle').dropdown();
+$('.dropdown-toggle').dropdown();
+$('body').tooltip({'selector':"[rel=tooltip]", 'placement':'bottom'});
 });

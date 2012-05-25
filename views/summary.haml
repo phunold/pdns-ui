@@ -1,19 +1,17 @@
-.header-box
-  .header-title
-    %h2
-      Summary Page
-      %span.help{:title=>"This needs work!"} &nbsp;
-  .well
-    %h3 Records in Database
-    %span.label.label-info
-      From
-      %i.icon-time.icon-white
-    #{@oldest_date}
-    %br
-    %span.label.label-info
-      to
-      %i.icon-time.icon-white
-    #{@latest_date}
+%h2
+  Summary Page
+  %i.icon-info-sign{:rel=>"tooltip", :title=>"This page needs work"}
+.well
+  %h3 Records in Database
+  %span.label.label-info
+    From
+    %i.icon-time.icon-white
+  #{@oldest_date}
+  %br
+  %span.label.label-info
+    to
+    %i.icon-time.icon-white
+  #{@latest_date}
 %hr
 %hr
 %hr
@@ -23,7 +21,7 @@
 %hr
 %h3
   Top10 DNS Query
-  %span.help{:title=>"passivedns is caching, use Top10 list with caution!"} &nbsp;
+  %i.icon-info-sign{:rel=>"tooltip", :title=>"passivedns is caching, use Top10 list with caution!"}
 %table.table.table-striped.table-condensed
   %thead
     %tr
@@ -31,13 +29,13 @@
       %th Total Queries
   %tbody
   - for i in @top_query
-    %tr{:class=>cycle}
+    %tr
       %td
-        %a{:href=>"/q/#{i[:QUERY]}"}= i[:QUERY]
+        %a{:href=>"/q/#{i.QUERY}"}= i.QUERY
       %td= i[:count]
 %h3
   Query Type
-  %span.help{:title=>"Overall distribution of Query Types"} &nbsp;
+  %i.icon-info-sign{:rel=>"tooltip", :title=>"Overall distribution of Query Types"}
 %table.table.table-striped.table-condensed
   %thead
     %tr
@@ -47,11 +45,11 @@
   - for i in @maptypes
     %tr
       %td 
-        %a{:href=>"/t/#{i[:MAPTYPE]}"}= i[:MAPTYPE]
+        %a{:href=>"/t/#{i.MAPTYPE}"}= i.MAPTYPE
       %td= i[:count]
 %h3
   NXDOMAIN
-  %span.help{:title=>"Query returning NXDOMAIN"} &nbsp;
+  %i.icon-info-sign{:rel=>"tooltip", :title=>"DNS Queries returning no answer aka NXDOMAIN"}
 %table.table.table-striped.table-condensed
   %thead
     %tr
@@ -61,5 +59,5 @@
   - for i in @nxdomains
     %tr
       %td
-        %a{:href=>"/q/#{i[:QUERY]}"}= i[:QUERY]
+        %a{:href=>"/q/#{i.QUERY}"}= i.QUERY
       %td= i[:count]

@@ -39,7 +39,7 @@ class Search < Sequel::Model
 
   # obj.inspect returned nothing, this will help
   def inspect
-    "#{first_seen} #{last_seen} #{query} #{answer}"
+    "#{first_seen} #{last_seen} #{query} #{answer} #{rr} #{maptype}"
   end
 
 end

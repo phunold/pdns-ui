@@ -30,7 +30,7 @@
           .nav-collapse
             %ul.nav.nav-pills
               %li.dropdown
-                %a.dropdown-toggle{"data-toggle"=>"dropdown", :href=>"#"}
+                %a.dropdown-toggle{"data-toggle"=>"dropdown", :href=>"#", :rel=>"tooltip", :title=>"View DNS Records"}
                   Records
                   %b.caret
                 %ul.dropdown-menu
@@ -41,18 +41,18 @@
                     %li
                       %a{:href=>"/t/#{m}"} #{m} records
               %li
-                %a{:href => "/summary"} Summary
+                %a{:href => "/summary", :rel=>"tooltip", :title=>"Some Stats"} Summary
               %li
-                %a{:href => "/advanced_search"} Advanced Search
+                %a{:href => "/advanced_search", :rel=>"tooltip", :title=>"Search specific Records"} Advanced Search
               %li
-                %a{:href => "/about"} About
+                %a{:href => "/about", :rel=>"tooltip", :title=>"Project details"} About
             %ul.nav.pull-right
               %li.navbar-text
                 Total Records:
                 %span.badge.badge-info #{@counter}
               %li.divider-vertical
               %form.navbar-search{:action=>"/search", :method=>"get"}
-                %input.search-query.input-small{:type=>"text", :name=>"search", :placeholder=>"Search"}
+                %input.search-query.input-small{:type=>"text", :name=>"search", :placeholder=>"Search", :rel=>"tooltip", :title=>"Search Query & Responses"}
           / /.nav-collapse
     .container
       =yield
@@ -61,6 +61,7 @@
       Le javascript
       \==================================================
     / Placed at the end of the document so the pages load faster
-    %script{:src => "/js/app.js"}
     %script{:src => "/js/jquery.js"}
     %script{:src => "/js/bootstrap-dropdown.js"}
+    %script{:src => "/js/bootstrap-tooltip.js"}
+    %script{:src => "/js/app.js"}

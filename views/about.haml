@@ -1,17 +1,16 @@
-.header-box
-  .header-title
-    %h2
-    %h2
-      About the Project
-  .header-meta
-    Version: &#39;#{@version}&#39;
-%p
-  this a first draft version and has been test for
-  %i PassiveDNS version 0.5
-%hr
-%p
-  if you find issues or have suggestions, please submit them on
-  %a{:href=>"https://github.com/phunold/pdns-ui", :target=>"_blank"} https://github.com
-%hr
-%p Thank you.
-%p PH.
+%h2
+  About this Project
+.alert.alert-block
+  %h4.alert-heading this a first public release
+  This release is in &#39;draft&#39; state...nobody is perfect!
+  %dl
+    %dt This Version:
+    %dd= @version
+    %dt PassiveDNS version
+    %dd 0.5
+  %p
+    if you find issues, have suggestions or any feedback, please submit them on
+    %a{:href=>"https://github.com/phunold/pdns-ui", :target=>"_blank", :rel=>"tooltip", :title=>"https://github.com/phunold/pdns-ui"} https://github.com
+  %hr
+  %p Thank you.
+  %p PH.

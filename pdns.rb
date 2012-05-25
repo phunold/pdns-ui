@@ -118,19 +118,17 @@ class App < Sinatra::Base
   # FIXME add TTL value to advanced search
   get '/advanced_search' do
     # group unique for dropdown menu
-    #FIXME @rrs = Pdns.group(:RR).order(:RR)
-    #FIXME @maptypes = Pdns.group(:MAPTYPE).order(:MAPTYPE)
     haml :advanced_search
   end
 
   get '/advanced_search_result' do
     page = (params[:page] || 1).to_i
-    query      = params[:query]
-    answer     = params[:answer]
-    maptype    = params[:maptype]
-    rr         = params[:rr]
-    first_seen = params[:first_seen]
-    last_seen  = params[:last_seen]
+    query      = params[:query].strip
+    answer     = params[:answer].strip
+    maptype    = params[:maptype].chomp("...")
+    rr         = params[:rr].chomp("...")
+    first_seen = params[:first_seen].strip
+    last_seen  = params[:last_seen].strip
 
     @search = Search.new(:query     =>query,
                          :answer    =>answer,
