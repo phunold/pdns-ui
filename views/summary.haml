@@ -27,8 +27,8 @@
 %table.table.table-striped.table-condensed
   %thead
     %tr
-      %td Address
-      %td Total Queries
+      %th Address
+      %th Total Queries
   %tbody
   - for i in @top_query
     %tr{:class=>cycle}
@@ -41,8 +41,8 @@
 %table.table.table-striped.table-condensed
   %thead
     %tr
-      %td Query Type
-      %td Total
+      %th Query Type
+      %th Total
   %tbody
   - for i in @maptypes
     %tr
@@ -55,8 +55,8 @@
 %table.table.table-striped.table-condensed
   %thead
     %tr
-      %td Query
-      %td Count
+      %th Query
+      %th Count
   %tbody
   - for i in @nxdomains
     %tr

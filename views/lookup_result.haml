@@ -8,18 +8,18 @@
     Oops, nothing found :(
 - unless @records.empty?
   %p= will_paginate(@records)
-  %table.table.table-condensed.table-striped.table-bordered
+  %table.table.table-condensed.table-striped
     %thead
       %tr
-        %td Query
-        %td CLASS
-        %td Query Type
-        %td Answer
-        %td TTL
-        %td
+        %th Query
+        %th CLASS
+        %th Query Type
+        %th Answer
+        %th TTL
+        %th
           First Seen
           %span.help{:title=>"showing \"-\" if First Seen and Last seen are the same!"} &nbsp;
-        %td Last Seen
+        %th Last Seen
     %tbody
       - for r in @records
         %tr
