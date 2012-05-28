@@ -51,9 +51,8 @@ This app is built on (http://sinatrarb.com)
 - Or running with Passenger aka modrails
 
 ## TODO
-- create test scripts, RIOT or whatever may be a good fit
 - check install requirements on RPM based systems
 - check how it feels with large table (+1M records)
-- more error handling, like mysql database (Sequel::DatabaseConnectionError,Sequel::DatabaseConnectionError)
 - escape special characters for html/link
 - sort out Roadmap, just a pile of ideas right now...
+- add more unit tests RSPEC

@@ -21,18 +21,26 @@ class App < Sinatra::Base
     use Rack::Flash
     register WillPaginate::Sinatra
     register Sinatra::ConfigFile
+    register Sinatra::Reloader
     config_file 'config/app.yml'
     config_file 'config/database.yml'
     DB = Sequel.connect "#{settings.adapter}://#{settings.username}:#{settings.password}@#{settings.host}/#{settings.database}"
-    register Sinatra::Reloader
   end
 
-
-  # count number of rows
   before do
-    @counter  = Pdns.count
+    # first execution of sql command
+    # so let's make sure database configuration is ok
+    # otherwise just die ungracefully with HTTP 500
+    begin
+      # database counter for all pages
+      @counter  = Pdns.count
+    rescue Sequel::DatabaseConnectionError
+      halt 500, "Database error, please check database settings"
+    end
+
+    # get all MAPTYPEs aka DNS Query Types (CNAME,A,SOA,MX,etc) for navigation
+    # dropdown menu on all pages
     @maptypes = Pdns.group(:MAPTYPE).map(:MAPTYPE)
-    @rrs      = Pdns.group(:RR).map(:RR)
   end
 
   # routes
@@ -117,7 +125,9 @@ class App < Sinatra::Base
 
   # FIXME add TTL value to advanced search
   get '/advanced_search' do
-    # group unique for dropdown menu
+    # group ResourceRecord for form select-option input
+    @rrs = Pdns.group(:RR).map(:RR)
+    # all Maptypes already parsed from navigation menu
     haml :advanced_search
   end
 
@@ -187,7 +197,7 @@ class App < Sinatra::Base
 
   # error handling 404
   not_found do
-    haml :sorry
+    haml :not_found
   end
 
   # error handling 500
