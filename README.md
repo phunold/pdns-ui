@@ -54,5 +54,4 @@ This app is built on (http://sinatrarb.com)
 - check install requirements on RPM based systems
 - check how it feels with large table (+1M records)
 - escape special characters for html/link
-- sort out Roadmap, just a pile of ideas right now...
 - add more unit tests RSPEC
