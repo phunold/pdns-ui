@@ -15,6 +15,9 @@ This app is built on (http://sinatrarb.com)
 - Ubuntu 10.04: install latest rubygem manually:
   http://qastuffs.blogspot.com/2010/11/installing-gem-bundler-in-ubuntu-1004.html
 
+- Fedora/RedHat/CentOS
+  * pending sorry!
+
 ## Configuration
 - supply database information in file: **config/database.yml**
 
@@ -51,7 +54,11 @@ This app is built on (http://sinatrarb.com)
 - Or running with Passenger aka modrails
 
 ## TODO
-- check install requirements on RPM based systems
+- update install requirements on RPM based systems
 - check how it feels with large table (+1M records)
-- escape special characters for html/link
-- add more unit tests RSPEC
+- add more unit tests
+* anything else check ROADMAP
+
+## Feedback
+
+Open for feedback, suggestions and wishes...

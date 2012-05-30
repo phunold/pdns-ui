@@ -47,17 +47,3 @@
       %td 
         %a{:href=>"/t/#{i.MAPTYPE}"}= i.MAPTYPE
       %td= i[:count]
-%h3
-  NXDOMAIN
-  %i.icon-info-sign{:rel=>"tooltip", :title=>"DNS Queries returning no answer aka NXDOMAIN"}
-%table.table.table-striped.table-condensed
-  %thead
-    %tr
-      %th Query
-      %th Count
-  %tbody
-  - for i in @nxdomains
-    %tr
-      %td
-        %a{:href=>"/q/#{i.QUERY}"}= i.QUERY
-      %td= i[:count]

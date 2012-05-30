@@ -63,15 +63,22 @@ class App < Sinatra::Base
   get '/q/:query' do
     page = (params[:page] || 1).to_i
     @lookup  = params[:query]
-    @records = Pdns.where(:QUERY => @lookup).reverse(:LAST_SEEN).paginate(page,settings.per_page)
+
+    # empty QUERY string lookup produce 404`
+    # we use an unlikely string for empty/blank queries 
+    if @lookup == "--blank--" then
+      @records = Pdns.where(:QUERY => '')
+    else  
+      @records = Pdns.where(:QUERY => @lookup)
+    end
+    @records = @records.reverse(:LAST_SEEN).paginate(page,settings.per_page)
     @meta = "Filter by Query:"
 
-    # lookup search should always give you a result
-    # but lets just catch this anyway
+    # FIXME make a nice page for searches without result 
     if @records.count >= 1 then
       haml :lookup_result
     else
-      haml :sorry
+      haml :not_found
     end
   end
 
@@ -82,12 +89,11 @@ class App < Sinatra::Base
     @records = Pdns.where(:ANSWER => @lookup).reverse(:LAST_SEEN).paginate(page,settings.per_page)
     @meta = "Filter by Response:"
 
-    # lookup search should always give you a result
-    # but lets just catch this anyway
+    # FIXME make a nice page for searches without result 
     if @records.count >= 1 then
       haml :lookup_result
     else
-      haml :sorry
+      haml :not_found
     end
   end
 
@@ -98,12 +104,26 @@ class App < Sinatra::Base
     @records = Pdns.where(:MAPTYPE => @lookup).reverse(:LAST_SEEN).paginate(page,settings.per_page)
     @meta = "Filter by Query Type:"
 
-    # lookup search should always give you a result
-    # but lets just catch this anyway
+    # FIXME make a nice page for searches without result 
     if @records.count >= 1 then
       haml :listing
     else
-      haml :sorry
+      haml :not_found
+    end
+  end
+
+  # list of specific DNS ResourceRecord aka RR
+  get '/r/:resource' do
+    page = (params[:page] || 1).to_i
+    @lookup   = params[:resource]
+    @records = Pdns.where(:RR => @lookup).reverse(:LAST_SEEN).paginate(page,settings.per_page)
+    @meta = "Filter by Resource Record:"
+
+    # FIXME make a nice page for searches without result 
+    if @records.count >= 1 then
+      haml :listing
+    else
+      haml :not_found
     end
   end
 
@@ -112,7 +132,7 @@ class App < Sinatra::Base
     @lookup = params[:search].strip
 
     # go back if search is not valid
-    redirect back if @lookup == "search"
+    redirect back if @lookup.empty?
 
     # match case insensitive against 'query' OR 'answer' column
     @records = Pdns.where(:QUERY.ilike("%#{@lookup}%") | :ANSWER.ilike("%#{@lookup}%"))
@@ -174,9 +194,6 @@ class App < Sinatra::Base
 
     # show distribution of maptype(A,PTR,CNAME,etc)
     @maptypes = Pdns.group_and_count(:MAPTYPE).reverse(:count)
-
-    # show NXDOMAIN answers
-    @nxdomains = Pdns.where(:ANSWER.like("NXDOMAIN")).group_and_count(:QUERY).reverse(:count).limit(20)
 
     haml :summary
   end

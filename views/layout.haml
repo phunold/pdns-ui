@@ -40,6 +40,17 @@
                   - for m in @maptypes
                     %li
                       %a{:href=>"/t/#{m}"} #{m} records
+              %li.dropdown
+                %a.dropdown-toggle{"data-toggle"=>"dropdown", :href=>"#"}
+                  Special Report
+                  %b.caret
+                %ul.dropdown-menu
+                  %li
+                    %a{:href=>"/a/NXDOMAIN"} NXDOMAIN 
+                  %li
+                    %a{:href=>"/r/CHAOS"} CHAOS 
+                  %li
+                    %a{:href=>"/q/--blank--"} blank QUERY 
               %li
                 %a{:href => "/summary", :rel=>"tooltip", :title=>"Some Stats"} Summary
               %li

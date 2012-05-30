@@ -59,6 +59,3 @@
       * use: http://ww.unmaskparasites.com/security-report/?page=example.com
     * labs.alienvault.com by OSSIM guys *detecting malware domains by syntax heuritstics
 
-## Feedback
-
-Open for feedback, suggestions and wishes...
