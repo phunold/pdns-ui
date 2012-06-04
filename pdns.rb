@@ -64,7 +64,7 @@ class App < Sinatra::Base
     page = (params[:page] || 1).to_i
     @lookup  = params[:query]
 
-    # empty QUERY string lookup produce 404`
+    # empty QUERY string lookup produces 404 "page not found"
     # we use an unlikely string for empty/blank queries 
     if @lookup == "--blank--" then
       @records = Pdns.where(:QUERY => '')
@@ -73,13 +73,7 @@ class App < Sinatra::Base
     end
     @records = @records.reverse(:LAST_SEEN).paginate(page,settings.per_page)
     @meta = "Filter by Query:"
-
-    # FIXME make a nice page for searches without result 
-    if @records.count >= 1 then
-      haml :lookup_result
-    else
-      haml :not_found
-    end
+    haml :lookup_result
   end
 
   # exact lookup of DNS answer
@@ -88,13 +82,7 @@ class App < Sinatra::Base
     @lookup   = params[:answer]
     @records = Pdns.where(:ANSWER => @lookup).reverse(:LAST_SEEN).paginate(page,settings.per_page)
     @meta = "Filter by Response:"
-
-    # FIXME make a nice page for searches without result 
-    if @records.count >= 1 then
-      haml :lookup_result
-    else
-      haml :not_found
-    end
+    haml :lookup_result
   end
 
   # list of specific DNS Type aka MAPTYPE
@@ -103,13 +91,7 @@ class App < Sinatra::Base
     @lookup   = params[:type]
     @records = Pdns.where(:MAPTYPE => @lookup).reverse(:LAST_SEEN).paginate(page,settings.per_page)
     @meta = "Filter by Query Type:"
-
-    # FIXME make a nice page for searches without result 
-    if @records.count >= 1 then
-      haml :listing
-    else
-      haml :not_found
-    end
+    haml :listing
   end
 
   # list of specific DNS ResourceRecord aka RR
@@ -118,13 +100,7 @@ class App < Sinatra::Base
     @lookup   = params[:resource]
     @records = Pdns.where(:RR => @lookup).reverse(:LAST_SEEN).paginate(page,settings.per_page)
     @meta = "Filter by Resource Record:"
-
-    # FIXME make a nice page for searches without result 
-    if @records.count >= 1 then
-      haml :listing
-    else
-      haml :not_found
-    end
+    haml :listing
   end
 
   get '/search' do
