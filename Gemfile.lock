@@ -6,6 +6,7 @@ GEM
     eventmachine (0.12.10)
     haml (3.1.6)
     mysql (2.8.1)
+    net-dns (0.7.1)
     rack (1.4.1)
     rack-flash3 (1.0.1)
       rack
@@ -43,6 +44,7 @@ PLATFORMS
 DEPENDENCIES
   haml
   mysql
+  net-dns
   rack-flash3
   rack-test
   rspec

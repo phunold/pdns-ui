@@ -10,6 +10,7 @@ require 'haml'
 require 'will_paginate'
 require 'will_paginate/sequel'
 require 'rack-flash'
+require 'net/dns'
 
 # non-gem require
 require 'config/application_helper'
@@ -174,6 +175,16 @@ class App < Sinatra::Base
     haml :summary
   end
 
+  # on-demand lookups
+  
+  # simple dns lookup
+  get '/ondemand/dns/:name' do
+    @lookup = params[:name]
+    @meta = "Name lookup"
+    @result = Resolver(params[:name])
+    haml :ondemand_result, :layout => false
+  end
+
   # some static pages
   get '/about' do
     @version = settings.version
@@ -191,6 +202,10 @@ class App < Sinatra::Base
   # error handling 404
   not_found do
     haml :not_found
+  end
+
+  get '/dns' do
+    p Resolver('www.google.com')
   end
 
   # error handling 500

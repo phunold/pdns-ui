@@ -7,6 +7,7 @@ gem "haml"
 gem "sequel"
 gem "will_paginate"
 gem "rack-flash3", :require => "rack-flash"
+gem "net-dns", :require => "net/dns"
 
 group :test do
   gem "rspec"

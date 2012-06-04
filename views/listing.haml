@@ -16,6 +16,7 @@
         %th Type
         %th Answer
         %th Date Time
+        %th -
     %tbody
     - @records.each do |r|
       %tr
@@ -32,4 +33,7 @@
             = r.LAST_SEEN.strftime(settings.short_date_format)
           - else
             = r.LAST_SEEN.strftime(settings.long_date_format)
+        %td
+          - unless r.QUERY.empty?
+            %a.btn{"data-toggle"=>"modal", :href=>"/ondemand/dns/#{r.QUERY}"} DNS
   %p= will_paginate @records
