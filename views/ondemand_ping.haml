@@ -1,0 +1,18 @@
+.modal
+  .modal-header
+    %button.close{:type=>"button", "data-dismiss"=>"modal"} x
+    %h3 OnDemand ICMP Ping
+  .modal-body
+    .alert.alert-info
+      #{@meta} &#39;#{@lookup}&#39;
+    - if @ping.ping?
+      .alert.alert-success
+        Ping Succesfull. 
+        Duration(in sec): #{@ping.duration}
+    - else
+      .alert.alert-error
+        Host unreachable.
+        #{@ping.warning}
+        #{@ping.exception}
+  .modal-footer
+    %a#btn{:href=>"#", "data-dismiss"=>"modal"} Close

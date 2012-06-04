@@ -35,5 +35,17 @@
             = r.LAST_SEEN.strftime(settings.long_date_format)
         %td
           - unless r.QUERY.empty?
-            %a.btn{"data-toggle"=>"modal", :href=>"/ondemand/dns/#{r.QUERY}"} DNS
+            .btn-group
+              %a.btn.dropdown-toggle{:rel=>"tooltip", :title=>"Perform Action", :href=>"#"}
+                %i.icon-user
+                %span.caret
+              %ul.dropdown-menu
+                %li
+                  %a.to_modal{:href=>"/ondemand/dns/#{r.QUERY}"}
+                    %i.icon-eye-open
+                    DNS Lookup
+                %li
+                  %a.to_modal{:href=>"/ondemand/ping/#{r.ANSWER}"}
+                    %i.icon-eye-close
+                    ICMP Ping
   %p= will_paginate @records

@@ -1,0 +1,16 @@
+.modal
+  .modal-header
+    %button.close{:type=>"button", "data-dismiss"=>"modal"} x
+    %h3 OnDemand DNS lookup
+  .modal-body
+    .alert.alert-info
+      #{@meta} &#39;#{@lookup}&#39;
+    - if @result
+      .alert.alert-success
+        %pre
+          = @result
+    - else
+      .alert.alert-error
+        Lookup failed using system defaults, current nameservers: #{@nameservers} 
+  .modal-footer
+    %a#btn{:href=>"#", "data-dismiss"=>"modal"} Close

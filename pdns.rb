@@ -11,6 +11,7 @@ require 'will_paginate'
 require 'will_paginate/sequel'
 require 'rack-flash'
 require 'net/dns'
+require 'net/ping'
 
 # non-gem require
 require 'config/application_helper'
@@ -181,8 +182,23 @@ class App < Sinatra::Base
   get '/ondemand/dns/:name' do
     @lookup = params[:name]
     @meta = "Name lookup"
-    @result = Resolver(params[:name])
+    # create resolver object(uses system defaults)
+    res = Net::DNS::Resolver.new
+    begin
+      @result = res.query(@lookup)
+    rescue Net::DNS::Resolver::NoResponseError
+      @nameservers = res.nameservers
+      @result = false
+    end 
+
     haml :ondemand_result, :layout => false
+  end
+  # ICMP ping (IP or NAME)
+  get '/ondemand/ping/:ip' do
+    @lookup = params[:ip]
+    @meta = "Pinging IP/Host:"
+    @ping = Net::Ping::External.new(@lookup)
+    haml :ondemand_ping, :layout => false
   end
 
   # some static pages
