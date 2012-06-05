@@ -1,5 +1,5 @@
 # Application Version
-version: v0.0.3
+version: v0.0.4
 # Application Look
 per_page: 80                           # number of rows per page
 short_date_format: "%T"                # this is for today's date
