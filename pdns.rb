@@ -50,7 +50,7 @@ class App < Sinatra::Base
     page = (params[:page] || 1).to_i
     @records = Pdns.reverse(:LAST_SEEN).paginate(page,settings.per_page)
     @meta = "No Filters applied"
-    haml :listing
+    haml :short_listing
   end
   
   # FIXME this is not linked anywhere, still testing
@@ -75,7 +75,7 @@ class App < Sinatra::Base
     end
     @records = @records.reverse(:LAST_SEEN).paginate(page,settings.per_page)
     @meta = "Filter by Query:"
-    haml :lookup_result
+    haml :long_listing
   end
 
   # exact lookup of DNS answer
@@ -84,7 +84,7 @@ class App < Sinatra::Base
     @lookup   = params[:answer]
     @records = Pdns.where(:ANSWER => @lookup).reverse(:LAST_SEEN).paginate(page,settings.per_page)
     @meta = "Filter by Response:"
-    haml :lookup_result
+    haml :long_listing
   end
 
   # list of specific DNS Type aka MAPTYPE
@@ -93,7 +93,7 @@ class App < Sinatra::Base
     @lookup   = params[:type]
     @records = Pdns.where(:MAPTYPE => @lookup).reverse(:LAST_SEEN).paginate(page,settings.per_page)
     @meta = "Filter by Query Type:"
-    haml :listing
+    haml :short_listing
   end
 
   # list of specific DNS ResourceRecord aka RR
@@ -102,7 +102,7 @@ class App < Sinatra::Base
     @lookup   = params[:resource]
     @records = Pdns.where(:RR => @lookup).reverse(:LAST_SEEN).paginate(page,settings.per_page)
     @meta = "Filter by Resource Record:"
-    haml :listing
+    haml :long_listing
   end
 
   get '/search' do
@@ -118,7 +118,7 @@ class App < Sinatra::Base
 
     # create paginated records
     @records = @records.reverse(:LAST_SEEN).paginate(page,settings.per_page)
-    haml :lookup_result
+    haml :long_listing
   end
 
   # FIXME add TTL value to advanced search
@@ -156,7 +156,7 @@ class App < Sinatra::Base
     @meta = "Woohoo! You just did an &#39;Advanced Search&#39;:"
     @lookup = "FIXME"
 
-    haml :lookup_result
+    haml :long_listing
   end
 
   get '/summary' do
@@ -191,13 +191,15 @@ class App < Sinatra::Base
       @result = false
     end 
 
-    haml :ondemand_result, :layout => false
+    # open as .js modal window
+    haml :ondemand_dns, :layout => false
   end
   # ICMP ping (IP or NAME)
   get '/ondemand/ping/:ip' do
     @lookup = params[:ip]
     @meta = "Pinging IP/Host:"
     @ping = Net::Ping::External.new(@lookup)
+    # open as .js modal window
     haml :ondemand_ping, :layout => false
   end
 

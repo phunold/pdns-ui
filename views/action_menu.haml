@@ -1,0 +1,14 @@
+- unless rr.QUERY.empty? or rr.ANSWER == "NXDOMAIN"
+  .btn-group
+    %a.btn.btn-mini.dropdown-toggle{:rel=>"tooltip", :title=>"Perform Action", :href=>"#"}
+      %i.icon-user
+      %span.caret
+    %ul.dropdown-menu
+      %li
+        %a.to_modal{:href=>"/ondemand/dns/#{rr.QUERY}"}
+          %i.icon-eye-open
+          DNS Lookup
+      %li
+        %a.to_modal{:href=>"/ondemand/ping/#{rr.ANSWER}"}
+          %i.icon-eye-close
+          Ping &#39;#{rr.ANSWER}&#39;

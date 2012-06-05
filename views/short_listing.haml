@@ -16,7 +16,7 @@
         %th Type
         %th Answer
         %th Date Time
-        %th -
+        %th &nbsp;
     %tbody
     - @records.each do |r|
       %tr
@@ -33,19 +33,5 @@
             = r.LAST_SEEN.strftime(settings.short_date_format)
           - else
             = r.LAST_SEEN.strftime(settings.long_date_format)
-        %td
-          - unless r.QUERY.empty?
-            .btn-group
-              %a.btn.dropdown-toggle{:rel=>"tooltip", :title=>"Perform Action", :href=>"#"}
-                %i.icon-user
-                %span.caret
-              %ul.dropdown-menu
-                %li
-                  %a.to_modal{:href=>"/ondemand/dns/#{r.QUERY}"}
-                    %i.icon-eye-open
-                    DNS Lookup
-                %li
-                  %a.to_modal{:href=>"/ondemand/ping/#{r.ANSWER}"}
-                    %i.icon-eye-close
-                    ICMP Ping
+        %td= haml :action_menu, :locals => { :rr => r }
   %p= will_paginate @records
