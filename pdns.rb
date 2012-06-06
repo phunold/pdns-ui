@@ -12,6 +12,7 @@ require 'will_paginate/sequel'
 require 'rack-flash'
 require 'net/dns'
 require 'net/ping'
+require 'whois'
 
 # non-gem require
 require 'config/application_helper'
@@ -203,14 +204,20 @@ class App < Sinatra::Base
     haml :ondemand_ping, :layout => false
   end
 
+  # whois lookup
+  get '/ondemand/whois/:domain' do
+    @lookup = params[:domain]
+    @meta = "Whois Domain lookup:"
+    c = Whois::Client.new(:timeout => 3)
+    @whois = c.query(@lookup)
+    # open as .js modal window
+    haml :ondemand_whois, :layout => false
+  end
+
   # some static pages
   get '/about' do
     @version = settings.version
     haml :about
-  end
-  # FIXME: just for testing
-  get '/tooltip' do
-    haml :tooltip
   end
 
   # send browser something
@@ -222,24 +229,9 @@ class App < Sinatra::Base
     haml :not_found
   end
 
-  get '/dns' do
-    p Resolver('www.google.com')
-  end
-
   # error handling 500
   error do
     haml :sorry
-  end
-
-  helpers do
-    def cycle
-      @_cycle ||= reset_cycle
-      @_cycle = [@_cycle.pop] + @_cycle
-      @_cycle.first
-    end
-    def reset_cycle
-      @_cycle = %w(even odd)
-    end  
   end
 
   # FIXME 'require' seems a little misplaced here

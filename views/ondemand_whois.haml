@@ -1,0 +1,16 @@
+.modal
+  .modal-header
+    %button.close{:type=>"button", "data-dismiss"=>"modal"} x
+    %h3 OnDemand Whois lookup
+  .modal-body
+    .alert.alert-info
+      #{@meta} &#39;#{@lookup}&#39;
+    - unless @whois
+      .alert.alert-error
+        no Whois available or lookup failed.
+    - else
+      .alert.alert-success
+        %pre
+          = @whois
+  .modal-footer
+    %a#btn{:href=>"#", "data-dismiss"=>"modal"} Close

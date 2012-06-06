@@ -1,14 +1,26 @@
 - unless rr.QUERY.empty? or rr.ANSWER == "NXDOMAIN"
   .btn-group
-    %a.btn.btn-mini.dropdown-toggle{:rel=>"tooltip", :title=>"Perform Action", :href=>"#"}
-      %i.icon-user
+    %a.btn.btn-info.btn-mini.dropdown-toggle{:rel=>"tooltip", :title=>"Perform Action", :href=>"#"}
+      %i.icon-user.icon-white
       %span.caret
-    %ul.dropdown-menu
+    %ul.dropdown-menu.pull-right
       %li
         %a.to_modal{:href=>"/ondemand/dns/#{rr.QUERY}"}
           %i.icon-eye-open
-          DNS Lookup
+          DNS Lookup &#39;#{rr.QUERY}&#39;
+      %li
+        %a.to_modal{:href=>"/ondemand/ping/#{rr.QUERY}"}
+          %i.icon-random
+          Ping &#39;#{rr.QUERY}&#39;
       %li
         %a.to_modal{:href=>"/ondemand/ping/#{rr.ANSWER}"}
-          %i.icon-eye-close
+          %i.icon-random
           Ping &#39;#{rr.ANSWER}&#39;
+      %li
+        %a.to_modal{:href=>"/ondemand/whois/#{rr.QUERY}"}
+          %i.icon-list
+          Whois &#39;#{rr.QUERY}&#39;
+      %li
+        %a.to_modal{:href=>"/ondemand/whois/#{rr.ANSWER}"}
+          %i.icon-list
+          Whois &#39;#{rr.ANSWER}&#39;
