@@ -6,19 +6,35 @@ This app is built on (http://sinatrarb.com)
 
 ## Install
 
-- Ubuntu:
+- Ubuntu 12.04:
 ````Bash
-  sudo apt-get install mysql-client libmysqlclient-dev ruby rubygems
-  sudo bundle install
+    apt-get install mysql-client libmysqlclient-dev ruby rubygems
+    gem install bundler --no-ri --no-rdoc
 ````
 
-- Ubuntu 10.04: install latest rubygem manually:
-  http://qastuffs.blogspot.com/2010/11/installing-gem-bundler-in-ubuntu-1004.html
+- Ubuntu 10.04: 
+
+````Bash
+    apt-get install libmysqlclient16 ruby ruby-dev rubygems libruby libruby-extras
+    # you need to install latest rubygem manually ( >= v1.3.6)
+    gem install rubygems-update
+    cd /var/lib/gems/1.8/bin
+    ./update_rubygems
+    gem install bundler --no-ri --no-rdoc
+`````
 
 - Fedora/RedHat/CentOS
-  * pending sorry!
+  * required RPMs pending, big sorry!
+
+- Get code and install dependencies
+
+````Bash
+    git clone git://github.com/phunold/pdns-ui.git
+    sudo bundle install
+````
 
 ## Configuration
+
 - supply database information in file: **config/database.yml**
 
 ````Bash
@@ -29,7 +45,7 @@ This app is built on (http://sinatrarb.com)
   database: pdns
 ````
 
-- change application look and feel to your liking: **config/app.yml**
+- OPTIONAL! change application look and feel to your liking: **config/app.yml**
 
 ````Bash
     per_page: 100                          # number of rows per page

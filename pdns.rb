@@ -27,7 +27,7 @@ class App < Sinatra::Base
     register Sinatra::Reloader
     config_file 'config/app.yml'
     config_file 'config/database.yml'
-    DB = Sequel.connect "#{settings.adapter}://#{settings.username}:#{settings.password}@#{settings.host}/#{settings.database}"
+    DB = Sequel.connect "#{settings.adapter}://#{settings.username}:#{settings.password}@#{settings.host}/#{settings.database}", :loggers => [Logger.new($stdout)]
   end
 
   before do
@@ -36,14 +36,17 @@ class App < Sinatra::Base
     # otherwise just die ungracefully with HTTP 500
     begin
       # database counter for all pages
-      @counter  = Pdns.count
+puts "sessions counter: #{session[:counter]}"
+puts "sessions maptypes: #{session[:maptypes]}"
+
+    @counter ||= session[:counter] ||= Pdns.count
     rescue Sequel::DatabaseConnectionError
       halt 500, "Database error, please check database settings"
     end
 
     # get all MAPTYPEs aka DNS Query Types (CNAME,A,SOA,MX,etc) for navigation
     # dropdown menu on all pages
-    @maptypes = Pdns.group(:MAPTYPE).map(:MAPTYPE)
+    @maptypes ||= session[:maptypes] ||= Pdns.group(:MAPTYPE).map(:MAPTYPE)
   end
 
   # routes
@@ -103,7 +106,7 @@ class App < Sinatra::Base
     @lookup   = params[:resource]
     @records = Pdns.where(:RR => @lookup).reverse(:LAST_SEEN).paginate(page,settings.per_page)
     @meta = "Filter by Resource Record:"
-    haml :long_listing
+    haml :short_listing
   end
 
   get '/search' do
@@ -119,7 +122,7 @@ class App < Sinatra::Base
 
     # create paginated records
     @records = @records.reverse(:LAST_SEEN).paginate(page,settings.per_page)
-    haml :long_listing
+    haml :short_listing
   end
 
   # FIXME add TTL value to advanced search
@@ -157,7 +160,7 @@ class App < Sinatra::Base
     @meta = "Woohoo! You just did an &#39;Advanced Search&#39;:"
     @lookup = "FIXME"
 
-    haml :long_listing
+    haml :short_listing
   end
 
   get '/summary' do

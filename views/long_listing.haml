@@ -1,12 +1,11 @@
 %h2 Search Result
-- unless @records.empty?
+- if @records.empty?
+  .alert.alert-warning
+    Oops, nothing found :(
+- else
   .alert.alert-info
     #{@meta} &#39;#{@lookup}&#39;
     %span.badge.badge-info= @records.pagination_record_count
-- else
-  .alert.alert-warning
-    Oops, nothing found :(
-- unless @records.empty?
   %p= will_paginate(@records)
   %table.table.table-condensed.table-striped
     %thead

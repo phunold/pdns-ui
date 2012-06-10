@@ -1,37 +1,31 @@
 %h2
   DNS Query Listing
-- unless @records.empty?
-  .alert.alert-info
-    = "#{@meta} #{@lookup}"
-    %i.icon-info-sign{:rel=>"tooltip", :title=>"Ordered by date desc"}
-- else
-  .alert.alert-warning
-    Ooops, nothing found
-- unless @records.empty?
-  %p= will_paginate @records
-  %table.table.table-striped.table-condensed
-    %thead
-      %tr
-        %th Query
-        %th Type
-        %th Answer
-        %th Date Time
-        %th &nbsp;
-    %tbody
-    - @records.each do |r|
-      %tr
-        %td
-          - if r.QUERY.empty?
-            &lt;blank&gt;
-          - else
-            %a{:href=>"/q/#{r.QUERY}"}= r.QUERY
-        %td= r.MAPTYPE
-        %td
-          %a{:href=>"/a/#{r.ANSWER}"}= r.ANSWER
-        %td.timestamp{:rel=>"tooltip", :title=>"First Seen #{r.FIRST_SEEN.strftime(settings.long_date_format)}"}
-          - if r.today? then
-            = r.LAST_SEEN.strftime(settings.short_date_format)
-          - else
-            = r.LAST_SEEN.strftime(settings.long_date_format)
-        %td= haml :action_menu, :locals => { :rr => r }
-  %p= will_paginate @records
+.alert.alert-info
+  = "#{@meta} #{@lookup}"
+  %i.icon-info-sign{:rel=>"tooltip", :title=>"Ordered by date desc"}
+%p= will_paginate @records
+%table.table.table-striped.table-condensed
+  %thead
+    %tr
+      %th Query
+      %th Type
+      %th Answer
+      %th Date Time
+      %th &nbsp;
+  %tbody
+  - @records.each do |r|
+    %tr
+      %td
+        - if r.QUERY.empty?
+          &lt;blank&gt;
+        - else
+          %a{:href=>"/q/#{r.QUERY}"}= r.QUERY
+      %td= r.MAPTYPE
+      %td
+        %a{:href=>"/a/#{r.ANSWER}"}= r.ANSWER
+      %td.timestamp{:rel=>"tooltip", :title=>"First Seen #{r.FIRST_SEEN.strftime(settings.long_date_format)}"}
+        - if r.today? then
+          = r.LAST_SEEN.strftime(settings.short_date_format)
+        - else
+          = r.LAST_SEEN.strftime(settings.long_date_format)
+%p= will_paginate @records
