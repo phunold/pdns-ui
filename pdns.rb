@@ -37,8 +37,10 @@ class App < Sinatra::Base
     begin
       # database counter for all pages
       @counter ||= session[:counter] ||= Pdns.count
-    rescue Sequel::DatabaseConnectionError
-      halt 500, "Database error, please check database settings"
+    rescue Sequel::DatabaseError => e
+      halt 500, "Database error: #{e.message}"
+    rescue Sequel::DatabaseConnectionError => e
+      halt 500, "Database error, please check database settings: #{e.message}"
     end
 
     # get all MAPTYPEs aka DNS Query Types (CNAME,A,SOA,MX,etc) for navigation

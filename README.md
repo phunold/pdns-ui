@@ -68,6 +68,19 @@ This app is built on (http://sinatrarb.com)
 ````
 
 - Or running with Passenger aka modrails
+````Bash
+sudo aptitude install libapache2-mod-passenger
+cat /etc/apache2/sites-enabled/pdns
+<VirtualHost *:80>
+    ServerName pdns.example.com
+    DocumentRoot /home/pdns-ui/public
+    <Directory /home/pdns-ui/public>
+        Allow from all
+        Options -MultiViews
+    </Directory>
+</VirtualHost>
+````
+  more details at: http://www.modrails.com/documentation/Users%20guide%20Apache.html
 
 ## TODO
 - update install requirements on RPM based systems
