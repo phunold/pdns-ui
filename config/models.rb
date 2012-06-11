@@ -17,8 +17,8 @@ end
 class Search < Sequel::Model
   attr_accessor :query, :answer, :first_seen, :last_seen, :rr, :maptype
   def validate
-    errors.add(:query, 'is not valid') unless query =~ /\A\w{0,253}\z/
-    errors.add(:answer, 'is not valid') unless answer =~ /\A\w{0,253}\z/
+    errors.add(:query, 'is not valid') unless query =~ /\A[\w\._-]{0,253}\z/
+    errors.add(:answer, 'is not valid') unless answer =~ /\A[\w\._-]{0,253}\z/
     errors.add(:last_seen, 'To date is not valid') unless (last_seen =~ /\A\d\d\d\d-\d\d-\d\d\z/ || last_seen.empty?)
     errors.add(:first_seen, 'From date is not valid') unless (first_seen =~ /\A\d\d\d\d-\d\d-\d\d\z/ || first_seen.empty?)
     errors.add(:last_seen, 'cannot be before first seen date') if last_seen < first_seen
@@ -26,8 +26,14 @@ class Search < Sequel::Model
 
   def construct_sql(s)
     # stitch together sql statement (logical AND)
-    s = s.where(:QUERY.like("%#{query}%")) unless query.empty?
-    s = s.where(:ANSWER.like("%#{answer}%")) unless answer.empty?
+    unless query.empty?
+      if query =~ /^[0-9]{1,3}\./
+        s = s.where(:QUERY.ilike("%#{query}%","%#{query.split(".").reverse.join(".")}%"))
+      else
+        s = s.where(:QUERY.ilike("%#{query}%")) 
+      end
+    end
+    s = s.where(:ANSWER.ilike("%#{answer}%")) unless answer.empty?
     s = s.filter(:RR => rr) unless rr.empty?
     s = s.filter(:MAPTYPE => maptype) unless maptype.empty?
     s = s.filter(:FIRST_SEEN >= Date.parse(first_seen)) unless first_seen.empty?

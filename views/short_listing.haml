@@ -3,6 +3,8 @@
 .alert.alert-info
   = "#{@meta} #{@lookup}"
   %i.icon-info-sign{:rel=>"tooltip", :title=>"Ordered by date desc"}
+- unless @back_btn.nil?
+  %a.btn.btn-primary.large{:href=>"javascript:history.back()"} #{@back_btn}
 %p= will_paginate @records
 %table.table.table-striped.table-condensed
   %thead

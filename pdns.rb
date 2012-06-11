@@ -36,10 +36,7 @@ class App < Sinatra::Base
     # otherwise just die ungracefully with HTTP 500
     begin
       # database counter for all pages
-puts "sessions counter: #{session[:counter]}"
-puts "sessions maptypes: #{session[:maptypes]}"
-
-    @counter ||= session[:counter] ||= Pdns.count
+      @counter ||= session[:counter] ||= Pdns.count
     rescue Sequel::DatabaseConnectionError
       halt 500, "Database error, please check database settings"
     end
@@ -115,14 +112,21 @@ puts "sessions maptypes: #{session[:maptypes]}"
 
     # go back if search is not valid
     redirect back if @lookup.empty?
+    
+    #:QUERY.ilike("%#{@lookup}%")) | (:ANSWER.ilike("%#{@lookup}%"))"
+    # create "in-addr.arpa" to match PTR address too
+    if @lookup =~ /^[0-9]{1,3}\./
+      in_addr_arpa_str = @lookup.split(".").reverse.join(".")
+      @records = Pdns.filter([:QUERY, :ANSWER].sql_string_join.ilike("%#{@lookup}%","#{in_addr_arpa_str}%"))
+      @meta = "Search Query and Response for (incl in_addr_arpa):"
+    else
+      # match case insensitive against 'query' OR 'answer' column
+      @records = Pdns.filter([:QUERY, :ANSWER].sql_string_join.ilike("%#{@lookup}%"))
+      @meta = "Search Query and Response for:"
+    end
 
-    # match case insensitive against 'query' OR 'answer' column
-    @records = Pdns.where(:QUERY.ilike("%#{@lookup}%") | :ANSWER.ilike("%#{@lookup}%"))
-    @meta = "Search Query and Response for:"
-
-    # create paginated records
     @records = @records.reverse(:LAST_SEEN).paginate(page,settings.per_page)
-    haml :short_listing
+    @records.empty? ? (haml :sorry) : (haml :short_listing)
   end
 
   # FIXME add TTL value to advanced search
@@ -142,6 +146,9 @@ puts "sessions maptypes: #{session[:maptypes]}"
     first_seen = params[:first_seen].strip
     last_seen  = params[:last_seen].strip
 
+    # FIXME overkill/hack! Is giving sql-error on startup, validate still works for my purpose
+    # Mysql::Error: Table 'pdns.searches' doesn't exist: DESCRIBE `searches`
+    # Mysql::Error: Table 'pdns.searches' doesn't exist: SELECT * FROM `searches` LIMIT 1
     @search = Search.new(:query     =>query,
                          :answer    =>answer,
                          :first_seen=>first_seen,
@@ -157,10 +164,18 @@ puts "sessions maptypes: #{session[:maptypes]}"
     
     # Final sql statement
     @records = @search.construct_sql(Pdns).paginate(page,settings.per_page)
+    # FIXME flash still a bit clumsy and doesnt make much sense with history.back() .js
+    flash[:warning] = nil
     @meta = "Woohoo! You just did an &#39;Advanced Search&#39;:"
+    # FIXME should display excerpt of what was searched for
     @lookup = "FIXME"
-
-    haml :short_listing
+    if @records.empty? then
+      @back_btn = "Try Again"
+      haml :sorry
+    else
+      @back_btn = "Refine Search"
+      haml :short_listing
+    end
   end
 
   get '/summary' do
@@ -229,12 +244,12 @@ puts "sessions maptypes: #{session[:maptypes]}"
 
   # error handling 404
   not_found do
-    haml :not_found
+    halt 404, "Sorry, could not found this page."
   end
 
   # error handling 500
   error do
-    haml :sorry
+    halt 500, "Something went terribly wrong. Please report this issue!"
   end
 
   # FIXME 'require' seems a little misplaced here
