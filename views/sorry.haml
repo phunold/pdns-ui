@@ -1,2 +1,4 @@
 .alert.alert-error
-  %p ooops, something went wrong!
+  = "ooops, could not find: &#39;#{@lookup}&#39;"
+- if back_btn
+  %a.btn.btn-primary.large{:href=>"javascript:history.back()"} #{back_btn}
