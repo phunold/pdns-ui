@@ -2,7 +2,17 @@
 
 **Minimalistic WebUI for passiveDNS tool by gamelinux.**
 
-This app is built on (http://sinatrarb.com)
+This app is built with:
+* sinatra web development framework (http://sinatrarb.com)
+* bootstrap, from twitter (http://twitter.github.com/bootstrap/)
+
+## Demo
+
+http://pdns.tklapp.com:8123/
+````Bash
+Username: pdns
+Password: demo1
+````
 
 ## Install
 
