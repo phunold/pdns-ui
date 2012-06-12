@@ -32,7 +32,7 @@
     %tr
       %td
         %a{:href=>"/q/#{i.QUERY}"}= i.QUERY
-      %td= i[:count]
+      %td= number_with_delimiter(i[:count])
 %h3
   Query Type
   %i.icon-info-sign{:rel=>"tooltip", :title=>"Overall distribution of Query Types"}
@@ -46,4 +46,4 @@
     %tr
       %td 
         %a{:href=>"/t/#{i.MAPTYPE}"}= i.MAPTYPE
-      %td= i[:count]
+      %td= number_with_delimiter(i[:count])

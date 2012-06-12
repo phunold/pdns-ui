@@ -5,7 +5,7 @@
 - else
   .alert.alert-info
     #{@meta} &#39;#{@lookup}&#39;
-    %span.badge.badge-info= @records.pagination_record_count
+    %span.badge.badge-info= number_with_delimiter(@records.pagination_record_count)
   %p= will_paginate(@records)
   %table.table.table-condensed.table-striped
     %thead

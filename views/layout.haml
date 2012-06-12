@@ -60,7 +60,10 @@
             %ul.nav.pull-right
               %li.navbar-text
                 Total Records:
-                %span.badge.badge-info #{@counter}
+                - if settings.human_readable_counter
+                  %span.badge.badge-info #{number_to_human(@counter)}
+                - else
+                  %span.badge.badge-info #{number_with_delimiter(@counter)}
               %li.divider-vertical
               %form.navbar-search{:action=>"/search", :method=>"get"}
                 %input.search-query.input-small{:type=>"text", :name=>"search", :placeholder=>"Search", :rel=>"tooltip", :title=>"Search Query & Responses"}

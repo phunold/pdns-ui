@@ -10,6 +10,7 @@ gem "rack-flash3", :require => "rack-flash"
 gem "net-dns", :require => "net/dns"
 gem "net-ping", :require => "net/ping"
 gem "whois"
+gem "actionpack", :require => "action_view"
 
 group :test do
   gem "rspec"

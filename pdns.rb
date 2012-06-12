@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env ruby -w
 
 require 'rubygems'
 require 'bundler/setup'
@@ -13,6 +13,8 @@ require 'rack-flash'
 require 'net/dns'
 require 'net/ping'
 require 'whois'
+require 'action_view'
+include ActionView::Helpers::NumberHelper
 
 # non-gem require
 require 'config/application_helper'
