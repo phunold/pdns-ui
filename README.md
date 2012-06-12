@@ -25,12 +25,11 @@ Password: demo1
 - Ubuntu 10.04: 
 
 ````Bash
-    apt-get install libmysqlclient16 ruby ruby-dev rubygems libruby libruby-extras
-    # you need to install latest rubygem manually ( >= v1.3.6)
-    gem install rubygems-update
-    cd /var/lib/gems/1.8/bin
-    ./update_rubygems
-    gem install bundler --no-ri --no-rdoc
+$ apt-get install libmysqlclient16 ruby ruby-dev rubygems libruby libruby-extras
+# you need to install latest rubygem manually ( >= v1.3.6)
+$    gem install rubygems-update
+$    cd /var/lib/gems/1.8/bin && ./update_rubygems
+ $  gem install bundler --no-ri --no-rdoc
 `````
 
 - Fedora/RedHat/CentOS
@@ -39,8 +38,8 @@ Password: demo1
 - Get code and install dependencies
 
 ````Bash
-    git clone git://github.com/phunold/pdns-ui.git
-    sudo bundle install
+$ git clone git://github.com/phunold/pdns-ui.git
+$ sudo bundle install
 ````
 
 ## Configuration
@@ -58,29 +57,26 @@ Password: demo1
 - OPTIONAL! change application look and feel to your liking: **config/app.yml**
 
 ````Bash
-    per_page: 100                          # number of rows per page
-    short_date_format: "%T %F"             # date format 'strftime'
-    long_date_format: "%a, %d %b %Y %T %z" # date format 'strftime'
+per_page: 80                           # number of rows per page
+short_date_format: "%T"                # this is for today's date
+long_date_format: "%Y-%m-%d at %T"     # format of all other dates
+human_readable_counter: true           # set to 'false' for exact counter
 ````
 
 ## Usage
 
-- Running for development or test:
+- Running for development using test:
 
 ````Bash
-    rackup
-````
-
-- point your browser to:
-
-````Bash
-    http://localhost:9292/
+$ rackup
+http://localhost:9292/
 ````
 
 - Or running with Passenger aka modrails
+
 ````Bash
-sudo aptitude install libapache2-mod-passenger
-cat /etc/apache2/sites-enabled/pdns
+$ sudo aptitude install libapache2-mod-passenger
+$ cat /etc/apache2/sites-enabled/pdns
 <VirtualHost *:80>
     ServerName pdns.example.com
     DocumentRoot /home/pdns-ui/public
@@ -90,11 +86,11 @@ cat /etc/apache2/sites-enabled/pdns
     </Directory>
 </VirtualHost>
 ````
-  more details at: http://www.modrails.com/documentation/Users%20guide%20Apache.html
+for more details visit:
+http://www.modrails.com/documentation/Users%20guide%20Apache.html
 
 ## TODO
 - update install requirements on RPM based systems
-- check how it feels with large table (+1M records)
 - add more unit tests
 * anything else check ROADMAP
 
