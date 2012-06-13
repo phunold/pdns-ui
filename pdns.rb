@@ -184,8 +184,8 @@ class App < Sinatra::Base
 
   get '/summary' do
     # get latest/oldest records
-    @latest_date = Pdns.order(:FIRST_SEEN).get(:LAST_SEEN)
-    @oldest_date = Pdns.reverse(:FIRST_SEEN).get(:FIRST_SEEN)
+    @oldest_date = Pdns.order(:FIRST_SEEN).get(:FIRST_SEEN)
+    @newest_date = Pdns.reverse(:LAST_SEEN).get(:LAST_SEEN)
 
     # FIXME stats need improvement, dont have good ideas yet!
     # and we have "wrong" numbers of rows because of caching

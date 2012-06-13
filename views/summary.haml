@@ -3,19 +3,14 @@
   %i.icon-info-sign{:rel=>"tooltip", :title=>"This page needs work"}
 .well
   %h3 Records in Database
-  %span.label.label-info
-    From
-    %i.icon-time.icon-white
   #{@oldest_date}
-  %br
-  %span.label.label-info
-    to
-    %i.icon-time.icon-white
-  #{@latest_date}
+  %br/
+  #{@newest_date}
 %hr
 %hr
 %hr
-%p all below here needs work
+.alert.alert-error
+  all below here needs work
 %hr
 %hr
 %hr
@@ -41,9 +36,11 @@
     %tr
       %th Query Type
       %th Total
+      %th Percentage
   %tbody
   - for i in @maptypes
     %tr
       %td 
         %a{:href=>"/t/#{i.MAPTYPE}"}= i.MAPTYPE
       %td= number_with_delimiter(i[:count])
+      %td= number_to_percentage(i[:count].to_f / @counter * 100)
