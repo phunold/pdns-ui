@@ -16,11 +16,16 @@
         %a.to_modal{:href=>"/ondemand/ping/#{rr.ANSWER}"}
           %i.icon-random
           Ping &#39;#{rr.ANSWER}&#39;
-      %li
-        %a.to_modal{:href=>"/ondemand/whois/#{rr.QUERY}"}
-          %i.icon-list
-          Whois &#39;#{rr.QUERY}&#39;
-      %li
-        %a.to_modal{:href=>"/ondemand/whois/#{rr.ANSWER}"}
-          %i.icon-list
-          Whois &#39;#{rr.ANSWER}&#39;
+        %li
+          %a.to_modal{:href=>"/ondemand/whois/#{rr.QUERY}"}
+            %i.icon-list
+            Whois &#39;#{rr.QUERY}&#39;
+        %li
+          %a.to_modal{:href=>"/ondemand/whois/#{rr.ANSWER}"}
+            %i.icon-list
+            Whois &#39;#{rr.ANSWER}&#39;
+      - if settings.gsafebrowsing_enable
+        %li
+          %a.to_modal{:href=>"/ondemand/safebrowsing/#{rr.QUERY}"}
+            %i.icon-list
+            Google Safebrowsing &#39;#{rr.QUERY}&#39;

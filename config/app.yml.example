@@ -5,3 +5,8 @@ per_page: 80                           # number of rows per page
 short_date_format: "%T"                # this is for today's date
 long_date_format: "%Y-%m-%d at %T"     # format of all other dates
 human_readable_counter: true           # set to 'false' for exact counter
+# Google Safebrowings
+gsafebrowsing_enable: false            # set to 'true' to enable
+gsafebrowsing_apikey: 'API-KEY'        # provide Google's API key
+gsafebrowsing_url: 'https://sb-ssl.google.com/safebrowsing/api/lookup'
+gsafebrowsing_version: '3.0'           # Google's Safebrowsing Lookup API Release

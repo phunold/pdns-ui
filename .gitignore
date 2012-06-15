@@ -1,3 +1,4 @@
 *.log
 *.db
 *.sql
+config/*.yml

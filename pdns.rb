@@ -15,6 +15,7 @@ require 'net/ping'
 require 'whois'
 require 'action_view'
 include ActionView::Helpers::NumberHelper
+require 'rest_client'
 
 # non-gem require
 require 'config/application_helper'
@@ -234,6 +235,20 @@ class App < Sinatra::Base
     @whois = c.query(@lookup)
     # open as .js modal window
     haml :ondemand_whois, :layout => false
+  end
+
+  # google safebrowsing lookup
+  get '/ondemand/safebrowsing/:domain' do
+    @lookup = params[:domain]
+    @meta = "Google Safebrowsing lookup:"
+    @safebrowsing = RestClient.post settings.gsafebrowsing_url + "?" + 
+                                    "client=pdns" + 
+                                    "&apikey=" + settings.gsafebrowsing_apikey + 
+                                    "&appver=" + settings.version + 
+                                    "&pver="   + settings.gsafebrowsing_version,
+                                    "1\n#{@lookup}"
+    # open as .js modal window
+    haml :ondemand_safebrowsing, :layout => false
   end
 
   # some static pages

@@ -27,6 +27,7 @@ GEM
     hike (1.2.1)
     i18n (0.6.0)
     journey (1.0.3)
+    mime-types (1.18)
     multi_json (1.3.6)
     mysql (2.8.1)
     net-dns (0.7.1)
@@ -44,6 +45,8 @@ GEM
       rack
     rack-test (0.6.1)
       rack (>= 1.0)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     rspec (2.7.0)
       rspec-core (~> 2.7.0)
       rspec-expectations (~> 2.7.0)
@@ -83,6 +86,7 @@ DEPENDENCIES
   net-ping
   rack-flash3
   rack-test
+  rest-client
   rspec
   sequel
   sinatra

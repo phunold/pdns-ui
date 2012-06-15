@@ -1,0 +1,25 @@
+.modal
+  .modal-header
+    %button.close{:type=>"button", "data-dismiss"=>"modal"} x
+    %h3 OnDemand Google Safebrowsing lookup
+  .modal-body
+    .alert.alert-info
+      #{@meta} &#39;#{@lookup}&#39;
+    - if @safebrowsing.code == 500
+      .alert.alert-error
+        no Safebrowsing setup or lookup failed.
+    - elsif @safebrowsing.code == 204
+      .alert.alert-success
+        Lookup returned &#39;clean&#39;
+    - elsif @safebrowsing.code == 200
+      .alert.alert-warning
+        Lookup returned
+        %pre
+          = @safebrowsing
+    - else
+      .alert.alert-warning
+        Something else went wrong.
+        %pre
+          = @safebrowsing
+  .modal-footer
+    %a#btn{:href=>"#", "data-dismiss"=>"modal"} Close

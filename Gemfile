@@ -11,6 +11,7 @@ gem "net-dns", :require => "net/dns"
 gem "net-ping", :require => "net/ping"
 gem "whois"
 gem "actionpack", :require => "action_view"
+gem "rest-client", :require => "rest_client"
 
 group :test do
   gem "rspec"
