@@ -32,8 +32,8 @@ $    cd /var/lib/gems/1.8/bin && ./update_rubygems
  $  gem install bundler --no-ri --no-rdoc
 `````
 
-- Fedora/RedHat/CentOS
-  * required RPMs pending, big sorry!
+- Fedora16
+$ yum install ldns ldns-devel libpcap-devel openssl-devel ruby rubygems rubygem-bundler rubygem-rack libffi-devel libffi mysql-devel
 
 - Get code and install dependencies
 
@@ -47,6 +47,7 @@ $ sudo bundle install
 - supply database information in file: **config/database.yml**
 
 ````Bash
+$ cp config/database.yml.example config/database.yml
   adapter: mysql
   host: localhost
   username: pdns
@@ -57,10 +58,19 @@ $ sudo bundle install
 - OPTIONAL! change application look and feel to your liking: **config/app.yml**
 
 ````Bash
+$ cp config/database.yml.example config/database.yml
+# Application Version
+version: v0.0.5
+# Application Look
 per_page: 80                           # number of rows per page
 short_date_format: "%T"                # this is for today's date
 long_date_format: "%Y-%m-%d at %T"     # format of all other dates
 human_readable_counter: true           # set to 'false' for exact counter
+# Google Safebrowings
+gsafebrowsing_enable: false            # set to 'true' to enable
+gsafebrowsing_apikey: 'API-KEY'        # provide Google's API key
+gsafebrowsing_url: 'https://sb-ssl.google.com/safebrowsing/api/lookup'
+gsafebrowsing_version: '3.0'           # Google's Safebrowsing Lookup API Release
 ````
 
 ## Usage
