@@ -55,10 +55,10 @@ $ cp config/database.yml.example config/database.yml
   database: pdns
 ````
 
-- OPTIONAL! change application look and feel to your liking: **config/app.yml**
+- change application look and feel to your liking: **config/app.yml**
 
 ````Bash
-$ cp config/database.yml.example config/database.yml
+$ cp config/app.yml.example config/app.yml
 # Application Version
 version: v0.0.5
 # Application Look
