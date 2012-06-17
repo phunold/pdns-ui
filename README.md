@@ -55,7 +55,7 @@ $ cp config/database.yml.example config/database.yml
   database: pdns
 ````
 
-- change application look and feel to your liking: **config/app.yml**
+- review application look and feel and copy example file: **config/app.yml**
 
 ````Bash
 $ cp config/app.yml.example config/app.yml
