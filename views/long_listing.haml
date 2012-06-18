@@ -26,6 +26,9 @@
           %td
             - if r.QUERY.empty?
               &lt;blank&gt;
+            - elsif r.QUERY.start_with?('xn--')
+              %a{:href=>"/q/#{r.QUERY}"}= r.QUERY
+              %span &#39;#{SimpleIDN.to_unicode(r.QUERY)}&#39;
             - else
               %a{:href=>"/q/#{r.QUERY}"}= r.QUERY
           %td= r.RR

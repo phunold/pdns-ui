@@ -16,6 +16,7 @@ require 'whois'
 require 'action_view'
 include ActionView::Helpers::NumberHelper
 require 'rest_client'
+require 'simpleidn'
 
 # non-gem require
 require 'config/application_helper'
@@ -76,7 +77,10 @@ class App < Sinatra::Base
     # we use an unlikely string for empty/blank queries 
     if @lookup == "--blank--" then
       @records = Pdns.where(:QUERY => '')
-    else  
+    # Internationalized Domain beginning with 'xn--'
+    elsif @lookup == "xn--" then
+      @records = Pdns.filter(:QUERY.ilike("xn--%"))
+    else
       @records = Pdns.where(:QUERY => @lookup)
     end
     @records = @records.reverse(:LAST_SEEN).paginate(page,settings.per_page)

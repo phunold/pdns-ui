@@ -12,6 +12,7 @@ gem "net-ping", :require => "net/ping"
 gem "whois"
 gem "actionpack", :require => "action_view"
 gem "rest-client", :require => "rest_client"
+gem "simpleidn"
 
 group :test do
   gem "rspec"
