@@ -10,7 +10,8 @@
 - add more special reports (IPv6 RSN abusers,'long' Queries and TXT, character rule violation, etc.)
 - additional stats where it makes sense
 - optional user access control
-- integration with PassiveDNS alert-log
+- integration with PassiveDNS alert-log possibly
+- better performant datastore (Redis!?)
 
 ## 0.5 
 - interesting "advanced search" can be stored/shared
