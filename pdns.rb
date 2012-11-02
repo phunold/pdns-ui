@@ -31,7 +31,11 @@ class App < Sinatra::Base
     register Sinatra::Reloader
     config_file 'config/app.yml'
     config_file 'config/database.yml'
-    DB = Sequel.connect "#{settings.adapter}://#{settings.username}:#{settings.password}@#{settings.host}/#{settings.database}", :loggers => [Logger.new($stdout)]
+    DB = Sequel.connect(:adapter  => settings.adapter,
+			:host     => settings.host,
+			:database => settings.database,
+			:user     => settings.username,
+			:password =>"#{settings.password}")
   end
 
   before do
