@@ -1,31 +1,23 @@
-- unless rr.QUERY.empty? or rr.ANSWER == "NXDOMAIN"
+- unless action_item.empty? or action_item == "NXDOMAIN"
   .btn-group
     %a.btn.btn-info.btn-mini.dropdown-toggle{:rel=>"tooltip", :title=>"Perform Action", :href=>"#"}
       %i.icon-user.icon-white
       %span.caret
     %ul.dropdown-menu.pull-right
       %li
-        %a.to_modal{:href=>"/ondemand/dns/#{rr.QUERY}"}
+        %a.to_modal{:href=>"/ondemand/dns/#{action_item}"}
           %i.icon-eye-open
-          DNS Lookup &#39;#{rr.QUERY}&#39;
+          DNS Lookup &#39;#{action_item}&#39;
       %li
-        %a.to_modal{:href=>"/ondemand/ping/#{rr.QUERY}"}
+        %a.to_modal{:href=>"/ondemand/ping/#{action_item}"}
           %i.icon-random
-          Ping &#39;#{rr.QUERY}&#39;
+          Ping &#39;#{action_item}&#39;
       %li
-        %a.to_modal{:href=>"/ondemand/ping/#{rr.ANSWER}"}
-          %i.icon-random
-          Ping &#39;#{rr.ANSWER}&#39;
-        %li
-          %a.to_modal{:href=>"/ondemand/whois/#{rr.QUERY}"}
-            %i.icon-list
-            Whois &#39;#{rr.QUERY}&#39;
-        %li
-          %a.to_modal{:href=>"/ondemand/whois/#{rr.ANSWER}"}
-            %i.icon-list
-            Whois &#39;#{rr.ANSWER}&#39;
+        %a.to_modal{:href=>"/ondemand/whois/#{action_item}"}
+          %i.icon-list
+          Whois &#39;#{action_item}&#39;
       - if settings.gsafebrowsing_enable
         %li
-          %a.to_modal{:href=>"/ondemand/safebrowsing/#{rr.QUERY}"}
+          %a.to_modal{:href=>"/ondemand/safebrowsing/#{action_item}"}
             %i.icon-list
-            Google Safebrowsing &#39;#{rr.QUERY}&#39;
+            Google Safebrowsing &#39;#{action_item}&#39;
