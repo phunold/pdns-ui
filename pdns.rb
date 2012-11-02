@@ -108,7 +108,7 @@ class App < Sinatra::Base
     @lookup   = params[:type]
     @records = Pdns.where(:MAPTYPE => @lookup).reverse(:LAST_SEEN).paginate(page,settings.per_page)
     @meta = "Filter by Query Type:"
-    haml :short_listing
+    haml :long_listing
   end
 
   # list of specific DNS ResourceRecord aka RR
@@ -117,7 +117,7 @@ class App < Sinatra::Base
     @lookup   = params[:resource]
     @records = Pdns.where(:RR => @lookup).reverse(:LAST_SEEN).paginate(page,settings.per_page)
     @meta = "Filter by Resource Record:"
-    haml :short_listing
+    haml :long_listing
   end
 
   get '/search' do
@@ -267,7 +267,7 @@ class App < Sinatra::Base
   end
 
   # send browser something
-  get '/favicon.ico' do
+  get '*/favicon.ico' do
   end
 
   # error handling 404
