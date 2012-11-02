@@ -50,11 +50,13 @@ $ sudo bundle install
 
 ````Bash
 $ cp config/database.yml.example config/database.yml
-  adapter: mysql
-  host: localhost
-  username: pdns
-  password: pdns
-  database: pdns
+# database settings
+adapter: mysql
+host: localhost
+port: 3306
+username: pdns
+password: pdns
+database: pdns
 ````
 
 - review application look and feel and copy example file: **config/app.yml**
