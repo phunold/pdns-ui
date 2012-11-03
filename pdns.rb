@@ -24,6 +24,7 @@ require 'config/application_helper'
 class App < Sinatra::Base
 
   configure do
+    enable :protection
     enable :sessions
     use Rack::Flash
     register WillPaginate::Sinatra
