@@ -1,32 +1,11 @@
 #!/usr/bin/env ruby -w
 
-require 'rubygems'
-require 'bundler/setup'
-require 'sinatra/base'
-require 'sinatra/config_file'
-require 'sinatra/reloader'
-require 'sequel'
-require 'haml'
-require 'will_paginate'
-require 'will_paginate/sequel'
-require 'rack-flash'
-require 'net/dns'
-require 'net/ping'
-require 'whois'
-require 'action_view'
+# borrowing 'number_to_human' from ActionView
 include ActionView::Helpers::NumberHelper
-require 'rest_client'
-require 'simpleidn'
-
-# non-gem require
-require 'config/application_helper'
 
 class App < Sinatra::Base
-
   configure do
     enable :protection
-    enable :sessions
-    use Rack::Flash
     register WillPaginate::Sinatra
     register Sinatra::ConfigFile
     register Sinatra::Reloader
@@ -46,7 +25,7 @@ class App < Sinatra::Base
     # otherwise just die ungracefully with HTTP 500
     begin
       # database counter for all pages
-      @counter ||= session[:counter] ||= Pdns.count
+      @counter ||= Pdns.count
     rescue Sequel::DatabaseError => e
       halt 500, "Database error: #{e.message}"
     rescue Sequel::DatabaseConnectionError => e
@@ -55,7 +34,7 @@ class App < Sinatra::Base
 
     # get all MAPTYPEs aka DNS Query Types (CNAME,A,SOA,MX,etc) for navigation
     # dropdown menu on all pages
-    @maptypes ||= session[:maptypes] ||= Pdns.group(:MAPTYPE).map(:MAPTYPE)
+    @maptypes ||= Pdns.group(:MAPTYPE).map(:MAPTYPE)
   end
 
   # routes
@@ -205,7 +184,7 @@ class App < Sinatra::Base
     @top_query = Pdns.group_and_count(:QUERY).reverse(:count).limit(10)
 
     # show distribution of maptype(A,PTR,CNAME,etc)
-    @maptypes = Pdns.group_and_count(:MAPTYPE).reverse(:count)
+    @maptype_group = Pdns.group_and_count(:MAPTYPE).reverse(:count)
 
     haml :summary
   end
@@ -283,5 +262,5 @@ class App < Sinatra::Base
 
   # FIXME 'require' seems a little misplaced here
   # but it works, and at the top of this file it didn't...
-  require 'config/models.rb'
+  require Pathname.new(__FILE__).dirname + 'config/models.rb'
 end
