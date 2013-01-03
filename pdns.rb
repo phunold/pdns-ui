@@ -6,6 +6,8 @@ include ActionView::Helpers::NumberHelper
 class App < Sinatra::Base
   configure do
     enable :protection
+    enable :sessions
+    use Rack::Flash
     register WillPaginate::Sinatra
     register Sinatra::ConfigFile
     register Sinatra::Reloader
