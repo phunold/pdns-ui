@@ -21,7 +21,7 @@
           First Seen
           %i.icon-info-sign{:rel=>"tooltip", :title=>"showing \"-\" if First Seen and Last seen are the same!"}
         %th Last Seen
-        %th &nbsp;
+        %th Count
     %tbody
       - for r in @records
         %tr
@@ -45,4 +45,5 @@
           - else
             %td.timestamp= r.FIRST_SEEN.strftime(settings.long_date_format)
           %td.timestamp= r.LAST_SEEN.strftime(settings.long_date_format)
+          %td= r.COUNT
   %p= will_paginate @records

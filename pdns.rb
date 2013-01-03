@@ -177,14 +177,14 @@ class App < Sinatra::Base
     @oldest_date = Pdns.order(:FIRST_SEEN).get(:FIRST_SEEN)
     @newest_date = Pdns.reverse(:LAST_SEEN).get(:LAST_SEEN)
 
-    # FIXME stats need improvement, dont have good ideas yet!
-    # and we have "wrong" numbers of rows because of caching
-
     # Top 10 Query
-    @top_query = Pdns.group_and_count(:QUERY).reverse(:count).limit(10)
+    @top_query = Pdns.select_group(:QUERY).select_append{sum(:COUNT).as(counter)}.reverse(:counter).limit(10)
+
+    # Top 10 Answers
+    @top_answer = Pdns.select_group(:ANSWER).select_append{sum(:COUNT).as(counter)}.reverse(:counter).limit(10)
 
     # show distribution of maptype(A,PTR,CNAME,etc)
-    @maptype_group = Pdns.group_and_count(:MAPTYPE).reverse(:count)
+    @maptype_group = Pdns.select_group(:MAPTYPE).select_append{sum(:COUNT).as(counter)}.reverse(:counter)
 
     haml :summary
   end

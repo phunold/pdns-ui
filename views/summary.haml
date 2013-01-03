@@ -6,28 +6,36 @@
   #{@oldest_date}
   %br/
   #{@newest_date}
-%hr
-%hr
-%hr
 .alert.alert-error
-  all below here needs work
-%hr
-%hr
-%hr
+  Following is experimental, read responsibly.
 %h3
   Top10 DNS Query
-  %i.icon-info-sign{:rel=>"tooltip", :title=>"passivedns is caching, use Top10 list with caution!"}
+  %i.icon-info-sign{:rel=>"tooltip", :title=>"Top total Answers per Query"}
 %table.table.table-striped.table-condensed
   %thead
     %tr
-      %th Address
-      %th Total Queries
+      %th Query
+      %th Sum of Query
   %tbody
-  - for i in @top_query
+    - for i in @top_query
+      %tr
+        %td
+          %a{:href=>"/q/#{i.QUERY}"}= i.QUERY
+        %td= number_with_delimiter(i[:counter].to_i)
+%h3
+  Top10 DNS Answer
+  %i.icon-info-sign{:rel=>"tooltip", :title=>"Top Answers to any Query"}
+%table.table.table-striped.table-condensed
+  %thead
     %tr
-      %td
-        %a{:href=>"/q/#{i.QUERY}"}= i.QUERY
-      %td= number_with_delimiter(i[:count])
+      %th Answer
+      %th Sum of Answers
+  %tbody
+    - for i in @top_answer
+      %tr
+        %td
+          %a{:href=>"/a/#{i.ANSWER}"}= i.ANSWER
+        %td= number_with_delimiter(i[:counter].to_i)
 %h3
   Query Type
   %i.icon-info-sign{:rel=>"tooltip", :title=>"Overall distribution of Query Types"}
@@ -35,12 +43,12 @@
   %thead
     %tr
       %th Query Type
-      %th Total
+      %th Sum of Query Types
       %th Percentage
   %tbody
-  - for i in @maptype_group
-    %tr
-      %td 
-        %a{:href=>"/t/#{i.MAPTYPE}"}= i.MAPTYPE
-      %td= number_with_delimiter(i[:count])
-      %td= number_to_percentage(i[:count].to_f / @counter * 100)
+    - for i in @maptype_group
+      %tr
+        %td 
+          %a{:href=>"/t/#{i.MAPTYPE}"}= i.MAPTYPE
+        %td= number_with_delimiter(i[:counter].to_i)
+        %td= number_to_percentage(i[:counter].to_f / @counter * 100)
