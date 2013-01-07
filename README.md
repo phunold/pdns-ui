@@ -33,6 +33,7 @@ $    cd /var/lib/gems/1.8/bin && ./update_rubygems
 `````
 
 - Fedora16
+
 ````Bash
 $ yum install ldns ldns-devel libpcap-devel openssl-devel ruby rubygems rubygem-bundler rubygem-rack libffi-devel libffi mysql-devel
 ````
