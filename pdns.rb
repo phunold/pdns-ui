@@ -3,6 +3,10 @@
 # borrowing 'number_to_human' from ActionView
 include ActionView::Helpers::NumberHelper
 
+# load modules
+require Pathname.new(__FILE__).dirname + 'lib/mymemcache.rb'
+
+
 class App < Sinatra::Base
   configure do
     enable :protection
@@ -19,6 +23,8 @@ class App < Sinatra::Base
 			:database => settings.database,
 			:user     => settings.username,
 			:password =>"#{settings.password}")
+    # init cache
+    @@cache = MyMemCache.new
   end
 
   before do
@@ -27,7 +33,8 @@ class App < Sinatra::Base
     # otherwise just die ungracefully with HTTP 500
     begin
       # database counter for all pages
-      @counter ||= Pdns.count
+      @counter ||= @@cache.get('count')
+      @counter ||= @@cache.set('count',Pdns.count)
     rescue Sequel::DatabaseError => e
       halt 500, "Database error: #{e.message}"
     rescue Sequel::DatabaseConnectionError => e
@@ -36,7 +43,8 @@ class App < Sinatra::Base
 
     # get all MAPTYPEs aka DNS Query Types (CNAME,A,SOA,MX,etc) for navigation
     # dropdown menu on all pages
-    @maptypes ||= Pdns.group(:MAPTYPE).map(:MAPTYPE)
+    @maptypes ||= @@cache.get('maptypes')
+    @maptypes ||= @@cache.set('maptypes',Pdns.group(:MAPTYPE).map(:MAPTYPE))
   end
 
   # routes
