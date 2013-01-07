@@ -1,6 +1,6 @@
 # ROADMAP
 
-## 0.1 
+##<del>0.1</del>
 - add some special reports to navigation (NXDOMAIN, blank query string, I18n domains, CHAOS, etc.)
 - add more dynamic searches/menus (ie: filter by "XYZ")
 - add basic on-demand lookup feature (whois,DNS,etc.)
