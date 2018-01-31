@@ -6,14 +6,6 @@ This app is built with:
 * sinatra web development framework (http://sinatrarb.com)
 * bootstrap, from twitter (http://twitter.github.com/bootstrap/)
 
-## Demo
-
-http://pdns.tklapp.com:8123/
-````Bash
-Username: pdns
-Password: demo1
-````
-
 ## Install
 
 - Ubuntu 12.04:
