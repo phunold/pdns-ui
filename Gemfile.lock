@@ -35,7 +35,7 @@ GEM
     net-ping (1.5.3)
       ffi (>= 1.0.0)
       net-ldap (~> 0.2.2)
-    rack (1.4.1)
+    rack (1.4.7)
     rack-cache (1.2)
       rack (>= 0.4)
     rack-flash3 (1.0.3)
